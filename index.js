@@ -33,6 +33,22 @@ app.use(passport.session());
 // Setup authentication routes
 require('./routes/authRoutes')(app);
 
+
+// Run if running in production on Heroku
+if (process.env.NODE_ENV === 'production') {
+    // Make sure that express handles production correctly
+    // Make sure that express serves prodcution assets
+    app.use(express.static('client-web/build'))
+
+    // Express will serve up the index.html file if it doesn't recognize the route
+    const path = require('path');
+    app.get('*',(req,res) => {
+        res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+    })
+
+}
+
+
 // Run server
 const PORT = process.env.PORT || 5000 // Get dynamic port allocation when deployed by Heroku. Otherwise, by default, use port 5000 
 app.listen(PORT);
