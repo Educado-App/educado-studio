@@ -171,7 +171,7 @@ const Navbar = (props) => {
                         <Typography className={classes.title}>Course Creator</Typography>
                     </div>
                     <div className={classes.barStuffContainer}>
-                        <p>Stuff</p>
+                        <a href="/auth/google" >Login with Google</a>
                     </div>
                 </Toolbar>
             </AppBar>

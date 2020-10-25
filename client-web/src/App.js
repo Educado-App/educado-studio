@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -27,28 +27,35 @@ const theme = createMuiTheme({
   }
 })
 
-function App() {
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <MuiThemeProvider theme={theme}>
-        <Router>
-          <div>
-            <Navbar>
-              <Switch>
-                <Route path="/home" component={Home} exact></Route>
-                <Route path="/createcourse" component={Createcourse} exact></Route>
-                <Route path="/statistics" component={Statistics} exact></Route>
-                <Route path="/settings" component={Settings} exact></Route>
-                <Route path="/overview" component={Overview} exact></Route>
-              </Switch>
-            </Navbar>
-          </div>
-          
-        </Router>
-      </MuiThemeProvider>
-    </React.Fragment>
-  );
+class App extends Component {
+  componentDidMount() {
+    
+  }
+
+
+  render() {
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <MuiThemeProvider theme={theme}>
+          <Router>
+            <div>
+              <Navbar>
+                <Switch>
+                  <Route path="/home" component={Home} exact></Route>
+                  <Route path="/createcourse" component={Createcourse} exact></Route>
+                  <Route path="/statistics" component={Statistics} exact></Route>
+                  <Route path="/settings" component={Settings} exact></Route>
+                  <Route path="/overview" component={Overview} exact></Route>
+                </Switch>
+              </Navbar>
+            </div>
+            
+          </Router>
+        </MuiThemeProvider>
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;

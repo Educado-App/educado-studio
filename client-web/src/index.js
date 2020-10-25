@@ -10,10 +10,12 @@ import thunk from 'redux-thunk';
 
 // Import reducers
 import settingsReducer from './store/reducers/Settings';
+import authReducer from './store/reducers/authReducer';
 
 // Create root reducer that combines all individual reducers
 const rootReducer = combineReducers({
   settings: settingsReducer,
+  auth: authReducer,
 })
 
 
