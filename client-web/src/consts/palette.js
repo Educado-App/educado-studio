@@ -8,6 +8,7 @@
 
     // Specials
     complementary: '#F0F3BD',
+    faded: '#f1faee'
 
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+
 import * as serviceWorker from './serviceWorker';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import { Provider } from 'react-redux';
@@ -22,8 +23,11 @@ const rootReducer = combineReducers({
 // Create store for managing state with Redux
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
-let main;
 
+// Logic for rendering app
+// If props.state.auth.loginStatus = false
+// Then main = <Login />
+// Else main = <App />
 
 ReactDOM.render(
     <Provider store={store}>

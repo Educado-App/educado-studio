@@ -1,17 +1,30 @@
 import {FETCH_USER} from '../actions/Auth';
 
 const initialState = {
+    loginStatus: false,
 }
 
-const reducer = (state = null, action ) => {
-
-    console.log(action);
-
+const reducer = (state = initialState, action ) => {
+    //typeof maybeObject != "undefined"
     switch (action.type) {
         case FETCH_USER:
-            return action.payload || false;
+            console.log(typeof action.payload)
+            if (typeof action.payload === 'object') {
+                return {
+                    ...state,
+                    loginStatus: true,
+                }
+            } else {
+                return {
+                    ...state,
+                    loginStatus: false,
+                }
+            }
+            
         default:
-            return state
+            return {
+                ...state,
+            }
     }
 };
 
