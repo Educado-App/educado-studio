@@ -14,6 +14,10 @@ import Overview from './pages/Overview/Overview';
 
 import palette from './consts/palette';
 
+import * as authActions from './store/actions/Auth';
+import { connect } from 'react-redux';
+
+
 const theme = createMuiTheme({
   palette: {
       primary: {
@@ -29,7 +33,7 @@ const theme = createMuiTheme({
 
 class App extends Component {
   componentDidMount() {
-    
+    this.props.fetchUser();
   }
 
 
@@ -47,6 +51,7 @@ class App extends Component {
                   <Route path="/statistics" component={Statistics} exact></Route>
                   <Route path="/settings" component={Settings} exact></Route>
                   <Route path="/overview" component={Overview} exact></Route>
+                  <Route path="/auth/google/callback" component={Home}></Route>
                 </Switch>
               </Navbar>
             </div>
@@ -58,4 +63,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null,authActions)(App);

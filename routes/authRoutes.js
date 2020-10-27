@@ -7,21 +7,24 @@ module.exports = (app) => {
     }))
 
     // Route handler for auth callback (Automatically gets 'code' from earlier call)
-    app.get('/auth/google/callback', passport.authenticate('google'));
+    app.get(
+        '/auth/google/callback',
+        passport.authenticate('google'),
+        (req,res) => {
+            res.redirect('/Home');
+        }    
+    );
     
     // Logout simulation
     app.get('/api/logout',(req,res) => {
         req.logout();
-        res.send(req.user);
+        res.redirect('/');
     });
 
     // Show current user simulation
     app.get('/api/current_user', (req,res) => {
         res.send(req.user);
     });
-
-
-
 
 }
 

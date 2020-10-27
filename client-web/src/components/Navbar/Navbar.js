@@ -22,6 +22,11 @@ import './Navbar.css';
 import MenuList from './components/menuList';
 import palette from '../../consts/palette';
 
+
+// Redux stuff
+import {connect} from 'react-redux';
+import * as authActions from '../../store/actions/Auth';
+
 // Constants
 const drawerOpenWidth = 240;
 const drawerClosedWidth = 70;
@@ -156,8 +161,19 @@ const Navbar = (props) => {
             )
         }
     }  
+
+    const renderLoginButton = () => {
+        switch (props.auth) {
+            case null:
+                return;
+            case false:
+                return <a href="/auth/google">Login with Google</a>;
+            default:
+                return <a href="/api/logout" >Logout</a>
+        }
+    }
+
     
-      
     // Main return JSX object 
     return (
         <div className={classes.root}>
@@ -171,7 +187,7 @@ const Navbar = (props) => {
                         <Typography className={classes.title}>Course Creator</Typography>
                     </div>
                     <div className={classes.barStuffContainer}>
-                        <a href="/auth/google" >Login with Google</a>
+                        {renderLoginButton()}
                     </div>
                 </Toolbar>
             </AppBar>
@@ -198,5 +214,9 @@ const Navbar = (props) => {
     )
 }
 
+function mapStateToProps(state) {
+    return {auth: state.auth};
+}
 
-export default Navbar;
+
+export default connect(mapStateToProps)(Navbar);

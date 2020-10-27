@@ -22,6 +22,8 @@ const rootReducer = combineReducers({
 // Create store for managing state with Redux
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
+let main;
+
 
 ReactDOM.render(
     <Provider store={store}>
