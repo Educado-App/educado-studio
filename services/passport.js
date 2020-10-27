@@ -21,15 +21,14 @@ passport.deserializeUser((id,done) => { // When client contacts server with cook
 });
 
 
-// OAuth
-passport.use(new GoogleStrategy({
+// Google OAuth Strategy 1: Login
+passport.use('google',new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleClientSecret,
     callbackURL: '/auth/google/callback',
     proxy: true 
 }, async (accessToken,refreshToken, profile, done) => {
     const existingUser = await User.findOne({googleID: profile.id}) // Look through User collection for an instance already with the ID
-    
     if (existingUser) { 
         // If existingUser exists, we already have a record with the given profile ID
         done(null,existingUser); // Inform passport that authentication is done. Return null for error, and the existing user
@@ -42,6 +41,34 @@ passport.use(new GoogleStrategy({
     }        
 }));
 
+
+// Google OAuth Strategy 1: Login
+passport.use('google-restricted',new GoogleStrategy({
+    clientID: keys.googleClientID,
+    clientSecret: keys.googleClientSecret,
+    callbackURL: '/auth/google/callback',
+    proxy: true 
+}, async (accessToken,refreshToken, profile, done) => {
+    // Find user with email of the one clicking
+    const existingUser = await User.findOne({email: profile.emails[0].value}) 
+    // If such a user exist
+    if (existingUser) { 
+        // If that user ALREADY has a Google ID, finish with that user
+        if (existingUser.googleID) {
+            done(null,existingUser);
+        } else { // Else remove user, add new with ID and email
+            const rem = await User.remove({email: profile.emails[0].value})
+            const user = await new User({
+                googleID: profile.id, 
+                email: profile.emails[0].value,
+            }).save();
+            done(null,user); // Finish with NEW user
+        }
+    } else {
+        // Only here, if user is NOT registered in Database
+        done(null,false) // Return with "unauthorized error"
+    }        
+}));
 
 
 

@@ -2,14 +2,14 @@ const passport = require('passport') // Import passport library module
 
 module.exports = (app) => {
     // Route handler for login simulation
-    app.get('/auth/google', passport.authenticate('google',{ // 'google' identifies a GoogleStrategy
+    app.get('/auth/google', passport.authenticate('google-restricted',{ // 'google' identifies a GoogleStrategy
         scope: ['profile','email'] // Specifies to google what access we request access to. Full list of possibilities can be seen on google.
     }))
 
     // Route handler for auth callback (Automatically gets 'code' from earlier call)
     app.get(
         '/auth/google/callback',
-        passport.authenticate('google'),
+        passport.authenticate('google-restricted'),
         (req,res) => {
             res.redirect('/');
         }    
