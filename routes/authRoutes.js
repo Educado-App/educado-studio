@@ -1,5 +1,7 @@
 const passport = require('passport') // Import passport library module
 
+const mongoose = require('mongoose');
+
 module.exports = (app) => {
     // Route handler for login simulation
     app.get('/auth/google', passport.authenticate('google-restricted',{ // 'google' identifies a GoogleStrategy

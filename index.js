@@ -7,6 +7,7 @@ const passport = require('passport');
 
 // Mongoose Model executions
 require('./models/User');
+require('./models/Courses');
 
 // Execution requires
 require('./services/passport'); // Execute passport config
@@ -27,11 +28,13 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.json());
 // ** END SECTION ** //
 
 
 // Setup authentication routes
 require('./routes/authRoutes')(app);
+require('./routes/courseRoutes')(app);
 
 
 // Run if running in production on Heroku

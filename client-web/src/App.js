@@ -49,7 +49,6 @@ class App extends Component {
           <CssBaseline />
           <MuiThemeProvider theme={theme}>
             <Router>
-              <div>
                 <Navbar>
                   <Switch>
                     <Route path="/home" component={Home} exact></Route>
@@ -60,7 +59,6 @@ class App extends Component {
                     <Route path="/auth/google/callback" component={Home}></Route>
                   </Switch>
                 </Navbar>
-              </div>
             </Router>
           </MuiThemeProvider>
         </React.Fragment>

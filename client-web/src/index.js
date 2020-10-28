@@ -9,14 +9,20 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 
+
 // Import reducers
 import settingsReducer from './store/reducers/Settings';
 import authReducer from './store/reducers/authReducer';
+import courseReducer from './store/reducers/courseReducer';
 
+
+import axios from 'axios';
+window.axios = axios;
 // Create root reducer that combines all individual reducers
 const rootReducer = combineReducers({
   settings: settingsReducer,
   auth: authReducer,
+  course: courseReducer,
 })
 
 
