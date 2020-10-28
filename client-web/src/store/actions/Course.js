@@ -3,10 +3,10 @@ import axios from 'axios';
 // Fetch user action
 export const CREATE_COURSE = 'CREATE_COURSE';
 
-export const createCourse = () => {
+export const createCourse = (title,description) => {
     const course = {
-        title: 'React Test',
-        description: 'Testing'
+        title: title,
+        description: description
     }
     return async (dispatch) => {
         const res = await axios.post('/api/create/course',course);

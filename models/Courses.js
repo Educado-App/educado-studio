@@ -8,7 +8,7 @@ const courseSchema = new Schema({
     description: String,
     _user: {type: Schema.Types.ObjectId,ref: 'User'},
     dateCreated: Date,
-    lastUpdated: Date,
+    dateUpdated: Date,
 });
 
 mongoose.model('courses',courseSchema); // Create new collection called users, using the userSchema

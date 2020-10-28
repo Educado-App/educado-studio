@@ -8,7 +8,6 @@ const requireLogin = require('../middlewares/requireLogin');
 module.exports = (app) => {
     // Create course
     app.post('/api/create/course',requireLogin,async (req,res) => {
-        console.log(req.body)
         const {title,description} = req.body;
 
         const course = new Course({

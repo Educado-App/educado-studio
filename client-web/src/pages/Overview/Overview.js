@@ -23,18 +23,16 @@ import './../../consts/global.css';
 
 const Overview = (props) => {
 
-    const handleClick = () => {
-        props.createCourse();
-        console.log(props.course.course)
-    }
+    
     return (
         <div>
             <h1>Overview</h1>
-            <Button onClick={props.createCourse} >Create User</Button>
+            
         </div>
         
     )
 }
+
 
 function mapStateToProps(state) {
     return {course: state.course};
