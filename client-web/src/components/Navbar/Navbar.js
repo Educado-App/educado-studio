@@ -62,13 +62,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         justifyContent: 'flex-start'
     },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        paddingRight: 8,
-        ...theme.mixins.toolbar, // Get height and width from toolbar 
-    },
     // Drawer styling
     drawerClosed: {
         overflowX: 'hidden',
@@ -89,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
     })},
     
       appBarSpacer: theme.mixins.toolbar, // Gets minimum height from toolbar object. Use to layout elements underneeth toolbar
+
       content: {
         flexGrow: 1,
         height: '100vh',
@@ -97,33 +91,15 @@ const useStyles = makeStyles((theme) => ({
       // Title
       title: {
           position: 'relative',
-          alignSelf: 'center',
-          fontSize: 20,
-
+          marginLeft: `calc(50% - ${drawerClosedWidth}px)`,
       },
-      titleContainer: {
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center', // Center column
-          justifyContent: 'flex-start', // Left start
-      },
-      barMenuIconContainer: {
-          width: '33.3%',
+      barIcon: {
           position: 'relative',
+          marginLeft: '0px'
       },
-      barTitleContainer: {
-          width: '33.3%',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center'
-      },
-      barStuffContainer: {
-          width: '33.3%',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'flex-end'
+      barLogoutButton: {
+          position: 'absolute',
+          right: '10px',
       }
     }))
 
@@ -149,30 +125,18 @@ const Navbar = (props) => {
     const RenderDrawerButton = () => {
         if (drawerState) {
             return (
-                <IconButton onClick={handleDrawerClose}>
+                <IconButton className={classes.barIcon} onClick={handleDrawerClose}>
                     <ChevronLeftIcon></ChevronLeftIcon>
                 </IconButton>
             )
         } else {
             return (
-                <IconButton onClick={handleDrawerOpen}>
+                <IconButton className={classes.barIcon} onClick={handleDrawerOpen}>
                     <MenuIcon></MenuIcon>
                 </IconButton>     
             )
         }
     }  
-
-    const renderLoginButton = () => {
-        switch (props.auth.loginStatus) {
-            case null:
-                return;
-            case false:
-                return <a href="/auth/google">Login with Google</a>;
-            default:
-                return <a href="/api/logout" >Logout</a>
-        }
-    }
-
     
     // Main return JSX object 
     return (
@@ -180,15 +144,12 @@ const Navbar = (props) => {
             <CssBaseline />
             <AppBar className={clsx(classes.appBar, drawerState && classes.appBarShift)} position="absolute"> 
                 <Toolbar className={classes.toolbar}>
-                    <div className={classes.barMenuIconContainer}>
-                        <RenderDrawerButton />
-                    </div>
-                    <div className={classes.barTitleContainer}>
-                        <Typography className={classes.title}>Course Creator</Typography>
-                    </div>
-                    <div className={classes.barStuffContainer}>
-                        <Button href="/api/logout">Logout</Button>
-                    </div>
+                    
+                    <RenderDrawerButton />
+                    
+                    <Typography variant="h5" align='center' className={classes.title}>Colibri</Typography>
+                    <Button className={classes.barLogoutButton} href="/api/logout">Logout</Button>
+                    
                 </Toolbar>
             </AppBar>
             

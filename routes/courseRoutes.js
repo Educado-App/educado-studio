@@ -19,7 +19,7 @@ module.exports = (app) => {
         })
 
         try {
-            await course.save();
+            course.save();
             res.send(course);
         } catch (err) {
             res.status(422).send(err);
