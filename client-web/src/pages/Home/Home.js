@@ -1,17 +1,17 @@
 // Base imports
-import React,{useState,useRef} from 'react';
+import React,{useState,useRef,Component} from 'react';
 import clsx from 'clsx';
 
 // Material UI base
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme, withStyles} from '@material-ui/core/styles';
 import { Container, CssBaseline } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {Link} from 'react-router-dom';
 
 // Material UI components
-
-
+import {connect} from 'react-redux';
+import * as courseActions from '../../store/actions/Course';
 // Material UI icons
 
 
@@ -19,7 +19,7 @@ import {Link} from 'react-router-dom';
 import GetContentById from './GetContentById/GetContentById'; 
 import './../../consts/global.css';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = (theme) => ({
     root: {
       flexGrow: 1,
     },
@@ -31,60 +31,45 @@ const useStyles = makeStyles((theme) => ({
     container: {
         marginTop: theme.spacing(3),
     }
-  }));
+  });
 
 
-const Home = () => {
-    const classes = useStyles();
+class Home extends Component {
+    
+    componentDidMount() {
+        this.props.getAllCourses();
+    }
 
-    return (
-        <div className={classes.root}>
+    render() {
+        const {classes} = this.props;
+        console.log(this.props.course.userCourses);
+
+        return (
+            <div className={classes.root}>
+                
         <Container className={classes.container} maxWidth="xl">
             <Grid container spacing={3}>
-            
-            <Grid item xs={12} md={6} lg={4} xl={3}>
-                <Link to="/overview" className="link">
-                <Paper className={classes.paper}>
-                    <GetContentById />
-                </Paper>
-                </Link>
-            </Grid>
-            
-            <Grid item xs={12} md={6} lg={4} xl={3}>
-                <Paper className={classes.paper}>
-                <GetContentById />
-                </Paper>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4} xl={3}>
-                <Paper className={classes.paper}>
-                <GetContentById />
-                </Paper>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4} xl={3}>
-                <Paper className={classes.paper}>
-                <GetContentById />
-                </Paper>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4} xl={3}>
-                <Paper className={classes.paper}>
-                <GetContentById />
-                </Paper>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4} xl={3}>
-                <Paper className={classes.paper}>
-                <GetContentById />
-                </Paper>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4} xl={3}>
-                <Paper className={classes.paper}>
-                <GetContentById />
-                </Paper>
-            </Grid>
+            {this.props.course.userCourses.map(course => (
+                <Grid item xs={12} md={6} lg={4} xl={3}>
+                    <Link to="/overview" className="link">
+                        <Paper className={classes.paper}>
+                            <img src="/logo192.png" />
+                            <h1>{course.title}</h1>
+                            <h2>{course.description}</h2>
+                        </Paper>
+                    </Link>
+                </Grid>
+            ))} 
             </Grid>
             </Container>
       </div>
-    );
+        )
+    };
+}
+
+function mapStateToProps(state) {
+    return {course: state.course}
 }
 
 
-export default Home;
+export default connect(mapStateToProps, courseActions)(withStyles(useStyles,{withTheme: true})(Home));

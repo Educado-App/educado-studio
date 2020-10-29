@@ -7,7 +7,7 @@ const requireLogin = require('../middlewares/requireLogin');
 
 module.exports = (app) => {
     // Create course
-    app.post('/api/create/course',requireLogin,async (req,res) => {
+    app.post('/api/course/create',requireLogin,async (req,res) => {
         const {title,description} = req.body;
 
         const course = new Course({
@@ -19,7 +19,7 @@ module.exports = (app) => {
         })
 
         try {
-            course.save();
+            await course.save();
             res.send(course);
         } catch (err) {
             res.status(422).send(err);
@@ -27,6 +27,21 @@ module.exports = (app) => {
         
     });
 
+
+    // Get all courses for user
+    app.get('/api/course/getall',requireLogin,async (req,res) => {
+        const list = await Course.find({_user: req.user.id});
+        console.log(list);
+        res.send(list);
+
+    })
+
+
+    // Delete all documents for user 
+    app.get('/api/course/delete_all',requireLogin,async (req,res) => {
+        await Course.deleteMany({_user: req.user.id},(err) => {console.log(err)});
+        res.send('Completed');
+    })
 
 }
 

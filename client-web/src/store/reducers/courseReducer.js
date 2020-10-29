@@ -1,7 +1,8 @@
-import {CREATE_COURSE} from '../actions/Course';
+import {CREATE_COURSE,GET_ALL_COURSES} from '../actions/Course';
 
 const initialState = {
-    course: {},
+    activeCourse: {},
+    userCourses: [{}],
 }
 
 const reducer = (state = initialState, action ) => {
@@ -9,7 +10,13 @@ const reducer = (state = initialState, action ) => {
         case CREATE_COURSE:
             return {
                 ...state,
-                course: action.payload,
+                activeCourse: action.payload,
+            }
+
+        case GET_ALL_COURSES:
+            return {
+                ...state,
+                userCourses: action.payload
             }
             
         default:

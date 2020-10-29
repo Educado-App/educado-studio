@@ -9,7 +9,21 @@ export const createCourse = (title,description) => {
         description: description
     }
     return async (dispatch) => {
-        const res = await axios.post('/api/create/course',course);
+        const res = await axios.post('/api/course/create',course);
         dispatch({ type: CREATE_COURSE, payload: res.data});
     }
 };
+
+
+// Get all courses
+export const GET_ALL_COURSES = 'GET_ALL_COURSES';
+
+export const getAllCourses = () => {
+    
+    return async (dispatch) => {
+        const res = await axios.get('/api/course/getall');
+        console.log(res);
+        dispatch({type: GET_ALL_COURSES, payload: res.data})
+    }
+
+}

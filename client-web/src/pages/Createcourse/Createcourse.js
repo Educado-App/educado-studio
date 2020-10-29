@@ -79,7 +79,7 @@ const Createcourse = (props) => {
                 rowsMax={4}
                 onChange={handleDescription}
             />
-            <Button onClick={handleClick} className={classes.button}>Create User</Button>
+            <Button onClick={handleClick} className={classes.button}>Create Course</Button>
         </div>
     )
 }
