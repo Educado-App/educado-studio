@@ -21,7 +21,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import './Navbar.css';
 import MenuList from './components/menuList';
 import palette from '../../consts/palette';
-
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 // Redux stuff
 import {connect} from 'react-redux';
@@ -89,13 +89,27 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
       },
       // Title
-      title: {
+      titleClosed: {
           position: 'relative',
-          marginLeft: `calc(50% - ${drawerClosedWidth}px)`,
+          marginLeft: `calc(1000px - 500px)`,
       },
-      barIcon: {
+      titleOpen: {
+          textAlign: 'center'
+        },
+    titleClosedContainer: {
+        width: `calc(${1000}px - ${drawerClosedWidth})`
+    },
+    titleOpenContainer: {
+        width: `calc(vw - ${drawerOpenWidth})`
+    },
+      barIconClosed: {
           position: 'relative',
-          marginLeft: '0px'
+          left: '0px'
+      },
+      barIcronOpen: {
+        position: 'relative',
+        left: '0px',
+        zIndex: 2
       },
       barLogoutButton: {
           position: 'absolute',
@@ -107,8 +121,30 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Navbar = (props) => {
+    // ...
+    const {height,width} = useWindowDimensions();
+
+    // Dynamic styles test
+    const dynStyles = makeStyles((theme)=>({
+        titleClosed: {
+            position: 'absolute',
+            width: `calc((${width}px) - ${drawerClosedWidth}px)`,
+            textAlign: 'center',
+            left: drawerClosedWidth,
+        },
+        titleOpen: {
+            position: 'absolute',
+            width: `calc(${width}px - ${drawerOpenWidth}px)`,
+            textAlign: 'center',
+            left: '0px',
+        },
+
+    }))
+    
     // Constants
     const classes = useStyles();
+    const dynClasses = dynStyles();
+
 
     // State management 
     const [drawerState,setDrawerState] = useState(false);
@@ -125,13 +161,13 @@ const Navbar = (props) => {
     const RenderDrawerButton = () => {
         if (drawerState) {
             return (
-                <IconButton className={classes.barIcon} onClick={handleDrawerClose}>
+                <IconButton className={clsx(classes.barIconClosed,drawerState && classes.barIcronOpen)} onClick={handleDrawerClose}>
                     <ChevronLeftIcon></ChevronLeftIcon>
                 </IconButton>
             )
         } else {
             return (
-                <IconButton className={classes.barIcon} onClick={handleDrawerOpen}>
+                <IconButton className={clsx(classes.barIconClosed,drawerState && classes.barIcronOpen)} onClick={handleDrawerOpen}>
                     <MenuIcon></MenuIcon>
                 </IconButton>     
             )
@@ -144,12 +180,9 @@ const Navbar = (props) => {
             <CssBaseline />
             <AppBar className={clsx(classes.appBar, drawerState && classes.appBarShift)} position="absolute"> 
                 <Toolbar className={classes.toolbar}>
-                    
                     <RenderDrawerButton />
-                    
-                    <Typography variant="h5" align='center' className={classes.title}>Colibri</Typography>
+                    <Typography variant="h5" className={clsx(dynClasses.titleClosed,drawerState && dynClasses.titleOpen)}>Colibri</Typography>           
                     <Button className={classes.barLogoutButton} href="/api/logout">Logout</Button>
-                    
                 </Toolbar>
             </AppBar>
             

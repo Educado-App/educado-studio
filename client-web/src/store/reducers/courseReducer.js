@@ -18,6 +18,8 @@ const reducer = (state = initialState, action ) => {
                 ...state,
                 userCourses: action.payload
             }
+
+        
             
         default:
             return {

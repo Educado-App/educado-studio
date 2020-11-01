@@ -56,7 +56,9 @@ const Createcourse = (props) => {
     }
 
     if (created === true) {
-        return <Redirect to='/home' />;
+
+
+        return <Redirect to='/edit/course' />;
     }
 
     return (

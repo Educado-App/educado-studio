@@ -10,7 +10,7 @@ import Home from './pages/Home/Home';
 import Createcourse from './pages/Createcourse/Createcourse';
 import Settings from './pages/Settings/Settings';
 import Statistics from './pages/Statistics/Statistics';
-import Overview from './pages/Overview/Overview';
+import EditCourse from './pages/EditCourse/EditCourse';
 
 import palette from './consts/palette';
 
@@ -41,6 +41,7 @@ class App extends Component {
   }
 
   render() {
+    
     if (this.props.auth.loginStatus === false) {
       return (<Login></Login>);
     } else {
@@ -55,7 +56,7 @@ class App extends Component {
                     <Route path="/createcourse" component={Createcourse} exact></Route>
                     <Route path="/statistics" component={Statistics} exact></Route>
                     <Route path="/settings" component={Settings} exact></Route>
-                    <Route path="/overview" component={Overview} exact></Route>
+                    <Route path="/edit/course" component={EditCourse} exact></Route>
                     <Route path="/auth/google/callback" component={Home}></Route>
                   </Switch>
                 </Navbar>

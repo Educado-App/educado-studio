@@ -8,7 +8,7 @@ const reducer = (state = initialState, action ) => {
     //typeof maybeObject != "undefined"
     switch (action.type) {
         case FETCH_USER:
-            console.log(typeof action.payload)
+            console.log(action.payload)
             if (typeof action.payload === 'object') {
                 return {
                     ...state,
