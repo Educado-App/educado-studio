@@ -31,9 +31,7 @@ module.exports = (app) => {
     // Get all courses for user
     app.get('/api/course/getall',requireLogin,async (req,res) => {
         const list = await Course.find({_user: req.user.id});
-        console.log(list);
         res.send(list);
-
     })
 
 

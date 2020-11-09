@@ -1,6 +1,6 @@
 // Constant requires
 const express = require('express'); // Import express
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); // Import mongoose
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -35,6 +35,7 @@ app.use(express.json());
 // Setup authentication routes
 require('./routes/authRoutes')(app);
 require('./routes/courseRoutes')(app);
+require('./routes/bucketRoutes')(app);
 
 
 // Run if running in production on Heroku

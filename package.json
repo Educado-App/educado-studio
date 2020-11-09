@@ -17,8 +17,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.787.0",
     "concurrently": "^5.3.0",
     "cookie-session": "^1.4.0",
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
     "mongoose": "^5.10.9",
     "nodemon": "^2.0.6",
