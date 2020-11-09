@@ -1,4 +1,4 @@
-import {CREATE_COURSE,GET_ALL_COURSES} from '../actions/Course';
+import {CREATE_COURSE,GET_ALL_COURSES,EDIT_COURSE} from '../actions/Course';
 
 const initialState = {
     activeCourse: {},
@@ -18,7 +18,14 @@ const reducer = (state = initialState, action ) => {
                 ...state,
                 userCourses: action.payload
             }
-
+        
+        case EDIT_COURSE:
+            return {
+                ...state,
+                activeCourse: state.userCourses.find(obj => {
+                    return obj._id === action.payload
+                })
+            }
         
             
         default:

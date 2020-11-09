@@ -48,6 +48,7 @@ class Home extends Component {
     
     state = {
         clickedCourse: false,
+        id: '',
     }
     
     
@@ -56,12 +57,11 @@ class Home extends Component {
     }
 
     handleClick = (event) => {
-        console.log(event.target.dataset.value);
         this.setState({
             ...this.state,
             clickedCourse: true,
+            id: event.target.dataset.value
         })
-        console.log(this.state)
     }
 
 
@@ -69,6 +69,7 @@ class Home extends Component {
         const {classes} = this.props;
         console.log(this.state)
         if (this.state.clickedCourse === true) {
+            this.props.editCourse(this.state.id);
             return <Redirect to="/edit/course"/>;
         };
 

@@ -88,20 +88,6 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         overflow: 'auto',
       },
-      // Title
-      titleClosed: {
-          position: 'relative',
-          marginLeft: `calc(1000px - 500px)`,
-      },
-      titleOpen: {
-          textAlign: 'center'
-        },
-    titleClosedContainer: {
-        width: `calc(${1000}px - ${drawerClosedWidth})`
-    },
-    titleOpenContainer: {
-        width: `calc(vw - ${drawerOpenWidth})`
-    },
       barIconClosed: {
           position: 'relative',
           left: '0px'

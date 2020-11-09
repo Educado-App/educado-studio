@@ -7,7 +7,7 @@ import * as courseActions from '../../store/actions/Course';
 
 // Material UI base
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { CssBaseline, Grid, Paper, Container, Button, TextField,Typography} from '@material-ui/core';
+import { CssBaseline, Grid, Paper, Container, Button, TextField,Typography, Divider} from '@material-ui/core';
 
 
 import {Redirect} from 'react-router-dom';
@@ -42,8 +42,8 @@ const Createcourse = (props) => {
 
     const [created,setCreated] = useState(false);
 
-    const handleClick = () => {
-        props.createCourse(title,description);
+    const handleClick = async () => {
+        await props.createCourse(title,description);
         setCreated(true);
     }
     
@@ -64,6 +64,7 @@ const Createcourse = (props) => {
     return (
         <div className={classes.root}>
             <Typography variant='h2' align='center'>Create a new course</Typography>
+            <Divider></Divider>
             <Typography variant='h5' >Title</Typography>
             <TextField
                 required
