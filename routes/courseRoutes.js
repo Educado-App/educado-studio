@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Course = mongoose.model('courses');
 
 const requireLogin = require('../middlewares/requireLogin');
+const { default: SectionBucket } = require('../client-web/src/pages/EditCourse/SectionBucket');
 
 module.exports = (app) => {
     // Create course
@@ -32,6 +33,16 @@ module.exports = (app) => {
     app.get('/api/course/getall',requireLogin,async (req,res) => {
         const list = await Course.find({_user: req.user.id});
         res.send(list);
+    })
+
+
+    // Get sections for course
+    app.get('/api/course/getsections',requireLogin,async (req,res) => {
+        const list = [{}]; // Empty array for keeping the section objects
+        // Write a map function for looping over the array send in the request
+        const {sections} = req.body;
+        console.log(sections);
+
     })
 
 
