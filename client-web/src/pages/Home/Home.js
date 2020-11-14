@@ -49,6 +49,7 @@ class Home extends Component {
     state = {
         clickedCourse: false,
         id: '',
+        sectionIds: [],
     }
     
     
@@ -60,7 +61,8 @@ class Home extends Component {
         this.setState({
             ...this.state,
             clickedCourse: true,
-            id: event.target.dataset.value
+            id: event.target.dataset.value,
+            sectionIds: event.target.dataset.sections,
         })
     }
 
@@ -69,7 +71,7 @@ class Home extends Component {
         const {classes} = this.props;
         console.log(this.state)
         if (this.state.clickedCourse === true) {
-            this.props.editCourse(this.state.id);
+            this.props.editCourse(this.state.id,this.state.sectionIds);
             return <Redirect to="/edit/course"/>;
         };
 
@@ -84,7 +86,7 @@ class Home extends Component {
                     
                     <Grid id={index} item xs={12} md={6} lg={4} xl={3} >
                         <Button className={classes.button} onClick={this.handleClick} >
-                            <Paper data-value={course._id} className={classes.paper}>
+                            <Paper data-value={course._id} data-sections={course.sections} className={classes.paper}>
                                 <img className={classes.img} src="/logo192.png" data-value={course._id}/>
                                 <Divider></Divider>
                                 <Typography variant='h5' data-value={course._id}>{course.title}</Typography>

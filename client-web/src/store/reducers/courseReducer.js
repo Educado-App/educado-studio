@@ -3,6 +3,7 @@ import {CREATE_COURSE,GET_ALL_COURSES,EDIT_COURSE} from '../actions/Course';
 const initialState = {
     activeCourse: {},
     userCourses: [{}],
+    courseSections: [{}],
 }
 
 const reducer = (state = initialState, action ) => {
@@ -24,7 +25,7 @@ const reducer = (state = initialState, action ) => {
                 ...state,
                 activeCourse: state.userCourses.find(obj => {
                     return obj._id === action.payload
-                })
+                }),
             }
         
             

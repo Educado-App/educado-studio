@@ -1,3 +1,4 @@
+import { AccordionSummary } from '@material-ui/core';
 import axios from 'axios';
 
 // Fetch user action
@@ -33,9 +34,11 @@ export const getAllCourses = () => {
 // Get all courses
 export const EDIT_COURSE = 'EDIT_COURSE';
 
-export const editCourse = (course_id) => {
+export const editCourse = (course_id,sections) => {
     
     return async (dispatch) => {
+        const sectionsList = await axios.get('/api/course/getsections',sections);
+        console.log(sectionsList);
         dispatch({type: EDIT_COURSE, payload: course_id})
     }
 }

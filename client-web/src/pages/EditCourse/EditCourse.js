@@ -39,6 +39,7 @@ const useStyles = (theme) => ({
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
             width: '50%',
+            margin: '15px'
         },
             top_left_row: {
                 display: 'flex',
@@ -60,15 +61,40 @@ const useStyles = (theme) => ({
         top_right: {
             display: 'flex',
             flexDirection: 'column',
-            width: '50%'
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            width: '50%',
+            margin: '15px'
         },
+            top_right_content: {
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                height: '100%',
+            },
+                top_right_content_buttons: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    marginLeft: '10px',
+
+                },
+                top_right_content_card: {
+                    width: '50%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center'
+                },
 
     bottom: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
-    }
+        alignItems: 'center',
+    },
+        bottom_card: {
+            width: '50%'
+        }
 });
 
 
@@ -77,14 +103,36 @@ class EditCourse extends Component {
     state = {
         title: this.props.course.activeCourse.title,
         description: this.props.course.activeCourse.description,
+        sectionsDnd: {
+            id: 'sections-dnd',
+            sections: this.props.course.activeCourse.sections, // Stores the array of sections
+        }
     }
 
     componentDidMount() {
 
     }
     
-    
+    // Function for DnD to execute upon reorder
     onDragEnd = result => {
+        // To do
+        const {destination, source, draggableId} = result; // Get info from result
+
+
+
+        if (!destination) {
+            return; //Return if no destination for drop
+        }
+
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return; // Also return if the item is dropped the same place as it was taken
+        }
+
+        const column = this.state.columns[source.droppableId]; 
+
 
     }
 
@@ -142,13 +190,22 @@ class EditCourse extends Component {
                     </div>
                 </div>
                 <div className={classes.top_right}>
-                    <h5>Right top top</h5>
+                    <Typography variant="h5">Cover image</Typography>
+                    <div className={classes.top_right_content}>
+                        <Card className={classes.top_right_content_card}>
+                            <img src="/logo192.png"></img>
+                        </Card>
+                        <div className={classes.top_right_content_buttons}>
+                            <Button >Upload photo</Button>
+                            <Button >Remove photo</Button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <Divider></Divider>
             <div className={classes.bottom}>
-                <h4>Sections</h4>
-                <Card>
+                <Typography variant="h5">Sections</Typography>
+                <Card className={classes.bottom_card}>
                     <DragDropContext
                         onDragEnd={this.onDragEnd}
                     >
