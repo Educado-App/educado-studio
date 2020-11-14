@@ -71,6 +71,7 @@ class Home extends Component {
         const {classes} = this.props;
         console.log(this.state)
         if (this.state.clickedCourse === true) {
+            console.log(this.state.sectionIds);
             this.props.editCourse(this.state.id,this.state.sectionIds);
             return <Redirect to="/edit/course"/>;
         };
@@ -81,7 +82,6 @@ class Home extends Component {
         <Container className={classes.container} maxWidth="xl">
             <Grid container spacing={3}>
             {this.props.course.userCourses.map((course,index) => {
-                console.log(course._id)
                 return (
                     
                     <Grid id={index} item xs={12} md={6} lg={4} xl={3} >

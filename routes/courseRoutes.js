@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const Course = mongoose.model('courses');
 
 const requireLogin = require('../middlewares/requireLogin');
-const { default: SectionBucket } = require('../client-web/src/pages/EditCourse/SectionBucket');
 
 module.exports = (app) => {
     // Create course

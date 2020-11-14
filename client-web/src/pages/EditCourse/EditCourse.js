@@ -133,6 +133,7 @@ class EditCourse extends Component {
 
         const column = this.state.columns[source.droppableId]; 
 
+        return;
 
     }
 
