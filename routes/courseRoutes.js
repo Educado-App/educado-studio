@@ -57,21 +57,34 @@ module.exports = (app) => {
     })
 
     // Update section title
-    app.post('/api/course/update/sectiontitle',requireLogin,async (req,res) => {
+    app.post('/api/course/update/sectiontitle',async (req,res) => {
         // ...
         // get new value & section ID
+        const {value,sectionId} = req.body;
+        console.log(value,sectionId);
+
         // find object in database and update title to new value
-        // return nothing
+        (await Section.findOneAndUpdate({_id: sectionId},{title: value})).save;
+        
+        // Send response
+        res.send('Completed');
+
     })
 
 
     // Update section position
-    app.post('/api/course/update/sectiontitle',requireLogin,async (req,res) => {
-        // ...
-        // get array of sectionIds from req
-        // get courseID from req
-        // find course object in db
-        // update sections attribute from course object
+    app.post('/api/course/update/sectionsorder',async (req,res) => {
+        // Get sections from request
+        const {sections} = req.body;
+
+        // Loop over each section object
+        for (i=0;i<sections.length;i++) {
+            // Find section by id and update position
+            (await Section.findOneAndUpdate({_id: sections[i].id},{position: sections[i].position})).save;
+        }
+
+        // Send response
+        res.send('Completed');
     })
 
 
