@@ -8,8 +8,6 @@ const { Schema } = mongoose;
 // Class description
 const sectionSchema = new Schema({
     title: String,
-    position: Number,
-    coverImg: String,
     _course: {type: Schema.Types.ObjectId,ref: 'Course'},
 });
 

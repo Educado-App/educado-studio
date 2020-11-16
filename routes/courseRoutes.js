@@ -2,6 +2,7 @@ const passport = require('passport') // Import passport library module
 
 const mongoose = require('mongoose');
 const Course = mongoose.model('courses');
+const Section = mongoose.model('sections');
 
 const requireLogin = require('../middlewares/requireLogin');
 
@@ -37,12 +38,45 @@ module.exports = (app) => {
 
     // Get sections for course
     app.get('/api/course/getsections',requireLogin,async (req,res) => {
-        const list = [{}]; // Empty array for keeping the section objects
-        // Write a map function for looping over the array send in the request
-        const {sections} = req.body;
-        console.log(sections);
+        const {courseId} = req.body; // get the courseId from request
 
+        // const testId = '5f9a870a78b29b0a6af21d89'; // testid
+
+        currentCourse = await Course.findOne({_id: courseId}); // Get current course
+        const currentSectionIds = currentCourse.sections; // Extract sections object from course
+
+        let currentSections = []; // Emty array for keeping sections data
+
+        // Loop over each section ID and save content in currentSections
+        for (i=0;i<currentSectionIds.length;i++) {
+            section = await Section.findOne({_id: currentSectionIds[i]})
+            currentSections.push(section);
+        }
+
+        res.send(currentSections) // Send back currentSections
     })
+
+    // Update section title
+    app.post('/api/course/update/sectiontitle',requireLogin,async (req,res) => {
+        // ...
+        // get new value & section ID
+        // find object in database and update title to new value
+        // return nothing
+    })
+
+
+    // Update section position
+    app.post('/api/course/update/sectiontitle',requireLogin,async (req,res) => {
+        // ...
+        // get array of sectionIds from req
+        // get courseID from req
+        // find course object in db
+        // update sections attribute from course object
+    })
+
+
+
+
 
 
     // Delete all documents for user 

@@ -8,6 +8,7 @@ const passport = require('passport');
 // Mongoose Model executions
 require('./models/User');
 require('./models/Courses');
+require('./models/Sections');
 
 // Execution requires
 require('./services/passport'); // Execute passport config
