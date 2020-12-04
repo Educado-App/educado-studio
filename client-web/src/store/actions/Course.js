@@ -34,10 +34,13 @@ export const getAllCourses = () => {
 // Get all courses
 export const EDIT_COURSE = 'EDIT_COURSE';
 
-export const editCourse = (course_id,sections) => {
+export const editCourse = (course_id) => {
+    const obj = {
+        params: { course_id: course_id}
+    }
     
     return async (dispatch) => {
-        const sectionsList = await axios.get('/api/course/getsections',sections);
+        const sectionsList = await axios.get('/api/course/getsections',obj);
         console.log(sectionsList);
         dispatch({type: EDIT_COURSE, payload: course_id})
     }

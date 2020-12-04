@@ -71,8 +71,7 @@ class Home extends Component {
         const {classes} = this.props;
         console.log(this.state)
         if (this.state.clickedCourse === true) {
-            console.log(this.state.sectionIds);
-            this.props.editCourse(this.state.id,this.state.sectionIds);
+            this.props.editCourse(this.state.id);
             return <Redirect to="/edit/course"/>;
         };
 
