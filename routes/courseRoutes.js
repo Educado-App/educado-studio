@@ -28,21 +28,25 @@ module.exports = (app) => {
         
     });
 
-
     // Get all courses for user
     app.get('/api/course/getall',requireLogin,async (req,res) => {
         const list = await Course.find({_user: req.user.id});
         res.send(list);
     })
 
-
     // Get sections for course
     app.get('/api/course/getsections',requireLogin,async (req,res) => {
-        const {courseId} = req.body; // get the courseId from request
+        const {course_id} = req.query; // get the courseId from request
 
         // const testId = '5f9a870a78b29b0a6af21d89'; // testid
+        //                '5f9a870a78b29b0a6af21d89'
 
-        currentCourse = await Course.findOne({_id: courseId}); // Get current course
+        currentCourse = await Course.findOne({_id: course_id}); // Get current course
+
+        if (currentCourse.sections === null) {
+            res.status(422).send()
+        }
+
         const currentSectionIds = currentCourse.sections; // Extract sections object from course
 
         let currentSections = []; // Emty array for keeping sections data
@@ -61,8 +65,7 @@ module.exports = (app) => {
         // ...
         // get new value & section ID
         const {value,sectionId} = req.body;
-        console.log(value,sectionId);
-
+        
         // find object in database and update title to new value
         (await Section.findOneAndUpdate({_id: sectionId},{title: value})).save;
         
@@ -70,7 +73,6 @@ module.exports = (app) => {
         res.send('Completed');
 
     })
-
 
     // Update section position
     app.post('/api/course/update/sectionsorder',async (req,res) => {
@@ -86,11 +88,6 @@ module.exports = (app) => {
         // Send response
         res.send('Completed');
     })
-
-
-
-
-
 
     // Delete all documents for user 
     app.get('/api/course/delete_all',requireLogin,async (req,res) => {
