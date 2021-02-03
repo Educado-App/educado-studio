@@ -25,7 +25,9 @@ module.exports = (app) => {
 
     // Show current user simulation
     app.get('/api/current_user', (req,res) => {
-        res.send(req.user);
+        setTimeout(() => {
+            res.send(req.user);
+        },1500)        
     });
 
 }
