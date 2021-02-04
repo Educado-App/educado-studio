@@ -72,7 +72,8 @@ class Home extends Component {
         
         // Check if user clicked course, and then redirect to editCourse page
         if (this.state.clickedCourse === true) {
-            return <Redirect to="/edit/course"/>;  
+            this.props.editCourse(this.state.id);
+            return <Redirect to="/edit/course"/>;
         };
 
         return (
