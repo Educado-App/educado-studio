@@ -48,8 +48,6 @@ class Home extends Component {
     
     state = {
         clickedCourse: false,
-        id: '',
-        sectionIds: [],
     }
     
     
@@ -57,19 +55,22 @@ class Home extends Component {
         this.props.getAllCourses();
     }
 
+    // Function for handling when user clicks a course
+    // Purpose: call editCourse() action, and activate redirect by setting state variable
+    // Redirect then activated in render() function
     handleClick = (event) => {
         this.setState({
             ...this.state,
-            clickedCourse: true,
-            id: event.target.dataset.value,
-            sectionIds: event.target.dataset.sections,
+            clickedCourse: true
         })
+        this.props.editCourse(event.target.dataset.value);
     }
 
 
     render() {
         const {classes} = this.props;
-        console.log(this.state)
+        
+        // Check if user clicked course, and then redirect to editCourse page
         if (this.state.clickedCourse === true) {
             this.props.editCourse(this.state.id);
             return <Redirect to="/edit/course"/>;
@@ -78,26 +79,23 @@ class Home extends Component {
         return (
             <div className={classes.root}>
                 
-        <Container className={classes.container} maxWidth="xl">
-            <Grid container spacing={3}>
-            {this.props.course.userCourses.map((course,index) => {
-                return (
-                    
-                    <Grid id={index} item xs={12} md={6} lg={4} xl={3} >
-                        <Button className={classes.button} onClick={this.handleClick} >
-                            <Paper data-value={course._id} data-sections={course.sections} className={classes.paper}>
-                                <img className={classes.img} src="/logo192.png" data-value={course._id}/>
-                                <Divider></Divider>
-                                <Typography variant='h5' data-value={course._id}>{course.title}</Typography>
-                            </Paper>
-                        </Button>
+                <Container className={classes.container} maxWidth="xl">
+                    <Grid container spacing={3}>
+                    {this.props.course.userCourses.map((course,index) => {
+                        return (
+                            <Grid id={index} item xs={12} md={6} lg={4} xl={3} >
+                                <Button className={classes.button} onClick={this.handleClick} >
+                                    <Paper data-value={course._id} data-sections={course.sections} className={classes.paper}>
+                                        <img className={classes.img} src="/logo192.png" data-value={course._id}/>
+                                        <Divider></Divider>
+                                        <Typography variant='h5' data-value={course._id}>{course.title}</Typography>
+                                    </Paper>
+                                </Button>
+                            </Grid>
+                        )})} 
                     </Grid>
-                    
-                
-            )})} 
-            </Grid>
-            </Container>
-      </div>
+                </Container>
+            </div>
         )
     };
 }

@@ -1,14 +1,15 @@
 import {FETCH_USER} from '../actions/Auth';
+import axios from 'axios';
 
 const initialState = {
-    loginStatus: false,
+    loginStatus: 'what',
 }
 
 const reducer = (state = initialState, action ) => {
     //typeof maybeObject != "undefined"
     switch (action.type) {
         case FETCH_USER:
-            console.log(action.payload)
+
             if (typeof action.payload === 'object') {
                 return {
                     ...state,
