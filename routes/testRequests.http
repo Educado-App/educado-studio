@@ -1,0 +1,17 @@
+# Update section title
+POST http://localhost:5000/api/course/update/sectiontitle HTTP/1.1
+content-type: application/json
+
+{
+    "value": "New title again",
+    "sectionId": "5fafb59e5b6b4b33b0456476"
+}
+
+
+# Update order of sections
+POST http://localhost:5000/api/course/update/sectionsorder HTTP/1.1
+content-type: application/json
+
+{
+    "sections": [{"id":"5fafb59e5b6b4b33b0456476","position":1},{"id":"5fafb6115b6b4b33b0456478","position":0}]
+}

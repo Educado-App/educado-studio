@@ -8,13 +8,14 @@ const passport = require('passport');
 // Mongoose Model executions
 require('./models/User');
 require('./models/Courses');
+require('./models/Sections');
 
 // Execution requires
 require('./services/passport'); // Execute passport config
 
 
 // Application 
-mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true,useFindAndModify: false});
 
 const app = express(); // Configuration for listening, communicate to handlers
 
