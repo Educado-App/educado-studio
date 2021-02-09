@@ -135,7 +135,6 @@ class EditCourse extends Component {
         this.state.progress = 0;
         const file = event.target.files[0]; // Accessing file
         const res = await uploadFile(file);
-        console.log(res)
         const imgFromServer = await getFile(res);
         this.state.imgFromServerTest = 'data:image/jpeg;base64,' + imgFromServer;
     }
