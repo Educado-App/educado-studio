@@ -1,13 +1,12 @@
 // Base imports
-import React,{useState,useRef} from 'react';
-import clsx from 'clsx';
+import React,{useState} from 'react';
 
 import {connect} from 'react-redux';
 import * as courseActions from '../../store/actions/Course';
 
 // Material UI base
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { CssBaseline, Grid, Paper, Container, Button, TextField,Typography, Divider} from '@material-ui/core';
+import { makeStyles} from '@material-ui/core/styles';
+import { Button, TextField,Typography, Divider} from '@material-ui/core';
 
 
 import {Redirect} from 'react-router-dom';

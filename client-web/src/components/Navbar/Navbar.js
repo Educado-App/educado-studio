@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 // Material UI base
 import { makeStyles } from '@material-ui/core/styles';
-import { CssBaseline, Container, Typography, useTheme, Button} from '@material-ui/core';
+import { CssBaseline, Container, Typography, Button} from '@material-ui/core';
 
 // Material UI components
 import AppBar from '@material-ui/core/AppBar';

@@ -1,22 +1,20 @@
 // Base imports
-import React,{useState,useRef,Component} from 'react';
-import clsx from 'clsx';
+import React,{Component} from 'react';
 
 // Material UI base
-import { makeStyles, useTheme, withStyles} from '@material-ui/core/styles';
-import { Button, Container, CssBaseline,Divider, Typography } from '@material-ui/core';
+import { withStyles} from '@material-ui/core/styles';
+import { Button, Container,Divider, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 // Material UI components
-import {connect, ReactReduxContext} from 'react-redux';
+import {connect} from 'react-redux';
 import * as courseActions from '../../store/actions/Course';
 // Material UI icons
 
 
 // Project imports 
-import GetContentById from './GetContentById/GetContentById'; 
 import './../../consts/global.css';
 
 const useStyles = (theme) => ({
@@ -47,7 +45,7 @@ class Home extends Component {
 
     
     state = {
-        clickedCourse: false,
+        id: '',
     }
     
     
@@ -61,7 +59,7 @@ class Home extends Component {
     handleClick = (event) => {
         this.setState({
             ...this.state,
-            clickedCourse: true
+            id: event.target.dataset.value
         })
         this.props.editCourse(event.target.dataset.value);
     }
@@ -69,12 +67,11 @@ class Home extends Component {
 
     render() {
         const {classes} = this.props;
-        
-        // Check if user clicked course, and then redirect to editCourse page
-        if (this.state.clickedCourse === true) {
-            this.props.editCourse(this.state.id);
-            return <Redirect to="/edit/course"/>;
-        };
+
+        // Check if activeCourse has been changed in Redux State, and then redirect to editCourse page
+        if (this.state.id === this.props.course.activeCourse._id) {
+            return <Redirect to="/edit/course"/>
+        }
 
         return (
             <div className={classes.root}>

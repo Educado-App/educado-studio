@@ -25,8 +25,11 @@ const reducer = (state = initialState, action ) => {
                 ...state,
                 language: action.language
             }
+        default:
+            return {
+                ...state,
+            }
     }
-    return state;
 };
 
 export default reducer;

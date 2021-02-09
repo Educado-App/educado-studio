@@ -1,10 +1,9 @@
 // Base imports
-import React,{useState,useRef} from 'react';
+import React,{useState} from 'react';
 import clsx from 'clsx';
-import {Link, useLocation, NavLink} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 // Material UI base
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { CssBaseline } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 // Material UI components
 import ListItem from '@material-ui/core/ListItem';
@@ -79,6 +78,15 @@ const MenuList = (props) => {
                             <SettingsIcon />
                         </ListItemIcon>
                         <ListItemText primary="Settings" />
+                    </ListItem>
+                </Link>
+
+                <Link to="/upload" className="link" onClick={props.click}>
+                    <ListItem button onClick={(event) => handleListItemClick(event,5)}>
+                        <ListItemIcon className={clsx(classes.listItem,useLocation().pathname === "/upload" && classes.listItemSelected)}>
+                            <SettingsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Upload" />
                     </ListItem>
                 </Link>
             </List>

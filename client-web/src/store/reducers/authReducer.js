@@ -1,8 +1,7 @@
 import {FETCH_USER} from '../actions/Auth';
-import axios from 'axios';
 
 const initialState = {
-    loginStatus: 'what',
+    loginStatus: 'checking',
 }
 
 const reducer = (state = initialState, action ) => {
