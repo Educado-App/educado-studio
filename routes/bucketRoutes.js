@@ -21,8 +21,7 @@ module.exports = (app) => {
 
       const download = {
           Bucket: keys.s3Bucket,
-          Key: s3link,
-          Limit: 1000000
+          Key: s3link
         };
 
       try {
