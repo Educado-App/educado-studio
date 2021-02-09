@@ -1,18 +1,13 @@
 // Base imports
-import React,{useState,useRef} from 'react';
-import clsx from 'clsx';
+import React from 'react';
 
-import {connect} from 'react-redux';
 
 // Material UI base
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { CssBaseline } from '@material-ui/core';
-import {DragDropContext,Droppable, Draggable} from 'react-beautiful-dnd';
-import {Button} from '@material-ui/core';
-import * as courseActions from '../../store/actions/Course';
+
+import {Droppable, Draggable} from 'react-beautiful-dnd';
 
 // Material UI components
-import {List, ListItem,ListItemText,Card} from '@material-ui/core';
+import {List, ListItem,ListItemText} from '@material-ui/core';
 
 // Material UI icons
 

@@ -1,10 +1,7 @@
 // Base imports
-import React,{useState,useRef} from 'react';
-import clsx from 'clsx';
+import React from 'react';
 
 // Material UI base
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { CssBaseline } from '@material-ui/core';
 
 // Material UI components
 import TextField from '@material-ui/core/TextField';

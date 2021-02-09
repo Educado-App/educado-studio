@@ -1,9 +1,9 @@
 // Base imports
-import React,{useState,useRef,useEffect} from 'react';
+import React from 'react';
 
 
 // Project imports 
-import {Container, Card, makeStyles,Typography, Button, CircularProgress} from '@material-ui/core';
+import {makeStyles,Typography, CircularProgress} from '@material-ui/core';
 import palette from '../../consts/palette';
 
 

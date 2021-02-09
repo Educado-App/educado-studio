@@ -1,6 +1,6 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {createMuiTheme,MuiThemeProvider} from '@material-ui/core/styles';
@@ -12,6 +12,7 @@ import Settings from './pages/Settings/Settings';
 import Statistics from './pages/Statistics/Statistics';
 import EditCourse from './pages/EditCourse/EditCourse';
 import Loading from './pages/Loading/Loading';
+import UploadFile from './components/UploadFile/UploadFile';
 
 import palette from './consts/palette';
 
@@ -35,22 +36,22 @@ const theme = createMuiTheme({
 
 const App = (props) => {
 
-
+  // Run fetchUser() on every mount of App
+  // Ensures to ALWAYS check if user is signed in or not
   useEffect(() => {
     props.fetchUser()
-      .then(console.log('Inside fetch stuff'))
-      .then(console.log(props.auth.loginStatus))
-  },[]);
+  },);
 
+  // Routes if user is not signed in
   let routes = (
     <Switch>
       <Route path="/login" component={Login}></Route>
       <Redirect to="/login"></Redirect>
     </Switch>
   );
-
-  if (props.auth.loginStatus === 'what') {
-    
+  
+  // Routes while application is checking if user is signed in
+  if (props.auth.loginStatus === 'checking') {
     routes = (
       <Switch>
         <Route path="/loading" component={Loading}></Route>
@@ -59,6 +60,7 @@ const App = (props) => {
     )
   }
 
+  // Routes when user is signed in
   if (props.auth.loginStatus === true ) {
     routes = (
       <Navbar>
@@ -69,6 +71,7 @@ const App = (props) => {
           <Route path="/settings" component={Settings} exact></Route>
           <Route path="/edit/course" component={EditCourse} exact></Route>
           <Route path="/auth/google/callback" component={Home}></Route>
+          <Route path="/upload" component={UploadFile}></Route>
         </Switch>
       </Navbar>
     );

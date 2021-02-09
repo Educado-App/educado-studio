@@ -1,4 +1,3 @@
-import { AccordionSummary } from '@material-ui/core';
 import axios from 'axios';
 
 // Fetch user action
@@ -45,3 +44,4 @@ export const editCourse = (course_id) => {
         dispatch({type: EDIT_COURSE, payload: course_id})
     }
 }
+

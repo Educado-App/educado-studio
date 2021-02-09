@@ -1,13 +1,12 @@
 // Base imports
-import React,{useState,useRef, Component} from 'react';
-import clsx from 'clsx';
-
+import React,{ Component, useRef} from 'react';
+import axios from 'axios';
 import {connect} from 'react-redux';
 
 // Material UI base
-import { makeStyles, useTheme,withStyles } from '@material-ui/core/styles';
-import { CssBaseline,Divider, Typography, TextField } from '@material-ui/core';
-import {DragDropContext,Droppable, Draggable} from 'react-beautiful-dnd';
+import { withStyles } from '@material-ui/core/styles';
+import { Divider, Typography, TextField } from '@material-ui/core';
+import {DragDropContext} from 'react-beautiful-dnd';
 import {Button} from '@material-ui/core';
 import * as courseActions from '../../store/actions/Course';
 
@@ -19,6 +18,11 @@ import {Card} from '@material-ui/core';
 
 // Project imports 
 import SectionBucket from './SectionBucket';
+import uploadFile from './../../hooks/uploadFile';
+import getfile from './../../hooks/getFile';
+import getFile from './../../hooks/getFile';
+
+
 
 const useStyles = (theme) => ({
     root: {
@@ -94,6 +98,13 @@ const useStyles = (theme) => ({
     },
         bottom_card: {
             width: '50%'
+        },
+        input: {
+            display: 'none',
+        },
+        photo: {
+            height: '150px',
+            width: '200px'
         }
 });
 
@@ -106,20 +117,35 @@ class EditCourse extends Component {
         sectionsDnd: {
             id: 'sections-dnd',
             sections: this.props.course.activeCourse.sections, // Stores the array of sections
-        }
+        },
+        coverImg: '',
+        coverImgData: {name: "",path: ""},
+        progress: 0,
+        imgFromServerTest: ''
     }
+
+    
 
     componentDidMount() {
 
     }
     
+    // Function for handling file input
+    handleChangeFile = async (event) => {
+        this.state.progress = 0;
+        const file = event.target.files[0]; // Accessing file
+        const res = await uploadFile(file);
+        console.log(res)
+        const imgFromServer = await getFile(res);
+        this.state.imgFromServerTest = 'data:image/jpeg;base64,' + imgFromServer;
+    }
+
+
+
     // Function for DnD to execute upon reorder
     onDragEnd = result => {
         // To do
         const {destination, source, draggableId} = result; // Get info from result
-
-
-
         if (!destination) {
             return; //Return if no destination for drop
         }
@@ -155,7 +181,8 @@ class EditCourse extends Component {
 
     render() {
         const {classes} = this.props;
-        
+        //const el = useRef();
+
         return (
             <div className={classes.root}>
             <Typography variant="h2" align='center'>Edit Course</Typography>
@@ -194,11 +221,21 @@ class EditCourse extends Component {
                     <Typography variant="h5">Cover image</Typography>
                     <div className={classes.top_right_content}>
                         <Card className={classes.top_right_content_card}>
-                            <img src="/logo192.png"></img>
+                            <img src={this.state.imgFromServerTest} className={classes.photo}></img>
                         </Card>
                         <div className={classes.top_right_content_buttons}>
-                            <Button >Upload photo</Button>
-                            <Button >Remove photo</Button>
+                            <input
+                                accept="image/*"
+                                className={classes.input}
+                                id="contained-button-file"
+                                multiple
+                                type="file"
+                                onChange={this.handleChangeFile}
+                            />
+                            <label htmlFor="contained-button-file">
+                                <Button variant="contained" component="span">Upload</Button>
+                            </label>
+                            <Button variant="contained">Remove photo</Button>
                         </div>
                     </div>
                 </div>
@@ -226,6 +263,3 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps,courseActions)(withStyles(useStyles,{withTheme: true})(EditCourse));
 
-{/* <ListItem button disableRipple>
-                                    <ListItemText primary="Single-line item 2"></ListItemText>
-                                </ListItem> */}
