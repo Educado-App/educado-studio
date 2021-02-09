@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Createcourse = (props) => {
-    let title;
-    let description;
-    
+const Createcourse = (props) => {    
     const classes = useStyles();    
 
     const [created,setCreated] = useState(false);
+    const [title,setTitle] = useState('')
+    const [description,setDescription] = useState('')
+
 
     const handleClick = async () => {
         await props.createCourse(title,description);
@@ -47,11 +47,11 @@ const Createcourse = (props) => {
     }
     
     const handleTitle = (event) => {
-        title = event.target.value;
+        setTitle(event.target.value);
     }
 
     const handleDescription = (event) => {
-        description = event.target.value;
+        setDescription(event.target.value);
     }
 
     if (created === true) {

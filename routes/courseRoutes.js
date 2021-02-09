@@ -11,6 +11,9 @@ module.exports = (app) => {
     app.post('/api/course/create',requireLogin,async (req,res) => {
         const {title,description} = req.body;
 
+        console.log('Title: ' + title);
+        console.log('Description: ' + description);
+
         const course = new Course({
             title: title, 
             description: description,
