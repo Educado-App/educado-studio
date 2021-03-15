@@ -14,8 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 // Material UI icons
 import HomeIcon from '@material-ui/icons/Home';
 import CreateIcon from '@material-ui/icons/Create';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import SettingsIcon from '@material-ui/icons/Settings';
+
 
 // Project imports 
 import './menuList.css';
@@ -63,32 +62,6 @@ const MenuList = (props) => {
                     </ListItem>
                 </Link>
 
-                <Link to="/statistics" className="link" onClick={props.click}>
-                    <ListItem button onClick={(event) => handleListItemClick(event,3)}>
-                        <ListItemIcon className={clsx(classes.listItem,useLocation().pathname === "/statistics" && classes.listItemSelected)}>
-                            <BarChartIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Statistics" />
-                    </ListItem>
-                </Link>
-
-                <Link to="/settings" className="link" onClick={props.click}>
-                    <ListItem button onClick={(event) => handleListItemClick(event,4)}>
-                        <ListItemIcon className={clsx(classes.listItem,useLocation().pathname === "/settings" && classes.listItemSelected)}>
-                            <SettingsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Settings" />
-                    </ListItem>
-                </Link>
-
-                <Link to="/upload" className="link" onClick={props.click}>
-                    <ListItem button onClick={(event) => handleListItemClick(event,5)}>
-                        <ListItemIcon className={clsx(classes.listItem,useLocation().pathname === "/upload" && classes.listItemSelected)}>
-                            <SettingsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Upload" />
-                    </ListItem>
-                </Link>
             </List>
         </div>
     )

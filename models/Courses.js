@@ -10,7 +10,7 @@ const courseSchema = new Schema({
     dateCreated: Date,
     dateUpdated: Date,
     coverImg: String,
-    sections: Array,
+    sections: [{type: Schema.Types.ObjectId,ref: 'Component'}],
 });
 
 mongoose.model('courses',courseSchema); // Create new collection called users, using the userSchema

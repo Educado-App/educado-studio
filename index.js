@@ -9,6 +9,7 @@ const passport = require('passport');
 require('./models/User');
 require('./models/Courses');
 require('./models/Sections');
+require('./models/Components');
 
 // Execution requires
 require('./services/passport'); // Execute passport config

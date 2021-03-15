@@ -7,8 +7,10 @@
 
 
     // Specials
-    complementary: '#F0F3BD',
-    faded: '#f1faee'
+    complementary: '#ffa62b',
+    faded: '#f1faee',
+    delete: '#ad2e24',
+    upload: '#7fa564'
 
 }
 

@@ -15,3 +15,86 @@ content-type: application/json
 {
     "sections": [{"id":"5fafb59e5b6b4b33b0456476","position":1},{"id":"5fafb6115b6b4b33b0456478","position":0}]
 }
+
+# Create section
+POST http://localhost:5000/api/section/create HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Jeg er en ny section",
+    "course_id": "602e1d03b7266a61b352b8d3"
+}
+
+# Update course elements
+POST http://localhost:5000/api/course/update HTTP/1.1
+content-type: application/json
+
+{
+    "course": {
+        "title": "bad word for a womans genitals",
+        "description": "but i won't say it thehee",
+        "sections": [
+                    "602e1a231413da00fb3dfabc",
+                    "5fafb6115b6b4b33b0456478",
+                    "5fafb59e5b6b4b33b0456476"
+                    ],
+        "_id": "602e1d03b7266a61b352b8d3"
+    }
+}
+
+POST http://localhost:5000/api/course/getallsections HTTP/1.1
+content-type: application/json
+
+{
+"sections": [
+                    "602e1a231413da00fb3dfabc",
+                    "5fafb6115b6b4b33b0456478",
+                    "5fafb59e5b6b4b33b0456476"
+                    ]
+}
+
+# Create new component
+POST http://localhost:5000/api/component/create HTTP/1.1
+content-type: application/json
+
+{
+    "type": "TEXT",
+    "file": "",
+    "text": "text3",
+    "section_id": "6037589da8761501555dac81"
+}
+
+# Get all components
+POST http://localhost:5000/api/component/getallcomponents HTTP/1.1
+content-type: application/json
+
+{
+"components": [
+                    "6037668726e346025fa23675",
+                    "603766a426e346025fa23676"
+                    ]
+}
+
+# Update component order
+POST http://localhost:5000/api/component/updatecomponentorder HTTP/1.1
+content-type: application/json
+
+{
+"components": [
+                    "603766a426e346025fa23676",
+                    "6037668726e346025fa23675"
+                    ],
+"section_id": "6034bd02c8b63a7ceb67f726"
+}
+
+
+# Update component order
+POST http://localhost:5000/api/get-presigned-url HTTP/1.1
+content-type: application/json
+
+{
+"component_id": "6043bcdf8ab78557bda46182"
+}
+
+
+

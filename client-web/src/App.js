@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {} from 'react';
 import './App.css';
 import {Switch, Route, Redirect} from 'react-router-dom';
 
@@ -12,13 +12,14 @@ import Settings from './pages/Settings/Settings';
 import Statistics from './pages/Statistics/Statistics';
 import EditCourse from './pages/EditCourse/EditCourse';
 import Loading from './pages/Loading/Loading';
-import UploadFile from './components/UploadFile/UploadFile';
+import EditSection from './pages/EditSection/EditSection';
 
 import palette from './consts/palette';
 
 import * as authActions from './store/actions/Auth';
 import { connect } from 'react-redux';
 import Login from './pages/Login/Login';
+import { Component } from 'react';
 
 
 const theme = createMuiTheme({
@@ -34,15 +35,16 @@ const theme = createMuiTheme({
   }
 })
 
-const App = (props) => {
+class App extends Component {
 
   // Run fetchUser() on every mount of App
   // Ensures to ALWAYS check if user is signed in or not
-  useEffect(() => {
-    props.fetchUser()
-  },);
+  componentDidMount(){
+    this.props.fetchUser()
+  }
 
-  // Routes if user is not signed in
+  render() {
+      // Routes if user is not signed in
   let routes = (
     <Switch>
       <Route path="/login" component={Login}></Route>
@@ -51,7 +53,7 @@ const App = (props) => {
   );
   
   // Routes while application is checking if user is signed in
-  if (props.auth.loginStatus === 'checking') {
+  if (this.props.auth.loginStatus === 'checking') {
     routes = (
       <Switch>
         <Route path="/loading" component={Loading}></Route>
@@ -61,7 +63,7 @@ const App = (props) => {
   }
 
   // Routes when user is signed in
-  if (props.auth.loginStatus === true ) {
+  if (this.props.auth.loginStatus === true ) {
     routes = (
       <Navbar>
         <Switch>
@@ -70,13 +72,13 @@ const App = (props) => {
           <Route path="/statistics" component={Statistics} exact></Route>
           <Route path="/settings" component={Settings} exact></Route>
           <Route path="/edit/course" component={EditCourse} exact></Route>
+          <Route path="/edit/section" component={EditSection} exact></Route>
           <Route path="/auth/google/callback" component={Home}></Route>
-          <Route path="/upload" component={UploadFile}></Route>
+          <Redirect to="/home"></Redirect>
         </Switch>
       </Navbar>
     );
   } 
-
   return (
       <React.Fragment>
         <CssBaseline />
@@ -84,7 +86,7 @@ const App = (props) => {
                 {routes}
         </MuiThemeProvider>
       </React.Fragment>
-  );
+  )}
 }
 
 function mapStateToProps(state) {

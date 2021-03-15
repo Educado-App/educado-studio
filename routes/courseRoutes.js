@@ -3,16 +3,18 @@ const passport = require('passport') // Import passport library module
 const mongoose = require('mongoose');
 const Course = mongoose.model('courses');
 const Section = mongoose.model('sections');
+const Component = mongoose.model('components')
 
 const requireLogin = require('../middlewares/requireLogin');
 
 module.exports = (app) => {
+    // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(COURSE ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻ 
+    // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+    // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+    // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
     // Create course
     app.post('/api/course/create',requireLogin,async (req,res) => {
         const {title,description} = req.body;
-
-        console.log('Title: ' + title);
-        console.log('Description: ' + description);
 
         const course = new Course({
             title: title, 
@@ -20,6 +22,7 @@ module.exports = (app) => {
             _user: req.user.id,
             dateCreated: Date.now(),
             dateUpdated: Date.now(),
+            sections: [],
         })
 
         try {
@@ -31,36 +34,97 @@ module.exports = (app) => {
         
     });
 
+    // Update Course 
+    app.post('/api/course/update',requireLogin,async (req,res) => {
+        const {course} = req.body; 
+        const dbCourse = await Course.findByIdAndUpdate(course._id, 
+            {
+            title: course.title, 
+            description: course.description,
+            sections: course.sections
+        }, function (err, docs) {
+            if (err){
+                console.log("Error:" , err)
+                res.send(err)
+            }else{
+                console.log("Updated Course: " , docs)
+            }
+        })
+        res.send('Course Update Complete');
+    });
+
     // Get all courses for user
     app.get('/api/course/getall',requireLogin,async (req,res) => {
         const list = await Course.find({_user: req.user.id});
         res.send(list);
     })
 
-    // Get sections for course
-    app.get('/api/course/getsections',requireLogin,async (req,res) => {
-        const {course_id} = req.query; // get the courseId from request
+    // Delete all documents for user 
+    app.post('/api/course/delete',requireLogin,async (req,res) => {
+        const {course_id} = req.body;
+        let course;
+        try {
+            course = await Course.findById(course_id).catch((err) => {console.log(err)});
+        } catch (error) {
+            res.status(422).send(err);    
+        }
+        const sectionIds = course.sections;
+        
+        sectionIds.map(async (section_id,index) => {
+            let section;
+            try {    
+                section = await Section.findById(section_id).catch((err) => {console.log(err)});
+            } catch (error) {
+                res.status(422).send(err);
+            }
+            const componentIds = section.components;
+            componentIds.map(async (component_id,index) => {
+                await Component.deleteOne({_id: component_id},(err) => {console.log(err)})
+            })
+            await Section.deleteOne({_id: section_id},(err) => {console.log(err)})
+        })  
 
-        // const testId = '5f9a870a78b29b0a6af21d89'; // testid
-        //                '5f9a870a78b29b0a6af21d89'
+        await Course.deleteOne({_id: course_id},(err) => {console.log(err)});
 
-        currentCourse = await Course.findOne({_id: course_id}); // Get current course
+        res.send('Completed');
+    })
 
-        if (currentCourse.sections === null) {
-            res.status(422).send()
+    // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(_SECTION ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻ 
+    // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+    // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+    // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+    // CREATE SECTION and add to corrosponding course sections array
+    app.post('/api/section/create', requireLogin, async (req,res) => {
+        const {title,course_id} = req.body; // Or query?...
+
+        const section = new Section({
+            title: title,
+            dateCreated: Date.now(),
+            dateUpdated: Date.now(),
+            components: [],
+        })
+
+        try {
+            await section.save();
+            course = await Course.findById(course_id);
+            await course.sections.push(section._id);
+            await course.save();
+            res.send(course);
+        } catch (err) {
+            res.status(422).send(err);
         }
 
-        const currentSectionIds = currentCourse.sections; // Extract sections object from course
+    });
 
-        let currentSections = []; // Emty array for keeping sections data
-
-        // Loop over each section ID and save content in currentSections
-        for (i=0;i<currentSectionIds.length;i++) {
-            section = await Section.findOne({_id: currentSectionIds[i]})
-            currentSections.push(section);
+    // Get all sections
+    app.post('/api/course/getallsections',requireLogin, async (req,res) => {
+        const {sections} = req.body;
+        let list = [];
+        for (let i = 0; i < sections.length; i++){
+            const temp = await Section.findOne({_id: sections[i]});
+            list.push(temp);
         }
-
-        res.send(currentSections) // Send back currentSections
+        res.send(list);
     })
 
     // Update section title
@@ -77,24 +141,132 @@ module.exports = (app) => {
 
     })
 
-    // Update section position
+    // Update sections order
     app.post('/api/course/update/sectionsorder',async (req,res) => {
         // Get sections from request
-        const {sections} = req.body;
-
-        // Loop over each section object
-        for (i=0;i<sections.length;i++) {
-            // Find section by id and update position
-            (await Section.findOneAndUpdate({_id: sections[i].id},{position: sections[i].position})).save;
-        }
+        const {sections,course_id} = req.body;
+        // REPORT NOTE: Måske lav performance test, for om det giver bedst mening at wipe array og overskrive, eller tjekke 1 efter 1 om updates
+        // Overwrite existing array
+        (await Course.findOneAndUpdate({_id: course_id},{sections: sections})).save;
+        
+        course = await Course.findById(course_id);
 
         // Send response
-        res.send('Completed');
+        res.send(course);
     })
+
+     // Delete component for user 
+     app.post('/api/section/delete',requireLogin,async (req,res) => {
+        const {section_id,course_id} = req.body;
+
+        const course = await Course.findById(course_id).catch((err) => {console.log(err)});
+
+        let sectionIds = course.sections;
+
+        let index = sectionIds.indexOf(section_id);
+        if (index !== -1) {
+            sectionIds.splice(index,1);
+        }
+        
+        (await Course.findOneAndUpdate({_id: course_id},{sections: sectionIds})).save;
+
+        await Section.deleteOne({_id: section_id},(err) => {console.log(err)});
+
+        res.send(sectionIds);
+    })
+
+
+    // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(_COMPONENT ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻ 
+    // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+    // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+    // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+
+    //Create Component
+    app.post('/api/component/create', async (req,res) => {
+        const {type,section_id} = req.body; // Or query?...
+
+        const component = new Component({
+            type: type,
+            file: '',
+            text: '',
+            dateCreated: Date.now(),
+            dateUpdated: Date.now(),
+        })
+
+        try {
+            await component.save();
+            section = await Section.findById(section_id);
+            await section.components.push(component._id);
+            await section.save();
+            res.send(section);
+        } catch (err) {
+            res.status(422).send(err);
+        }
+    });
+
+    //Get all components
+    app.post('/api/component/getallcomponents', async (req,res) => {
+        const {components} = req.body;
+        let list = [];
+        for (let i = 0; i < components.length; i++){
+            const temp = await Component.findOne({_id: components[i]});
+            list.push(temp);
+        }
+        res.send(list);
+    })
+
+    //Update Component order
+    app.post('/api/component/updatecomponentorder',async (req,res) => {
+        // Get components from request
+        const {components,section_id} = req.body;
+        (await Section.findOneAndUpdate({_id: section_id},{components: components})).save;
+        section = await Section.findById(section_id);
+        // Send response
+        res.send(section);
+    })
+
+    // Update section title
+    app.post('/api/component/text/update',async (req,res) => {
+        
+        const {text,component_id} = req.body;
+        
+        // find object in database and update title to new value
+        (await Component.findOneAndUpdate({_id: component_id},{text: text})).save;
+        component = await Component.findById(component_id);
+
+        // Send response
+        res.send(component);
+
+    })
+
+    // Delete all documents for user 
+    app.post('/api/component/delete',requireLogin,async (req,res) => {
+        const {component_id,section_id} = req.body;
+
+        const section = await Section.findById(section_id).catch((err) => {console.log(err)});
+
+        let componentIds = section.components;
+
+        let index = componentIds.indexOf(component_id);
+        if (index !== -1) {
+            componentIds.splice(index,1);
+        }
+        
+        (await Section.findOneAndUpdate({_id: section_id},{components: componentIds})).save;
+
+        await Component.deleteOne({_id: component_id},(err) => {console.log(err)});
+
+        res.send(componentIds);
+    })
+
+
+    // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (_ADMIN ROUTING BELOW_) ┻━┻︵ \(°□°)/ ︵ ┻━┻ 
 
     // Delete all documents for user 
     app.get('/api/course/delete_all',requireLogin,async (req,res) => {
         await Course.deleteMany({_user: req.user.id},(err) => {console.log(err)});
+        await Section.deleteMany({},(err) => {console.log(err)});
+        await Component.deleteMany({},(err) => {console.log(err)});
         res.send('Completed');
     })
 
