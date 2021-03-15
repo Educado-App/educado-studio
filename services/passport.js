@@ -50,7 +50,29 @@ passport.use('google-restricted',new GoogleStrategy({
     proxy: true 
 }, async (accessToken,refreshToken, profile, done) => {
     // Find user with email of the one clicking
-    const existingUser = await User.findOne({email: profile.emails[0].value}) 
+    let existingUser;
+
+    for (i=0;i<profile.emails.length;i++) {
+        const tempUser = await User.findOne({email: profile.emails[i].value});
+
+        if (tempUser) {
+            existingUser = tempUser;
+        };
+    }
+
+    // profile.emails.map(async (email, index) => {
+    //     console.log('EMAIL');
+    //     console.log(email);
+    //     const tempUser = await User.findOne({email: email.value});
+
+    //     console.log('TEMP USER');
+    //     console.log(tempUser);
+
+    //     if (tempUser) {
+    //         existingUser = tempUser;
+    //     };
+    // });
+    
     // If such a user exist
     if (existingUser) { 
         // If that user ALREADY has a Google ID, finish with that user
