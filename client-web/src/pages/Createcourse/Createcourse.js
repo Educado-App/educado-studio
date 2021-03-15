@@ -83,8 +83,9 @@ const Createcourse = (props) => {
         </div>
     )
 }
+
 function mapStateToProps(state) {
     return {course: state.course};
-  }
+}
 
 export default connect(mapStateToProps,courseActions)(Createcourse)

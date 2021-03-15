@@ -1,15 +1,14 @@
 // Base imports
-import React,{ Component, useRef} from 'react';
-import axios from 'axios';
+import React,{ Component} from 'react';
 import {connect} from 'react-redux';
 
 // Material UI base
 import { withStyles } from '@material-ui/core/styles';
-import { Divider, Typography, TextField } from '@material-ui/core';
+import { Divider, Typography, TextField, Fab} from '@material-ui/core';
 import {DragDropContext} from 'react-beautiful-dnd';
 import {Button} from '@material-ui/core';
 import * as courseActions from '../../store/actions/Course';
-
+import PublishIcon from '@material-ui/icons/Publish';
 // Material UI components
 import {Card} from '@material-ui/core';
 
@@ -18,11 +17,12 @@ import {Card} from '@material-ui/core';
 
 // Project imports 
 import SectionBucket from './SectionBucket';
-import uploadFile from './../../hooks/uploadFile';
-import getfile from './../../hooks/getFile';
-import getFile from './../../hooks/getFile';
+import uploadCoverImage from '../../hooks/uploadCoverImage';
+import getFileFromUrl from '../../hooks/getFileFromUrl';
+import CreateSection from './CreateSection';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-
+import palette from './../../consts/palette';
 
 const useStyles = (theme) => ({
     root: {
@@ -103,9 +103,28 @@ const useStyles = (theme) => ({
             display: 'none',
         },
         photo: {
-            height: '150px',
-            width: '200px'
-        }
+            height: '100%',
+            width: '100%'
+        },
+        fabPadding: {      
+            marginLeft: '10px',
+            marginRight: '10px',
+            marginBottom: '50px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            display: 'flex'
+            },
+
+    uploadButton: {
+        backgroundColor: palette.primary,
+        margin: '2px',
+        width: '100px'
+    },
+    deleteButton: {
+        backgroundColor: palette.complementary,
+        margin: '2px',
+        width: '100px'
+    }
 });
 
 
@@ -121,28 +140,43 @@ class EditCourse extends Component {
         coverImg: '',
         coverImgData: {name: "",path: ""},
         progress: 0,
-        imgFromServerTest: ''
+        imgFromServerTest: '',
+        reloadTrigger: false,
     }
 
     
 
-    componentDidMount() {
+    async componentDidMount() {
+        await this.props.getAllSections(this.props.course.activeCourse.sections);
+        const imgFromServer = await getFileFromUrl(this.props.course.activeCourse.coverImg);
+        this.setState({
+            ...this.state,
+            imgFromServerTest: 'data:image/jpeg;base64,' + imgFromServer
+        })
+    }
 
+    async componentDidUpdate(prevProps,prevState){
+        if (prevState.reloadTrigger !== this.state.reloadTrigger) {
+            await this.props.getAllSections(this.props.course.activeCourse.sections);
+        }
     }
     
     // Function for handling file input
     handleChangeFile = async (event) => {
         this.state.progress = 0;
         const file = event.target.files[0]; // Accessing file
-        const res = await uploadFile(file);
-        const imgFromServer = await getFile(res);
-        this.state.imgFromServerTest = 'data:image/jpeg;base64,' + imgFromServer;
+        const res = await uploadCoverImage(file,this.props.course.activeCourse._id);
+        const imgFromServer = await getFileFromUrl(res);
+        this.setState({
+            ...this.state,
+            imgFromServerTest: 'data:image/jpeg;base64,' + imgFromServer
+        })
     }
 
 
 
     // Function for DnD to execute upon reorder
-    onDragEnd = result => {
+    onDragEnd = async result => {
         // To do
         const {destination, source, draggableId} = result; // Get info from result
         if (!destination) {
@@ -156,7 +190,16 @@ class EditCourse extends Component {
             return; // Also return if the item is dropped the same place as it was taken
         }
 
-        const column = this.state.columns[source.droppableId]; 
+        const newTaskIds = Array.from(this.props.course.activeCourse.sections);
+        newTaskIds.splice(source.index, 1);
+        newTaskIds.splice(destination.index, 0, draggableId);
+
+        await this.props.updateSectionsOrder(newTaskIds,this.props.course.activeCourse._id)
+
+        this.setState({
+            ...this.state,
+            reloadTrigger: !this.state.reloadTrigger
+        })
 
         return;
 
@@ -178,13 +221,18 @@ class EditCourse extends Component {
         })
     }
 
+    onTriggerReload = () => {
+        this.setState({
+            ...this.state,
+            reloadTrigger: !this.state.reloadTrigger
+        })
+    }
+
     render() {
         const {classes} = this.props;
-        //const el = useRef();
 
         return (
             <div className={classes.root}>
-            <Typography variant="h2" align='center'>Edit Course</Typography>
             <Divider ></Divider>
             <div className={classes.top}>
                 <div className={classes.top_left}>
@@ -208,8 +256,8 @@ class EditCourse extends Component {
                             variant="outlined"
                             label="Required"
                             multiline
-                            rowsMax={4}
-                            rows={4}
+                            rowsMax={7}
+                            rows={7}
                             defaultValue={this.state.description}
                             onChange={this.onChangeDescription}
                             className={classes.top_left_row_input}
@@ -217,10 +265,9 @@ class EditCourse extends Component {
                     </div>
                 </div>
                 <div className={classes.top_right}>
-                    <Typography variant="h5">Cover image</Typography>
                     <div className={classes.top_right_content}>
                         <Card className={classes.top_right_content_card}>
-                            <img src={this.state.imgFromServerTest} className={classes.photo}></img>
+                            <img src={this.state.imgFromServerTest} className={classes.photo} alt={""}></img>
                         </Card>
                         <div className={classes.top_right_content_buttons}>
                             <input
@@ -232,24 +279,32 @@ class EditCourse extends Component {
                                 onChange={this.handleChangeFile}
                             />
                             <label htmlFor="contained-button-file">
-                                <Button variant="contained" component="span">Upload</Button>
+                            <Button size="small" variant="contained" className={classes.uploadButton}>
+                                <PublishIcon></PublishIcon>                 
+                                Upload
+                            </Button>
                             </label>
-                            <Button variant="contained">Remove photo</Button>
+                            <Button size="small" variant="contained" className={classes.deleteButton}>
+                                <DeleteIcon></DeleteIcon>                 
+                                Remove
+                            </Button>
                         </div>
                     </div>
                 </div>
             </div>
             <Divider></Divider>
             <div className={classes.bottom}>
-                <Typography variant="h5">Sections</Typography>
                 <Card className={classes.bottom_card}>
                     <DragDropContext
                         onDragEnd={this.onDragEnd}
                     >
-                        <SectionBucket></SectionBucket>
-                    </DragDropContext>
+                        <SectionBucket sectionsList={this.props.course.courseSections} ></SectionBucket>
+                    </DragDropContext>      
                 </Card>
-            </div>
+                </div>
+                <div className={classes.fabPadding}>
+                <CreateSection trigger={this.onTriggerReload}></CreateSection>
+                </div>
         </div>
         )
     }

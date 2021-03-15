@@ -25,7 +25,6 @@ import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 // Redux stuff
 import {connect} from 'react-redux';
-import * as authActions from '../../store/actions/Auth';
 
 // Constants
 const drawerOpenWidth = 240;
@@ -100,6 +99,15 @@ const useStyles = makeStyles((theme) => ({
       barLogoutButton: {
           position: 'absolute',
           right: '10px',
+          backgroundColor: palette.complementary
+      },
+      logoContainer: {
+        position: 'absolute',
+        right: '50%'
+      },
+      logo: {
+          position: 'relative',
+          right: '-50%'
       }
     }))
 
@@ -108,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = (props) => {
     // ...
-    const {height,width} = useWindowDimensions();
+    const {width} = useWindowDimensions();
 
     // Dynamic styles test
     const dynStyles = makeStyles((theme)=>({
@@ -167,8 +175,10 @@ const Navbar = (props) => {
             <AppBar className={clsx(classes.appBar, drawerState && classes.appBarShift)} position="absolute"> 
                 <Toolbar className={classes.toolbar}>
                     <RenderDrawerButton />
-                    <Typography variant="h5" className={clsx(dynClasses.titleClosed,drawerState && dynClasses.titleOpen)}>Colibri</Typography>           
-                    <Button className={classes.barLogoutButton} href="/api/logout">Logout</Button>
+                    <div className={classes.logoContainer}>
+                        <img src="/ecs-logo.png" className={classes.logo}></img>  
+                    </div>
+                    <Button className={classes.barLogoutButton} variant="contained" href="/api/logout">Logout</Button>
                 </Toolbar>
             </AppBar>
             
@@ -198,5 +208,9 @@ function mapStateToProps(state) {
     return {auth: state.auth};
 }
 
+
+
+
+{/* <Typography variant="h5" className={clsx(dynClasses.titleClosed,drawerState && dynClasses.titleOpen)}>Educado Creator Studio</Typography>          */}
 
 export default connect(mapStateToProps)(Navbar);
