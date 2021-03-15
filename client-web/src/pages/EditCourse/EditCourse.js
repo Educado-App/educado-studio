@@ -273,16 +273,16 @@ class EditCourse extends Component {
                             <input
                                 accept="image/*"
                                 className={classes.input}
-                                id="contained-button-file"
+                                id="cover-img-upload"
                                 multiple
                                 type="file"
                                 onChange={this.handleChangeFile}
                             />
-                            <label htmlFor="contained-button-file">
-                            <Button size="small" variant="contained" className={classes.uploadButton}>
-                                <PublishIcon></PublishIcon>                 
-                                Upload
-                            </Button>
+                            <label htmlFor="cover-img-upload">
+                                <Fab size="small" component="span" variant="extended" className={classes.uploadButton}>
+                                    <PublishIcon></PublishIcon>                 
+                                    Upload
+                                </Fab>
                             </label>
                             <Button size="small" variant="contained" className={classes.deleteButton}>
                                 <DeleteIcon></DeleteIcon>                 
