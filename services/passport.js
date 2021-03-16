@@ -51,38 +51,33 @@ passport.use('google-restricted',new GoogleStrategy({
 }, async (accessToken,refreshToken, profile, done) => {
     // Find user with email of the one clicking
     let existingUser;
+    let index;
+    
+    console.log(profile);
 
     for (i=0;i<profile.emails.length;i++) {
         const tempUser = await User.findOne({email: profile.emails[i].value});
-
+        
+        console.log(tempUser);
+        
         if (tempUser) {
             existingUser = tempUser;
+            index = i;
         };
     }
-
-    // profile.emails.map(async (email, index) => {
-    //     console.log('EMAIL');
-    //     console.log(email);
-    //     const tempUser = await User.findOne({email: email.value});
-
-    //     console.log('TEMP USER');
-    //     console.log(tempUser);
-
-    //     if (tempUser) {
-    //         existingUser = tempUser;
-    //     };
-    // });
     
+    console.log(existingUser);
+
     // If such a user exist
     if (existingUser) { 
         // If that user ALREADY has a Google ID, finish with that user
         if (existingUser.googleID) {
             done(null,existingUser);
         } else { // Else remove user, add new with ID and email
-            const rem = await User.remove({email: profile.emails[0].value})
+            const rem = await User.remove({email: profile.emails[index].value});
             const user = await new User({
                 googleID: profile.id, 
-                email: profile.emails[0].value,
+                email: profile.emails[index].value,
             }).save();
             done(null,user); // Finish with NEW user
         }
