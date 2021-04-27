@@ -41,6 +41,36 @@ module.exports = (app) => {
       }     
   });
 
+  app.get('/api/eml/download-s3', async (req,res) => {
+    aws.config.setPromisesDependency();
+    aws.config.update({
+    region: 'eu-central-1'
+    })
+
+    const s3 = new aws.S3();
+
+    const {s3link} = req.query;
+    console.log(s3link);
+    let link;
+    if (!s3link){
+      res.send("no image found"); 
+      return;
+    }else{
+      const download = {
+        Bucket: keys.s3Bucket,
+        Key: s3link
+      };
+
+    try {
+      const data = await s3.getObject( download ).promise(); 
+      const encoded = data.Body.toString('base64');
+      res.send({img: encoded});
+    } catch (e) {
+      console.log(e);
+    }
+    }     
+});
+
   app.get('/api/download-s3-image',requireLogin, async (req,res) => {
     aws.config.setPromisesDependency();
     aws.config.update({
@@ -89,7 +119,7 @@ module.exports = (app) => {
     
     const params = {
         Bucket: keys.s3Bucket,
-        limit: 10000000,
+        limit: 100000000,
         Key: Date.now() + '-' + req.file.originalname,
         Body: myFile.buffer
     };
@@ -120,7 +150,7 @@ module.exports = (app) => {
     
     const params = {
         Bucket: keys.s3Bucket,
-        limit: 10000000,
+        limit: 100000000,
         Key: Date.now() + '-' + req.file.originalname,
         Body: myFile.buffer
     };
@@ -179,4 +209,36 @@ module.exports = (app) => {
           }
         })
   });
+
+  app.post('/api/eml/get-presigned-url', async (req, res) => {
+    aws.config.update({
+    region: 'eu-central-1'
+    })
+
+    const {course_id} = req.body;
+    
+    const course = await Course.findById(course_id);
+  
+    let link = course.coverImg;
+  
+    const s3 = new aws.S3();
+    
+    const params = {
+        Bucket: keys.s3Bucket,
+        Key: link,
+        Expires: 600
+    };
+    
+    const signedUrl = s3.getSignedUrl('getObject',params);
+  
+    res.send(signedUrl);
+  });
 };
+
+
+
+
+
+
+
+

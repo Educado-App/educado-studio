@@ -59,6 +59,12 @@ module.exports = (app) => {
         res.send(list);
     })
 
+    // Get all courses for user
+    app.get('/api/course/eml/getall',async (req,res) => {
+        const list = await Course.find();
+        res.send(list);
+    })
+
     // Delete all documents for user 
     app.post('/api/course/delete',requireLogin,async (req,res) => {
         const {course_id} = req.body;
@@ -126,6 +132,17 @@ module.exports = (app) => {
         }
         res.send(list);
     })
+
+    app.post('/api/eml/course/getallsections', async (req,res) => {
+        const {sections} = req.body;
+        let list = [];
+        for (let i = 0; i < sections.length; i++){
+            const temp = await Section.findOne({_id: sections[i]});
+            list.push(temp);
+        }
+        res.send(list);
+    })
+
 
     // Update section title
     app.post('/api/course/update/sectiontitle',async (req,res) => {

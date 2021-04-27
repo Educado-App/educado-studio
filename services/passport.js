@@ -52,21 +52,15 @@ passport.use('google-restricted',new GoogleStrategy({
     // Find user with email of the one clicking
     let existingUser;
     let index;
-    
-    console.log(profile);
 
     for (i=0;i<profile.emails.length;i++) {
         const tempUser = await User.findOne({email: profile.emails[i].value});
-        
-        console.log(tempUser);
-        
+
         if (tempUser) {
             existingUser = tempUser;
             index = i;
         };
     }
-    
-    console.log(existingUser);
 
     // If such a user exist
     if (existingUser) { 
