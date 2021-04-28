@@ -233,7 +233,29 @@ module.exports = (app) => {
   
     res.send(signedUrl);
   });
+
+  app.post('/api/eml/get-presigned-url-file', async (req, res) => {
+    aws.config.update({
+    region: 'eu-central-1'
+    })
+
+    const {link} = req.body;
+  
+    const s3 = new aws.S3();
+    
+    const params = {
+        Bucket: keys.s3Bucket,
+        Key: link,
+        Expires: 600
+    };
+    
+    const signedUrl = s3.getSignedUrl('getObject',params);
+  
+    res.send(signedUrl);
+  });
 };
+
+
 
 
 
