@@ -81,9 +81,15 @@ module.exports = (app) => {
 
     const {component_id} = req.query;
 
+    console.log("Component ID:", component_id);
+
+
     const component = await Component.findById(component_id);
 
     let link = component.file;
+  
+    console.log("LINK HERE:",link);
+
     if (!link){
       res.send("no image found"); 
       return;
@@ -154,15 +160,27 @@ module.exports = (app) => {
         Key: Date.now() + '-' + req.file.originalname,
         Body: myFile.buffer
     };
+
+    try {
+      const stored = await s3.upload(params).promise();
+      console.log("KEY FROM NEW THING:");
+      console.log(stored.Key);
+      (await Component.findOneAndUpdate({_id: component_id},{file: stored.Key})).save;
+      res.send({link: stored.Key});
+    } catch (err) {
+      console.log(err)
+    }
     
-    s3.upload(params, async (err, result) => {
-        if(err) {
-          console.log("Error", err);
-        } else {
-          (await Component.findOneAndUpdate({_id: component_id},{file: result.key})).save;
-          res.send({link: result.key});
-        }
-    });
+    // s3.upload(params, async (err, result) => {
+    //     if(err) {
+    //       console.log("Error", err);
+    //     } else {
+    //       console.log("KEY UNDER HERE");
+    //       console.log(result.key);
+    //       (await Component.findOneAndUpdate({_id: component_id},{file: result.key})).save;
+    //       res.send({link: result.key});
+    //     }
+    // });
   });
 
   app.post('/api/get-presigned-url', async (req, res) => {
@@ -181,7 +199,7 @@ module.exports = (app) => {
     const params = {
         Bucket: keys.s3Bucket,
         Key: link,
-        Expires: 600
+        Expires: 60000
     };
     
     const signedUrl = s3.getSignedUrl('getObject',params);
