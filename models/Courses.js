@@ -13,4 +13,4 @@ const courseSchema = new Schema({
     sections: [{type: Schema.Types.ObjectId,ref: 'Component'}],
 });
 
-mongoose.model('courses',courseSchema); // Create new collection called users, using the userSchema
+mongoose.model('courses',courseSchema); // Create new collection called courses, using the courseScema
