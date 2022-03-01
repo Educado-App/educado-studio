@@ -2,6 +2,8 @@ import {
     CREATE_COURSE,
     GET_ALL_COURSES,
     EDIT_COURSE,
+    UPDATE_COURSE_TITLE,
+    UPDATE_COURSE_DESCRIPTION,
     GET_ALL_SECTIONS,
     CREATE_SECTION,
     UPDATE_SECTIONS_ORDER,
@@ -44,6 +46,18 @@ const reducer = (state = initialState, action ) => {
                 }),
             }
 
+        case UPDATE_COURSE_TITLE:
+            return {
+                ...state,
+                activeCourse: action.payload
+            }
+
+            case UPDATE_COURSE_DESCRIPTION:
+                return {
+                    ...state,
+                    activeCourse: action.payload
+                }
+            
         case EDIT_SECTION:
             return {
                 ...state,

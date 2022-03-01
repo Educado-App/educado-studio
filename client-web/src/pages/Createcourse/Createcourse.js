@@ -39,6 +39,7 @@ const Createcourse = (props) => {
     const [created,setCreated] = useState(false);
     const [title,setTitle] = useState('')
     const [description,setDescription] = useState('')
+    const [coverImg,setCoverImg] = useState('')
 
 
     const handleClick = async () => {
@@ -52,6 +53,10 @@ const Createcourse = (props) => {
 
     const handleDescription = (event) => {
         setDescription(event.target.value);
+    }
+
+    const handleCoverImg = (event) => {
+        setCoverImg(event.target.value);
     }
 
     if (created === true) {

@@ -95,6 +95,34 @@ module.exports = (app) => {
         res.send('Completed');
     })
 
+        // Update course title
+        app.post('/api/course/update/title',async (req,res) => {
+        
+            const {text,course_id} = req.body;
+            
+            // find object in database and update title to new value
+            (await Course.findOneAndUpdate({_id: course_id},{title: text})).save;
+            course = await Course.findById(course_id);
+    
+            // Send response
+            res.send(course);
+    
+        })
+
+                // Update section title
+                app.post('/api/course/update/description',async (req,res) => {
+        
+                    const {text,course_id} = req.body;
+                    
+                    // find object in database and update title to new value
+                    (await Course.findOneAndUpdate({_id: course_id},{description: text})).save;
+                    course = await Course.findById(course_id);
+            
+                    // Send response
+                    res.send(course);
+            
+                })
+
     // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(_SECTION ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻ 
     // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
     // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`

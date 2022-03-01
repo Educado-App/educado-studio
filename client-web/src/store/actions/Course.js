@@ -241,3 +241,35 @@ export const deleteSection = (section_id,course_id) => {
     }
 
 }
+
+// Update Course Title
+export const UPDATE_COURSE_TITLE = 'UPDATE_COURSE_TITLE';
+
+export const updateCourseTitle = (text,course_id) => {
+    const obj = {
+        text: text,
+        course_id: course_id
+    }
+
+    return async (dispatch) => {
+        const res = await axios.post('/api/course/update/title',obj);
+        dispatch({type: UPDATE_COURSE_TITLE, payload: res.data})
+    }
+
+}
+
+// Update Course description
+export const UPDATE_COURSE_DESCRIPTION = 'UPDATE_COURSE_DESCRIPTION';
+
+export const updateCourseDescription = (text,course_id) => {
+    const obj = {
+        text: text,
+        course_id: course_id
+    }
+
+    return async (dispatch) => {
+        const res = await axios.post('/api/course/update/description',obj);
+        dispatch({type: UPDATE_COURSE_DESCRIPTION, payload: res.data})
+    }
+
+}

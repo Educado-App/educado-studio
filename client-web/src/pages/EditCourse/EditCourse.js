@@ -133,6 +133,7 @@ class EditCourse extends Component {
     state = {
         title: this.props.course.activeCourse.title,
         description: this.props.course.activeCourse.description,
+        activeCourse: this.props.course.activeCourse._id,
         sectionsDnd: {
             id: 'sections-dnd',
             sections: this.props.course.activeCourse.sections, // Stores the array of sections
@@ -204,7 +205,14 @@ class EditCourse extends Component {
         return;
 
     }
+    
+    onSaveTitle = async () => {
+        await this.props.updateCourseTitle(this.state.title,this.state.activeCourse);
+    }
 
+    onSaveDescription = async () => {
+        await this.props.updateCourseDescription(this.state.description,this.state.activeCourse);
+    }
 
 
     onChangeTitle = (event) => {
@@ -213,6 +221,7 @@ class EditCourse extends Component {
             title: event.target.value,
         })
     }
+
 
     onChangeDescription = (event) => {
         this.setState({
@@ -247,6 +256,11 @@ class EditCourse extends Component {
                             onChange={this.onChangeTitle}
                             className={classes.top_left_row_input}
                         />
+                                <label htmlFor="update-course-title">                      
+                                <Fab size="small" component="span" variant="extended" className={classes.uploadButton} onClick={this.onSaveTitle}>                
+                                    Update
+                                </Fab>  
+                                </label>                        
                     </div>
                     <div className={classes.top_left_row}>
                     <Typography variant="h5" className={classes.top_left_row_text}>Description</Typography>
@@ -262,6 +276,11 @@ class EditCourse extends Component {
                             onChange={this.onChangeDescription}
                             className={classes.top_left_row_input}
                         />
+                                <label htmlFor="update-course-description">
+                                <Fab size="small" component="span" variant="extended" className={classes.uploadButton} onClick={this.onSaveDescription}>                
+                                    Update
+                                </Fab>       
+                                </label>                 
                     </div>
                 </div>
                 <div className={classes.top_right}>
@@ -279,13 +298,11 @@ class EditCourse extends Component {
                                 onChange={this.handleChangeFile}
                             />
                             <label htmlFor="cover-img-upload">
-                                <Fab size="small" component="span" variant="extended" className={classes.uploadButton}>
-                                    <PublishIcon></PublishIcon>                 
+                                <Fab size="small" component="span" variant="extended" className={classes.uploadButton}>                
                                     Upload
                                 </Fab>
                             </label>
-                            <Button size="small" variant="contained" className={classes.deleteButton}>
-                                <DeleteIcon></DeleteIcon>                 
+                            <Button size="small" variant="contained" className={classes.deleteButton}>                
                                 Remove
                             </Button>
                         </div>
