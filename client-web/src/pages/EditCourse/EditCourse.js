@@ -246,7 +246,7 @@ class EditCourse extends Component {
             <div className={classes.top}>
                 <div className={classes.top_left}>
                     <div className={classes.top_left_row}>
-                        <Typography variant="h5" className={classes.top_left_row_text}>Title</Typography>
+                        <Typography variant="h5" className={classes.top_left_row_text}>Title</Typography>  
                         <TextField
                             required
                             id="outlined-required"
@@ -255,12 +255,12 @@ class EditCourse extends Component {
                             defaultValue={this.state.title}
                             onChange={this.onChangeTitle}
                             className={classes.top_left_row_input}
-                        />
-                                <label htmlFor="update-course-title">                      
+                        />  
+                                            <label htmlFor="update-course-title">                      
                                 <Fab size="small" component="span" variant="extended" className={classes.uploadButton} onClick={this.onSaveTitle}>                
                                     Update
                                 </Fab>  
-                                </label>                        
+                                </label>                    
                     </div>
                     <div className={classes.top_left_row}>
                     <Typography variant="h5" className={classes.top_left_row_text}>Description</Typography>

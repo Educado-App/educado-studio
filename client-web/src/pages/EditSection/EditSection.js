@@ -8,7 +8,7 @@ import * as courseActions from '../../store/actions/Course';
 import {DragDropContext} from 'react-beautiful-dnd';
 
 // Material UI components
-import {Card} from '@material-ui/core';
+import {Card, Typography, Divider} from '@material-ui/core';
 
 
 // Material UI icons
@@ -21,6 +21,8 @@ const useStyles = (theme) => ({
         root: {
             display: 'flex',
             flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: '10px',
         },
         container: {
             display: 'flex',
@@ -96,6 +98,8 @@ class EditSection extends Component {
         const {classes} = this.props;
       return(
         <div className={classes.root}>
+            <Typography variant='h3' data-value={this.props.course.activeSection._id}>{this.props.course.activeSection.title}</Typography>
+            <Divider></Divider>
             <div className={classes.container}>
                 <Card className={classes.bottom_card}>
                     <DragDropContext
