@@ -298,11 +298,13 @@ class EditCourse extends Component {
                                 onChange={this.handleChangeFile}
                             />
                             <label htmlFor="cover-img-upload">
-                                <Fab size="small" component="span" variant="extended" className={classes.uploadButton}>                
+                                <Fab size="small" component="span" variant="extended" className={classes.uploadButton}>         
+                                    <PublishIcon></PublishIcon>         
                                     Upload
                                 </Fab>
                             </label>
-                            <Button size="small" variant="contained" className={classes.deleteButton}>                
+                            <Button size="small" variant="contained" className={classes.deleteButton}>        
+                                <DeleteIcon></DeleteIcon>        
                                 Remove
                             </Button>
                         </div>
