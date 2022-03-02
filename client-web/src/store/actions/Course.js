@@ -3,10 +3,11 @@ import axios from 'axios';
 // Fetch user action
 export const CREATE_COURSE = 'CREATE_COURSE';
 
-export const createCourse = (title,description) => {
+export const createCourse = (title,description,category) => {
     const course = {
         title: title,
-        description: description
+        description: description,
+        category: category,
     }
     return async (dispatch) => {
         const res = await axios.post('/api/course/create',course);
@@ -61,6 +62,7 @@ export const CREATE_SECTION = 'CREATE_SECTION';
 export const createSection = (title, course_id) => {
     const obj = {
         title: title,
+        description: '',
         course_id: course_id
     }
     return async (dispatch) => {
@@ -242,6 +244,21 @@ export const deleteSection = (section_id,course_id) => {
 
 }
 
+// Update Course description
+export const UPDATE_SECTION_DESCRIPTION = 'UPDATE_SECTION_DESCRIPTION';
+
+export const updateSectionDescription = (text,section_id) => {
+    const obj = {
+        text: text,
+        section_id: section_id
+    }
+
+    return async (dispatch) => {
+        const res = await axios.post('/api/section/update/description',obj);
+        dispatch({type: UPDATE_SECTION_DESCRIPTION, payload: res.data})
+    }
+}
+
 // Update Course Title
 export const UPDATE_COURSE_TITLE = 'UPDATE_COURSE_TITLE';
 
@@ -270,6 +287,21 @@ export const updateCourseDescription = (text,course_id) => {
     return async (dispatch) => {
         const res = await axios.post('/api/course/update/description',obj);
         dispatch({type: UPDATE_COURSE_DESCRIPTION, payload: res.data})
+    }
+
+}
+
+export const UPDATE_COURSE_CATEGORY = 'UPDATE_COURSE_CATEGORY';
+
+export const updateCourseCategory = (text,course_id) => {
+    const obj = {
+        text: text,
+        course_id: course_id
+    }
+
+    return async (dispatch) => {
+        const res = await axios.post('/api/course/update/category',obj);
+        dispatch({type: UPDATE_COURSE_CATEGORY, payload: res.data})
     }
 
 }

@@ -8,14 +8,15 @@ import * as courseActions from '../../store/actions/Course';
 import {DragDropContext} from 'react-beautiful-dnd';
 
 // Material UI components
-import {Card, Typography, Divider} from '@material-ui/core';
+import {Card, Typography, Divider, Fab, TextField} from '@material-ui/core';
 
 
 // Material UI icons
 
 // Project imports 
 import CreateComponent from './CreateComponent';
-import ComponentBucket from './ComponentBucket'
+import ComponentBucket from './ComponentBucket';
+import palette from '../../consts/palette';
 
 const useStyles = (theme) => ({
         root: {
@@ -27,7 +28,7 @@ const useStyles = (theme) => ({
         container: {
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'center'
+            justifyContent: 'center',
         },
         bottom_card: {
             width: '50%',
@@ -38,6 +39,16 @@ const useStyles = (theme) => ({
             marginTop: '10px',
             marginLeft: '10px',
             marginRight: '10px',
+        },
+        uploadButton: {
+            backgroundColor: palette.primary,
+            margin: '2px',
+            width: '100px'
+        },
+        descriptionField: {
+            width: '50%',
+            minWidth: 740,
+            display: 'flex',
         }
 });
 
@@ -46,6 +57,8 @@ class EditSection extends Component {
     
     state = {
         reloadTrigger: false,
+        description: this.props.course.activeSection.description,
+        title: this.props.course.activeSection.title,
     }
 
     onTriggerReload = () => {
@@ -92,14 +105,42 @@ class EditSection extends Component {
           return;
   
       }
+
+      onChangeDescription = (event) => {
+        this.setState({
+            ...this.state,
+            description: event.target.value,
+        })
+    }
+
+    onSaveDescription = async () => {
+        await this.props.updateSectionDescription(this.state.description,this.props.course.activeSection._id);
+    }
     
 
     render() {
         const {classes} = this.props;
       return(
         <div className={classes.root}>
-            <Typography variant='h3' data-value={this.props.course.activeSection._id}>{this.props.course.activeSection.title}</Typography>
+            <Typography variant='h3'>{this.state.title}</Typography>
             <Divider></Divider>
+            <TextField
+                            required
+                            id="outlined-multiline-static"
+                            variant="outlined"
+                            label="Required"
+                            multiline
+                            rowsMax={7}
+                            rows={5}
+                            defaultValue={this.state.description}
+                            onChange={this.onChangeDescription}
+                            className={classes.descriptionField}
+                        />
+                                <label htmlFor="update-course-description">
+                                <Fab size="small" component="span" variant="extended" className={classes.uploadButton} onClick={this.onSaveDescription}>                
+                                    Update description
+                                </Fab>       
+                                </label>       
             <div className={classes.container}>
                 <Card className={classes.bottom_card}>
                     <DragDropContext

@@ -7,7 +7,9 @@ import {
     GET_ALL_SECTIONS,
     CREATE_SECTION,
     UPDATE_SECTIONS_ORDER,
+    UPDATE_SECTION_DESCRIPTION,
     EDIT_SECTION,
+    UPDATE_COURSE_CATEGORY,
     CREATE_COMPONENT,
     GET_ALL_COMPONENTS,
     UPDATE_COMPONENTS_ORDER,
@@ -52,12 +54,18 @@ const reducer = (state = initialState, action ) => {
                 activeCourse: action.payload
             }
 
-            case UPDATE_COURSE_DESCRIPTION:
-                return {
-                    ...state,
-                    activeCourse: action.payload
+        case UPDATE_COURSE_DESCRIPTION:
+             return {
+                ...state,
+                activeCourse: action.payload
                 }
-            
+
+        case UPDATE_COURSE_CATEGORY:
+            return {
+             ...state,
+            activeCourse: action.payload
+            }
+                
         case EDIT_SECTION:
             return {
                 ...state,
@@ -89,7 +97,12 @@ const reducer = (state = initialState, action ) => {
                 ...state,
                 activeCourse: action.payload
             }
-        
+
+        case UPDATE_SECTION_DESCRIPTION:
+            return {
+                ...state,
+            activeSection: action.payload
+        }
         
         case CREATE_COMPONENT:
         return {

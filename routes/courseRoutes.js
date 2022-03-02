@@ -19,6 +19,7 @@ module.exports = (app) => {
         const course = new Course({
             title: title, 
             description: description,
+            category: "",
             _user: req.user.id,
             dateCreated: Date.now(),
             dateUpdated: Date.now(),
@@ -123,6 +124,19 @@ module.exports = (app) => {
             
                 })
 
+                // Update section title
+                app.post('/api/course/update/category',async (req,res) => {
+        
+                    const {text,course_id} = req.body;
+                    
+                    // find object in database and update title to new value
+                    (await Course.findOneAndUpdate({_id: course_id},{category: text})).save;
+                    course = await Course.findById(course_id);
+            
+                    // Send response
+                    res.send(course);           
+                })
+
     // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(_SECTION ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻ 
     // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
     // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
@@ -133,6 +147,7 @@ module.exports = (app) => {
 
         const section = new Section({
             title: title,
+            description: '',
             dateCreated: Date.now(),
             dateUpdated: Date.now(),
             components: [],
@@ -218,6 +233,34 @@ module.exports = (app) => {
         await Section.deleteOne({_id: section_id},(err) => {console.log(err)});
 
         res.send(sectionIds);
+    })
+
+    // Update course title
+    app.post('/api/section/update/title',async (req,res) => {
+        
+        const {text,section_id} = req.body;
+                
+        // find object in database and update title to new value
+        (await Section.findOneAndUpdate({_id: section_id},{title: text})).save;
+        section = await Section.findById(section_id);
+        
+        // Send response
+        res.send(section);
+        
+    })
+
+    // Update section title
+     app.post('/api/section/update/description',async (req,res) => {
+        
+        const {text,section_id} = req.body;
+                        
+        // find object in database and update title to new value
+        (await Section.findOneAndUpdate({_id: section_id},{description: text})).save;
+        section = await Section.findById(section_id);
+                
+        // Send response
+        res.send(section);
+                
     })
 
 

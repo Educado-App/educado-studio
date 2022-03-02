@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 // Material UI base
 import { withStyles } from '@material-ui/core/styles';
-import { Divider, Typography, TextField, Fab} from '@material-ui/core';
+import { Divider, Typography, TextField, Fab, ButtonGroup } from '@material-ui/core';
 import {DragDropContext} from 'react-beautiful-dnd';
 import {Button} from '@material-ui/core';
 import * as courseActions from '../../store/actions/Course';
@@ -23,6 +23,7 @@ import CreateSection from './CreateSection';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import palette from './../../consts/palette';
+import { Health } from 'aws-sdk';
 
 const useStyles = (theme) => ({
     root: {
@@ -134,6 +135,8 @@ class EditCourse extends Component {
         title: this.props.course.activeCourse.title,
         description: this.props.course.activeCourse.description,
         activeCourse: this.props.course.activeCourse._id,
+        category: this.props.course.activeCourse.category,
+        tempcategory: '',
         sectionsDnd: {
             id: 'sections-dnd',
             sections: this.props.course.activeCourse.sections, // Stores the array of sections
@@ -214,6 +217,9 @@ class EditCourse extends Component {
         await this.props.updateCourseDescription(this.state.description,this.state.activeCourse);
     }
 
+    onSaveCategory = async (category) => {
+        await this.props.updateCourseCategory(category,this.state.activeCourse);
+    }
 
     onChangeTitle = (event) => {
         this.setState({
@@ -221,7 +227,6 @@ class EditCourse extends Component {
             title: event.target.value,
         })
     }
-
 
     onChangeDescription = (event) => {
         this.setState({
@@ -282,6 +287,33 @@ class EditCourse extends Component {
                                 </Fab>       
                                 </label>                 
                     </div>
+                    <Typography variant="h5" className={classes.top_left_row_text}>Category</Typography>
+                    <ButtonGroup color="primary" aria-label="outlined primary button group">
+                        <Button onClick=
+                        {
+                            () => {
+                                this.onSaveCategory('Health')
+                            }
+                        }>Health</Button>
+                        <Button onClick=
+                        {
+                            () => {
+                                this.onSaveCategory('Finance')
+                            }
+                        }>Finance</Button>
+                        <Button onClick=
+                        {
+                            () => {
+                                this.onSaveCategory('Technology')
+                            }
+                        }>Technology</Button>
+                        <Button onClick=
+                        {
+                            () => {
+                                this.onSaveCategory('Language')
+                            }
+                        }>Language</Button>
+                        </ButtonGroup>
                 </div>
                 <div className={classes.top_right}>
                     <div className={classes.top_right_content}>

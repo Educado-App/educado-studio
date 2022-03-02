@@ -10,6 +10,8 @@ const courseSchema = new Schema({
     dateCreated: Date,
     dateUpdated: Date,
     coverImg: String,
+    category: String,
+    isPublished: Boolean,
     sections: [{type: Schema.Types.ObjectId,ref: 'Component'}],
 });
 

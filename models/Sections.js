@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 // Class description
 const sectionSchema = new Schema({
     title: String,
+    description: String,
     dateCreated: Date,
     dateUpdated: Date,
     components: [{type: Schema.Types.ObjectId,ref: 'Component'}],

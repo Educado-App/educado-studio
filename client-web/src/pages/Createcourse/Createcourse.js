@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column'
     },
     container: {
-        marginTop: theme.spacing(3),
+        width: '50%',
+        minWidth: 740,
     },
     button: {
         backgroundColor: palette.primary,
