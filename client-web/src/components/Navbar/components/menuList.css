@@ -1,14 +1,14 @@
 .main {
-    display: flex;
-    flex-direction: column;
-    white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
 }
 
 .link {
-    color: inherit;
-    text-decoration: inherit;
+  color: inherit;
+  text-decoration: inherit;
 }
 
 .container {
-    margin-top: 15px;
+  margin-top: 15px;
 }

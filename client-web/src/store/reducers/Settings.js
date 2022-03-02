@@ -1,35 +1,35 @@
-import * as actionTypes from '../actions/Settings';
+import * as actionTypes from "../actions/Settings";
 
 const initialState = {
-    organisation: 'National Bank of Brazil',
-    language: 'Portuguise',
-    languages: [
-        {
-            name: 'English',
-        },
-        {
-            name: 'Portuguise',
-        },
-    ]
-}
+  organisation: "National Bank of Brazil",
+  language: "Portuguise",
+  languages: [
+    {
+      name: "English",
+    },
+    {
+      name: "Portuguise",
+    },
+  ],
+};
 
-const reducer = (state = initialState, action ) => {
-    switch (action.type) {
-        case actionTypes.CHANGE_ORGANISATION:
-            return {
-                ...state,
-                organisation: action.name
-            }
-        case actionTypes.CHANGE_LANGUAGE:
-            return {
-                ...state,
-                language: action.language
-            }
-        default:
-            return {
-                ...state,
-            }
-    }
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionTypes.CHANGE_ORGANISATION:
+      return {
+        ...state,
+        organisation: action.name,
+      };
+    case actionTypes.CHANGE_LANGUAGE:
+      return {
+        ...state,
+        language: action.language,
+      };
+    default:
+      return {
+        ...state,
+      };
+  }
 };
 
 export default reducer;
