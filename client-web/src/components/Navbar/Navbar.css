@@ -1,14 +1,14 @@
 .nav {
-    color: black;
-    background-color: black;
+  color: black;
+  background-color: black;
 }
 
 .tool {
-    color: black;
-    background-color: '#05668d'; 
+  color: black;
+  background-color: "#05668d";
 }
 
 .drawerContainer {
-    height: 100%;
-    flex: 1;
+  height: 100%;
+  flex: 1;
 }
