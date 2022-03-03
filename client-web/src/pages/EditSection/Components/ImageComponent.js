@@ -15,6 +15,7 @@ import uploadFileToComponent from "../../../hooks/uploadFileToComponent";
 // Material UI icons
 import DeleteComponentButton from "./DeleteComponentButton";
 import PublishIcon from "@material-ui/icons/Publish";
+import getPresignedUrl from "../../../hooks/getPresignedUrl";
 
 // Project imports
 const useStyles = (theme) => ({
@@ -41,14 +42,17 @@ class ImageComponent extends Component {
   state = {
     img: "",
     reloadTrigger: false,
+    presignedUrl: "",
     componentId: this.props.id,
   };
 
   async componentDidMount() {
-    const imgFromServer = await getFileFromComponent(this.state.componentId);
+    const presignedUrlFromServer = await getPresignedUrl(
+      this.state.componentId
+      );
     this.setState({
       ...this.state,
-      img: "data:image/jpeg;base64," + imgFromServer,
+      presignedUrl: presignedUrlFromServer,
     });
   }
 
@@ -68,7 +72,7 @@ class ImageComponent extends Component {
     const { classes } = this.props;
     return (
       <Card className={classes.root}>
-        <CardMedia image={this.state.img} className={classes.media}></CardMedia>
+        <CardMedia image={this.state.presignedUrl} className={classes.media}></CardMedia>
         <CardActions>
           <input
             accept="image/*"
