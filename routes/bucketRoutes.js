@@ -11,13 +11,13 @@ const Component = mongoose.model("components");
 
 let mulreq = multer();
 
-// AWS Routing in the order of - ADMIN, IMAGE, AUDIO, VIDEO, and DELETE
+// AWS Routing in the order of - ADMIN, IMAGE, AUDIO, VIDEO, MOBILE, and DELETE
 // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(_ADMIN ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻
 // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
 // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
 // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
 
-module.exports = (app) => {
+/* module.exports = (app) => {
   app.get("/download-s3", requireLogin, async (req, res) => {
     aws.config.setPromisesDependency();
     aws.config.update({
@@ -45,7 +45,7 @@ module.exports = (app) => {
         console.log(e);
       }
     }
-  });
+  }); */
 
   // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(_IMAGE ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻
   // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
@@ -129,36 +129,6 @@ module.exports = (app) => {
   // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
   // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
 
-  app.get("/api/eml/download-s3", async (req, res) => {
-    aws.config.setPromisesDependency();
-    aws.config.update({
-      region: "eu-central-1",
-    });
-
-    const s3 = new aws.S3();
-
-    const { s3link } = req.query;
-    console.log(s3link);
-    let link;
-    if (!s3link) {
-      res.send("no image found");
-      return;
-    } else {
-      const download = {
-        Bucket: keys.s3Bucket,
-        Key: s3link,
-      };
-
-      try {
-        const data = await s3.getObject(download).promise();
-        const encoded = data.Body.toString("base64");
-        res.send({ img: encoded });
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  });
-
   app.post(
     "/upload-s3",
     mulreq.single("file"),
@@ -214,6 +184,65 @@ module.exports = (app) => {
     res.send(signedUrl);
   });
 
+  // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(_DELETE ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻
+  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+
+  app.get("/delete-s3", async () => {
+    aws.config.update({
+      region: "eu-central-1",
+    });
+
+    const s3 = new aws.S3();
+
+    const params = {
+      Bucket: keys.s3Bucket,
+      Key: folderLocation + "/" + fileName,
+    };
+
+    s3.deleteObject(params, (err, data) => {
+      if (err) {
+        console.log("Error", err);
+      } else {
+        console.log("hopes deleted");
+      }
+    });
+  });
+
+  // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(_MOBILE ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻
+  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+
+  app.get("/api/eml/download-s3", async (req, res) => {
+    aws.config.setPromisesDependency();
+    aws.config.update({
+      region: "eu-central-1",
+    });
+    const s3 = new aws.S3();
+    const { s3link } = req.query;
+    console.log(s3link);
+    let link;
+    if (!s3link) {
+      res.send("no image found");
+      return;
+    } else {
+      const download = {
+        Bucket: keys.s3Bucket,
+        Key: s3link,
+      };
+
+      try {
+        const data = await s3.getObject(download).promise();
+        const encoded = data.Body.toString("base64");
+        res.send({ img: encoded });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  });
+
   app.post("/api/eml/get-presigned-url", async (req, res) => {
     aws.config.update({
       region: "eu-central-1",
@@ -244,31 +273,5 @@ module.exports = (app) => {
     };
     const signedUrl = s3.getSignedUrl("getObject", params);
     res.send(signedUrl);
-  });
-
-  // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(_DELETE ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻
-  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
-  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
-  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
-
-  app.get("/delete-s3", async () => {
-    aws.config.update({
-      region: "eu-central-1",
-    });
-
-    const s3 = new aws.S3();
-
-    const params = {
-      Bucket: keys.s3Bucket,
-      Key: folderLocation + "/" + fileName,
-    };
-
-    s3.deleteObject(params, (err, data) => {
-      if (err) {
-        console.log("Error", err);
-      } else {
-        console.log("hopes deleted");
-      }
-    });
   });
 };
