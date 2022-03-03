@@ -152,7 +152,7 @@ class EditCourse extends Component {
   async componentDidMount() {
     await this.props.getAllSections(this.props.course.activeCourse.sections);
     const presignedUrlFromServer = await getPresignedUrlCoverImg(
-      this.state.coverImgPS
+      this.state.activeCourse
     );
     this.setState({
       ...this.state,
@@ -175,7 +175,7 @@ class EditCourse extends Component {
       this.props.course.activeCourse._id
     );
     const presignedUrlFromServer = await getPresignedUrlCoverImg(
-      this.state.coverImgPS
+      this.state.activeCourse
     );
     this.setState({
       ...this.state,
