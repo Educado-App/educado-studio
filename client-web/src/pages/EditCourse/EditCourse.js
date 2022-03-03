@@ -24,6 +24,7 @@ import { Card } from "@material-ui/core";
 import SectionBucket from "./SectionBucket";
 import uploadCoverImage from "../../hooks/uploadCoverImage";
 import getFileFromUrl from "../../hooks/getFileFromUrl";
+import getPresignedUrl from "../../hooks/getPresignedUrl";
 import CreateSection from "./CreateSection";
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -135,6 +136,7 @@ class EditCourse extends Component {
     description: this.props.course.activeCourse.description,
     activeCourse: this.props.course.activeCourse._id,
     category: this.props.course.activeCourse.category,
+    coverImgPS: this.props.course.activeCourse.coverImg,
     tempcategory: "",
     sectionsDnd: {
       id: "sections-dnd",
@@ -149,12 +151,12 @@ class EditCourse extends Component {
 
   async componentDidMount() {
     await this.props.getAllSections(this.props.course.activeCourse.sections);
-    const imgFromServer = await getFileFromUrl(
-      this.props.course.activeCourse.coverImg
+    const presignedUrlFromServer = await getPresignedUrl(
+      this.state.coverImgPS
     );
     this.setState({
       ...this.state,
-      imgFromServerTest: "data:image/jpeg;base64," + imgFromServer,
+      presignedUrl: presignedUrlFromServer,
     });
   }
 
@@ -172,10 +174,12 @@ class EditCourse extends Component {
       file,
       this.props.course.activeCourse._id
     );
-    const imgFromServer = await getFileFromUrl(res);
+    const presignedUrlFromServer = await getPresignedUrl(
+      this.state.coverImgPS
+    );
     this.setState({
       ...this.state,
-      imgFromServerTest: "data:image/jpeg;base64," + imgFromServer,
+      presignedUrl: presignedUrlFromServer,
     });
   };
 
@@ -352,7 +356,7 @@ class EditCourse extends Component {
             <div className={classes.top_right_content}>
               <Card className={classes.top_right_content_card}>
                 <img
-                  src={this.state.imgFromServerTest}
+                  src={this.state.presignedUrl}
                   className={classes.photo}
                   alt={""}
                 ></img>
