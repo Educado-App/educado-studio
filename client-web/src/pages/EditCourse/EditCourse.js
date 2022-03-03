@@ -24,7 +24,7 @@ import { Card } from "@material-ui/core";
 import SectionBucket from "./SectionBucket";
 import uploadCoverImage from "../../hooks/uploadCoverImage";
 import getFileFromUrl from "../../hooks/getFileFromUrl";
-import getPresignedUrl from "../../hooks/getPresignedUrl";
+import getPresignedUrlCoverImg from "../../hooks/getPresignedUrlCoverImg";
 import CreateSection from "./CreateSection";
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -151,7 +151,7 @@ class EditCourse extends Component {
 
   async componentDidMount() {
     await this.props.getAllSections(this.props.course.activeCourse.sections);
-    const presignedUrlFromServer = await getPresignedUrl(
+    const presignedUrlFromServer = await getPresignedUrlCoverImg(
       this.state.coverImgPS
     );
     this.setState({
@@ -174,7 +174,7 @@ class EditCourse extends Component {
       file,
       this.props.course.activeCourse._id
     );
-    const presignedUrlFromServer = await getPresignedUrl(
+    const presignedUrlFromServer = await getPresignedUrlCoverImg(
       this.state.coverImgPS
     );
     this.setState({
