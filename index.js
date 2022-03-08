@@ -55,5 +55,5 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Run server
-const PORT = process.env.PORT || 5000; // Get dynamic port allocation when deployed by Heroku. Otherwise, by default, use port 5000
+const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku. Otherwise, by default, use port 5000
 app.listen(PORT);
