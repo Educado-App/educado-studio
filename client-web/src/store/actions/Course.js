@@ -3,11 +3,12 @@ import axios from "axios";
 // Fetch user action
 export const CREATE_COURSE = "CREATE_COURSE";
 
-export const createCourse = (title, description, category) => {
+export const createCourse = (title, description, category, published) => {
   const course = {
     title: title,
     description: description,
     category: category,
+    published: false,
   };
   return async (dispatch) => {
     const res = await axios.post("/api/course/create", course);
@@ -280,5 +281,19 @@ export const updateCourseCategory = (text, course_id) => {
   return async (dispatch) => {
     const res = await axios.post("/api/course/update/category", obj);
     dispatch({ type: UPDATE_COURSE_CATEGORY, payload: res.data });
+  };
+};
+
+export const UPDATE_PUBLISHED_SATE = "UPDATE_PUBLISHED_SATE";
+
+export const updatePublishState = (published, course_id) => {
+  const obj = {
+    published: published,
+    course_id: course_id,
+  };
+
+  return async (dispatch) => {
+    const res = await axios.post("/api/course/update/published", obj);
+    dispatch({ type: UPDATE_PUBLISHED_SATE, payload: res.data });
   };
 };

@@ -23,7 +23,6 @@ import { Card } from "@material-ui/core";
 // Project imports
 import SectionBucket from "./SectionBucket";
 import uploadCoverImage from "../../hooks/uploadCoverImage";
-import getFileFromUrl from "../../hooks/getFileFromUrl";
 import getPresignedUrlCoverImg from "../../hooks/getPresignedUrlCoverImg";
 import CreateSection from "./CreateSection";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -233,6 +232,10 @@ class EditCourse extends Component {
     await this.props.updateCourseCategory(category, this.state.activeCourse);
   };
 
+  onSavePublish = async (published) => {
+    await this.props.updatePublishState(published, this.state.activeCourse);
+  };
+
   onChangeTitle = (event) => {
     this.setState({
       ...this.state,
@@ -352,6 +355,7 @@ class EditCourse extends Component {
               </Button>
             </ButtonGroup>
           </div>
+          <div></div>
           <div className={classes.top_right}>
             <div className={classes.top_right_content}>
               <Card className={classes.top_right_content_card}>
@@ -406,6 +410,29 @@ class EditCourse extends Component {
         <div className={classes.fabPadding}>
           <CreateSection trigger={this.onTriggerReload}></CreateSection>
         </div>
+        <Typography variant="h5" className={classes.bottom}>
+          Publish?
+        </Typography>
+        <ButtonGroup
+          className={classes.bottom}
+          color="primary"
+          aria-label="outlined primary button group"
+        >
+          <Button
+            onClick={() => {
+              this.onSavePublish(true);
+            }}
+          >
+            Publish
+          </Button>
+          <Button
+            onClick={() => {
+              this.onSavePublish(false);
+            }}
+          >
+            Un-publish
+          </Button>
+        </ButtonGroup>
       </div>
     );
   }

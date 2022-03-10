@@ -66,6 +66,7 @@ module.exports = (app) => {
     res.send(list);
   });
 
+  
   // Get all courses for user
   app.get("/api/course/eml/getall", async (req, res) => {
     const list = await Course.find();
@@ -103,6 +104,19 @@ module.exports = (app) => {
 
     // find object in database and update title to new value
     (await Course.findOneAndUpdate({ _id: course_id }, { category: text }))
+      .save;
+    course = await Course.findById(course_id);
+
+    // Send response
+    res.send(course);
+  });
+
+  // Update course published state
+  app.post("/api/course/update/published", async (req, res) => {
+    const { published, course_id } = req.body;
+
+    // find object in database and update title to new value
+    (await Course.findOneAndUpdate({ _id: course_id }, { published: published }))
       .save;
     course = await Course.findById(course_id);
 
@@ -180,16 +194,6 @@ module.exports = (app) => {
 
   // Get all sections
   app.post("/api/course/getallsections", requireLogin, async (req, res) => {
-    const { sections } = req.body;
-    let list = [];
-    for (let i = 0; i < sections.length; i++) {
-      const temp = await Section.findOne({ _id: sections[i] });
-      list.push(temp);
-    }
-    res.send(list);
-  });
-
-  app.post("/api/eml/course/getallsections", async (req, res) => {
     const { sections } = req.body;
     let list = [];
     for (let i = 0; i < sections.length; i++) {
@@ -375,6 +379,16 @@ module.exports = (app) => {
     });
 
     res.send(componentIds);
+  });
+
+  app.post("/api/eml/course/getallsections", async (req, res) => {
+    const { sections } = req.body;
+    let list = [];
+    for (let i = 0; i < sections.length; i++) {
+      const temp = await Section.findOne({ _id: sections[i] });
+      list.push(temp);
+    }
+    res.send(list);
   });
 
   // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (_ADMIN ROUTING BELOW_) ┻━┻︵ \(°□°)/ ︵ ┻━┻

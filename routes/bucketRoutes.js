@@ -109,8 +109,6 @@ module.exports = (app) => {
 
       try {
         const stored = await s3.upload(params).promise();
-        console.log("KEY FROM NEW THING:");
-        console.log(stored.Key);
         (
           await Component.findOneAndUpdate(
             { _id: component_id },

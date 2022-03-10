@@ -10,6 +10,7 @@ import {
   UPDATE_SECTION_DESCRIPTION,
   EDIT_SECTION,
   UPDATE_COURSE_CATEGORY,
+  UPDATE_PUBLISHED_SATE,
   CREATE_COMPONENT,
   GET_ALL_COMPONENTS,
   UPDATE_COMPONENTS_ORDER,
@@ -61,6 +62,12 @@ const reducer = (state = initialState, action) => {
       };
 
     case UPDATE_COURSE_CATEGORY:
+      return {
+        ...state,
+        activeCourse: action.payload,
+      };
+    
+    case UPDATE_PUBLISHED_SATE:
       return {
         ...state,
         activeCourse: action.payload,

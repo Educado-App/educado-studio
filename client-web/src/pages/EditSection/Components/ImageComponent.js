@@ -9,8 +9,6 @@ import { Fab, withStyles } from "@material-ui/core";
 import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
 import { CardActions } from "@material-ui/core";
-import getFileFromUrl from "../../../hooks/getFileFromUrl";
-import getFileFromComponent from "../../../hooks/getFileFromComponent";
 import uploadFileToComponent from "../../../hooks/uploadFileToComponent";
 // Material UI icons
 import DeleteComponentButton from "./DeleteComponentButton";
@@ -49,7 +47,7 @@ class ImageComponent extends Component {
   async componentDidMount() {
     const presignedUrlFromServer = await getPresignedUrl(
       this.state.componentId
-      );
+    );
     this.setState({
       ...this.state,
       presignedUrl: presignedUrlFromServer,
@@ -61,10 +59,12 @@ class ImageComponent extends Component {
   handleChangeFile = async (event) => {
     const file = event.target.files[0];
     const res = await uploadFileToComponent(file, this.state.componentId);
-    const imgFromServer = await getFileFromUrl(res);
+    const presignedUrlFromServer = await getPresignedUrl(
+      this.state.componentId
+    );
     this.setState({
       ...this.state,
-      img: "data:image/jpeg;base64," + imgFromServer,
+      presignedUrl: presignedUrlFromServer,
     });
   };
 
@@ -72,7 +72,10 @@ class ImageComponent extends Component {
     const { classes } = this.props;
     return (
       <Card className={classes.root}>
-        <CardMedia image={this.state.presignedUrl} className={classes.media}></CardMedia>
+        <CardMedia
+          image={this.state.presignedUrl}
+          className={classes.media}
+        ></CardMedia>
         <CardActions>
           <input
             accept="image/*"
