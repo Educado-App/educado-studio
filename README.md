@@ -11,41 +11,46 @@ Educado Creator studio + backend, a learning creation application based on the f
 - mongodb
 - google Oauth
 
-and much more.
+## Step-by-step guide to run Educado development setup
+Below is a short guide explaining how to set up and run Educado in development mode. 
 
-## Basic overview
-Educado is mainly split into:
+### Setting up Node environment
+- Ensure that local version of Node.js is latest stable version (v16.14.2)
+    - run 'node --version'
+    - if version == v16.14.2, then all is good :)
+    - if version is NOT v16.14.2 then do the following
+        - Ensure that you have npm installed
+        - run 'npm install -g n' to install node version manager 
+        - when installed, run 'n stable', to install latest stable version of node 
 
-- web client
-- config
-- models
-- routing
-
-## Requirements
-Before running the app you must setup the following outside dependencies:
-
-- Google Oauth
-- Amazon S3 Bucket using the AWS key / secret key system
-- A mongoDB database
-
-## Getting started with Educado 
-After cloning the repository run: npm install 
-
-This should be done in both the root folder and in the client web folder.
-
-(Optional): Run npm audit fix on both
-
-Before starting the app, correct access keys must be setup for dev.
-Within config create a dev.js file and insert your own:
-
+### Setting up local repository
+- Go to GitLab page and clone (with ssh) the Colibri repository
+- Create dev.js file for development keys in /config directory
+- Get dev keys from Daniel/Jacob and insert into dev.js file and save
+The dev keys contain the following values:
 1. googleClientID
 2. googleClientSecret
 3. mongoURI
 4. cookieKey
 5. s3 Bucket name
 
-This is done within a module.exports function. 
-NOTE: Your AWS key and Secret key must be stored locally on your PC and NOT on the dev.js file.
+### Installing node dependencies 
+- Navivate into the cloned repository
+- In root folder of the repo run 'npm install'
+- Navigate into the client-web directory
+- Run 'npm install' again
 
-Once completed educado will run with the: npm run dev command.
-By default it runs on port 3000 and port 8888. 
+### Setting up AWS CLI 
+- Use AWS install guide to install on your OS 
+    - [https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html]
+- Get AWS keys (access key ID and secret access key) from Daniel/Jacob 
+- Run 'aws configure' and insert access key and secret key
+- Set two other potions to 'none'
+    - Default region name [None]: 
+    - Default output format [None]:
+
+### Run app in development mode
+- Run 'npm run dev' to start application 
+- By default the web-client runs on ://localhohst:3000
+- ...and rest api runs on ://localhost:8888
+- Local proxy (from client-web) handles communnication link between them
