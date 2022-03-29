@@ -176,10 +176,15 @@ module.exports = (app) => {
     const params = {
       Bucket: keys.s3Bucket,
       Key: link,
-      Expires: 60000,
+      Expires: 600,
     };
-    const signedUrl = s3.getSignedUrl("getObject", params);
-    res.send(signedUrl);
+
+    if (params.Key) {
+      const signedUrl = s3.getSignedUrl("getObject", params);
+      res.send(signedUrl);
+    } else {
+      res.send('no file found');
+    }
   });
 
   // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(_DELETE ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻
@@ -242,11 +247,15 @@ module.exports = (app) => {
   });
 
   app.post("/api/eml/get-presigned-url", async (req, res) => {
-    aws.config.update({
-      region: "eu-central-1",
-    });
+   
     const { course_id } = req.body;
+
+    console.log("Course id within EML route: ",course_id);
+
     const course = await Course.findById(course_id);
+
+    console.log("Course within EML route: ",course);
+
     let link = course.coverImg;
     const s3 = new aws.S3();
     const params = {
@@ -254,8 +263,15 @@ module.exports = (app) => {
       Key: link,
       Expires: 600,
     };
-    const signedUrl = s3.getSignedUrl("getObject", params);
-    res.send(signedUrl);
+
+    if (params.Key) {
+      const signedUrl = s3.getSignedUrl("getObject", params);
+      res.send(signedUrl);
+    } else {
+      res.send('no image found');
+    }
+    
+
   });
 
   app.post("/api/eml/get-presigned-url-file", async (req, res) => {
