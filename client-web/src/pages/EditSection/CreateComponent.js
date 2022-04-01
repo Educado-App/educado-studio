@@ -119,7 +119,6 @@ const CreateComponent = (props) => {
           </ListItemIcon>
           <ListItemText primary="Video" />
         </MenuItem>
-
         <MenuItem>
           <ListItemIcon>
             <DnsIcon fontSize="small"/>
