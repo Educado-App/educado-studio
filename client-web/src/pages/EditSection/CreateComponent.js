@@ -119,7 +119,8 @@ const CreateComponent = (props) => {
           </ListItemIcon>
           <ListItemText primary="Video" />
         </MenuItem>
-        <MenuItem>
+
+        <MenuItem button onClick={handleCreateQuiz}>
           <ListItemIcon>
             <DnsIcon fontSize="small"/>
           </ListItemIcon>

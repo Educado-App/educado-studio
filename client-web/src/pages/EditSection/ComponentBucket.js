@@ -15,6 +15,8 @@ import TextComponent from "./Components/TextComponent";
 import ImageComponent from "./Components/ImageComponent";
 import VideoComponent from "./Components/VideoComponent";
 import AudioComponent from "./Components/AudioComponent";
+import QuizComponent from "./Components/QuizComponent";
+
 
 const ComponentBucket = (props) => {
   return (
@@ -61,6 +63,15 @@ const ComponentBucket = (props) => {
                     trigger={props.trigger}
                     id={component._id}
                   ></AudioComponent>
+                );
+                break;
+
+              case "QUIZ":
+                componentToRender = (
+                  <QuizComponent
+                      trigger={props.trigger}
+                      id={component._id}
+                  ></QuizComponent>
                 );
                 break;
 
