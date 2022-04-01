@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mui/icons-material": "^5.5.1",
     "aws-sdk": "^2.1083.0",
     "cli": "^1.0.1",
     "concurrently": "^5.3.0",

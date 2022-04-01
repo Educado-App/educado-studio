@@ -15,6 +15,9 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import DnsIcon from '@material-ui/icons/Dns';
+
+
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -61,6 +64,12 @@ const CreateComponent = (props) => {
     await props.createComponent("AUDIO", props.course.activeSection._id);
     props.trigger();
   };
+
+  //Quiz creation handler function made by CCT2 G3
+  const handleCreateQuiz = async (event) => {
+    await props.createComponent("QUIZ", props.course.activeSection._id);
+    props.trigger();
+  }
 
   //   const handleTitle = (event) => {
   //     setTitle(event.target.value);
@@ -110,6 +119,15 @@ const CreateComponent = (props) => {
           </ListItemIcon>
           <ListItemText primary="Video" />
         </MenuItem>
+
+
+        <MenuItem>
+          <ListItemIcon>
+            <DnsIcon fontSize="small"/>
+          </ListItemIcon>
+            <ListItemText primary="Quiz" />
+        </MenuItem>
+
       </Menu>
     </div>
   );
