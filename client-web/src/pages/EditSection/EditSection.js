@@ -1,6 +1,8 @@
 // Base imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Draggable from "react-draggable"; //https://github.com/react-grid-layout/react-draggable/blob/master/example/example.js
+
 
 // Material UI base
 import { withStyles } from "@material-ui/core/styles";
@@ -16,6 +18,7 @@ import { Card, Typography, Divider, Fab, TextField } from "@material-ui/core";
 import CreateComponent from "./CreateComponent";
 import ComponentBucket from "./ComponentBucket";
 import palette from "../../consts/palette";
+import SmartphonePreview from "./SmartphonePreview/SmartphonePreview";
 
 const useStyles = (theme) => ({
   root: {
@@ -124,7 +127,9 @@ class EditSection extends Component {
   };
 
   render() {
+    const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     const { classes } = this.props;
+
     return (
       <div className={classes.root}>
         <Typography variant="h3">{this.state.title}</Typography>
@@ -158,11 +163,17 @@ class EditSection extends Component {
               <ComponentBucket
                 trigger={this.onTriggerReload}
                 componentsList={this.props.course.sectionComponents}
-              ></ComponentBucket>
+              />
             </DragDropContext>
           </Card>
         </div>
         <CreateComponent trigger={this.onTriggerReload}></CreateComponent>
+
+        <Draggable cancel="div.smartphoneScreen" {...dragHandlers}>
+          <div>
+            <SmartphonePreview/>
+          </div>
+        </Draggable>
       </div>
     );
   }

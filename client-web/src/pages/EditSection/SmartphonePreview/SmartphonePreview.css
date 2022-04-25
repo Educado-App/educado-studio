@@ -1,0 +1,21 @@
+/* The black part */
+.smartphoneEdge {
+    padding-top: 2em;
+    padding-bottom: 2em;
+    margin: 2em auto;
+    background-color: black;
+    border-radius: 25px;
+    height: 30em;
+    width: 15em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.smartphoneScreen {
+    padding: 0.2em;
+    background-color: floralwhite;
+    border-radius: 2px;
+    margin: 0.2em;
+    height: 25em;
+    align-self: center;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.19) inset;
+}

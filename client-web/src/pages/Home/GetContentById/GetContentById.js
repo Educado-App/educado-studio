@@ -6,7 +6,7 @@ import React from "react";
 
 // Material UI icons
 
-// Project imports   '
+// Project imports
 
 const GetContentById = () => {
   return (
