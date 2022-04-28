@@ -7,13 +7,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Card } from "@material-ui/core";
 
 // Material UI components
-import TextField from "@material-ui/core/TextField";
 import Fab from "@material-ui/core/Fab";
 import SaveIcon from "@material-ui/icons/Save";
 // Material UI icons
 
 // Project imports
 import DeleteComponentButton from "./DeleteComponentButton";
+import AnswersSegment from "./QuizComponents/AnswersSegment";
+import PointsSegment from "./QuizComponents/PointsSegment";
+import QuestionSegment from "./QuizComponents/QuestionSegment";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,30 +61,10 @@ const QuizComponent = (props) => {
     return (
         <Card className={classes.root}>
             <div className={classes.media}>
-                <TextField
-                    className={classes.media}
-                    required
-                    id="outlined-multiline-static"
-                    variant="outlined"
-                    multiline
-                    rowsMax={4}
-                    rows={2}
-                    defaultValue={text}
-                    onChange={onChangeText}
-                > Question </TextField>
+                <QuestionSegment onChange={onChangeText}></QuestionSegment>
             </div>
             <div className={classes.media}>
-                <TextField
-                    className={classes.media}
-                    required
-                    id="outlined-multiline-static"
-                    variant="outlined"
-                    multiline
-                    rowsMax={1}
-                    rows={1}
-                    defaultValue={text}
-                    onChange={onChangeText}
-                > Answer </TextField>
+                <AnswersSegment></AnswersSegment>
             </div>
             <div className={classes.saveButton}>
                 <Fab size="small" variant="extended" onClick={onSave}>
