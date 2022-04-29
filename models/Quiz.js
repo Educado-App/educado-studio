@@ -13,6 +13,7 @@ const quizSchema = new Schema({
         audioAnswer: String, 
         correctAnswer: Boolean,
     }], // Array of answers. First string is the answer in plaintext, second is AWS link for audio and boolean for if correct or not
+    points: Number,
     dateCreated: Date,
     dateUpdated: Date,
   });
