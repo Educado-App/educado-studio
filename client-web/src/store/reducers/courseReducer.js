@@ -12,6 +12,7 @@ import {
   UPDATE_COURSE_CATEGORY,
   UPDATE_PUBLISHED_SATE,
   CREATE_COMPONENT,
+  CREATE_QUIZ,
   GET_ALL_COMPONENTS,
   UPDATE_COMPONENTS_ORDER,
   UPDATE_COMPONENT_TEXT,
@@ -31,6 +32,12 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_COURSE:
+      return {
+        ...state,
+        activeCourse: action.payload,
+      };
+
+    case CREATE_QUIZ:
       return {
         ...state,
         activeCourse: action.payload,

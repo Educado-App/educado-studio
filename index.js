@@ -10,6 +10,7 @@ require("./models/User");
 require("./models/Courses");
 require("./models/Sections");
 require("./models/Components");
+require("./models/Quiz");
 
 // Execution requires
 require("./services/passport"); // Execute passport config

@@ -139,6 +139,19 @@ export const createComponent = (type, section_id) => {
   };
 };
 
+// Create New Quiz
+export const CREATE_QUIZ = "CREATE_QUIZ";
+
+export const createQuiz = (section_id) => {
+  const obj = {
+    section_id: section_id,
+  };
+  return async (dispatch) => {
+    const res = await axios.post("/api/component/quiz/create", obj);
+    return dispatch({ type: CREATE_QUIZ, payload: res.data });
+  };
+};
+
 // Get All Components for corrosponding section
 export const GET_ALL_COMPONENTS = "GET_ALL_COMPONENTS";
 

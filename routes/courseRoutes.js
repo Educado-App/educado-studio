@@ -3,8 +3,8 @@ const passport = require("passport"); // Import passport library module
 const mongoose = require("mongoose");
 const Course = mongoose.model("courses");
 const Section = mongoose.model("sections");
+const Quiz = mongoose.model("quizzes");
 const Component = mongoose.model("components");
-//const Quiz = mongoose.model("quizzes");
 
 const requireLogin = require("../middlewares/requireLogin");
 
@@ -317,11 +317,11 @@ module.exports = (app) => {
 
   //Create quiz component
   app.post("/api/component/quiz/create", async (req, res) => {
-    const { type, section_id } = req.body;
+    const { section_id } = req.body;
 
     const quizComponent = new Quiz({
       question: {},
-      answers: [],
+      answers: [{}],
       points: "",
       dateCreated: Date.now(),
       dateUpdated: Date.now(),
@@ -330,7 +330,7 @@ module.exports = (app) => {
     try {
       await quizComponent.save();
       section  = await Section.findById(section_id);
-      await section.components.push(quizComponent._id);
+      await section.components.quizzes.push(quizComponent._id);
       await section.save();
       res.send(section);
     } catch (err) {
