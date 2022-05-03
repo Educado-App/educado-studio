@@ -15,6 +15,7 @@ import {
   GET_ALL_COMPONENTS,
   UPDATE_COMPONENTS_ORDER,
   UPDATE_COMPONENT_TEXT,
+  UPDATE_COMPONENT_QUIZ,
   RESET_SECTION_TRIGGER,
 } from "../actions/Course";
 
@@ -142,6 +143,20 @@ const reducer = (state = initialState, action) => {
         ...state,
         sectionComponents: tempState,
       };
+
+    case UPDATE_COMPONENT_QUIZ:
+      const objectIndex = state.sectionComponents.findIndex(
+        (obj) => obj._id === action.payload._id
+      );
+
+      let temporaryState = state.sectionComponents;
+
+      temporaryState[objectIndex] = action.payload;
+
+      return {
+        ...state,
+        sectionComponents: tempState,
+      }
 
     default:
       return {

@@ -298,6 +298,7 @@ module.exports = (app) => {
       type: type,
       file: "",
       text: "",
+      quizzes: [],
       dateCreated: Date.now(),
       dateUpdated: Date.now(),
     });
