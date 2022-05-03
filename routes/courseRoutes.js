@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Course = mongoose.model("courses");
 const Section = mongoose.model("sections");
 const Component = mongoose.model("components");
+//const Quiz = mongoose.model("quizzes");
 
 const requireLogin = require("../middlewares/requireLogin");
 
@@ -12,7 +13,7 @@ const requireLogin = require("../middlewares/requireLogin");
 
 module.exports = (app) => {
   // ┻━┻︵ \(°□°)/ ︵ ┻━┻ (¯`·._.··¸.-~*´¨¯¨`*·~-.,-(COURSE ROUTING BELOW_)-,.-~*´¨¯¨`*·~-.¸··._.·´¯)┻━┻︵ \(°□°)/ ︵ ┻━┻
-  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
+  // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <(   '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
   // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
   // (>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`(>'-')> <('_'<) ^('_')\- \m/(-_-)\m/ <( '-')> \_( .")> <( ._.)-`
 
@@ -307,6 +308,29 @@ module.exports = (app) => {
       await component.save();
       section = await Section.findById(section_id);
       await section.components.push(component._id);
+      await section.save();
+      res.send(section);
+    } catch (err) {
+      res.status(422).send(err);
+    }
+  });
+
+  //Create quiz component
+  app.post("/api/component/quiz/create", async (req, res) => {
+    const { type, section_id } = req.body;
+
+    const quizComponent = new Quiz({
+      question: {},
+      answers: [],
+      points: "",
+      dateCreated: Date.now(),
+      dateUpdated: Date.now(),
+    });
+
+    try {
+      await quizComponent.save();
+      section  = await Section.findById(section_id);
+      await section.components.push(quizComponent._id);
       await section.save();
       res.send(section);
     } catch (err) {
