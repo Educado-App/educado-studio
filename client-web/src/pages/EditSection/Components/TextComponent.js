@@ -76,7 +76,7 @@ const TextComponent = (props) => {
           <SaveIcon />
           Save
         </Fab>
-        <DeleteComponentButton component_id={props.id}></DeleteComponentButton>
+        <DeleteComponentButton component_id={props.id}> </DeleteComponentButton>
       </div>
     </Card>
   );

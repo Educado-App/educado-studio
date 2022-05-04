@@ -152,6 +152,9 @@ export const createQuiz = (section_id) => {
   };
 };
 
+// Create New Sub-Component (below)
+
+
 // Get All Components for corrosponding section
 export const GET_ALL_COMPONENTS = "GET_ALL_COMPONENTS";
 
@@ -197,7 +200,7 @@ export const updateComponentText = (text, component_id) => {
 };
 
 // Update Quiz
-export const UPDATE_COMPONENT_QUIZ = "UPDATE_COMPONENT_QUIZ";
+/*export const UPDATE_COMPONENT_QUIZ = "UPDATE_COMPONENT_QUIZ";
 
 export const updateComponentQuiz = (quiz, component_id) => {
   const obj = {
@@ -209,7 +212,7 @@ export const updateComponentQuiz = (quiz, component_id) => {
     const res = await axios.post("/api/component/quiz/update", obj);
     dispatch({ type: UPDATE_COMPONENT_QUIZ, payload: res.data });
   };
-};
+};*/
 
 // Delete component
 export const DELETE_COMPONENT = "DELETE_COMPONENT";

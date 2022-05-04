@@ -2,6 +2,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../../store/actions/Course";
+import AnswersSegment from "./AnswersSegment";
+
+
 
 // Material UI base
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,9 +12,13 @@ import { Card } from "@material-ui/core";
 
 // Material UI components
 import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
 
 const useStyles = makeStyles((theme) => ({
-    
+    media: {
+        width: "720px",
+        background: "lightblue",
+    },
 }));
 
 
@@ -28,15 +35,21 @@ const QuestionSegment = (props) => {
     
     return (
         <Card>
-            <TextField
-                className={classes.media}
-                required
-                id="outlined-multiline-static"
-                variant="outlined"
-                multiline
-                rowsMax={4}
-                rows={2}
-            > Question </TextField>
+           <div>
+               <TextField
+               className={classes.media}
+               required
+               id="outlined-multiline-static"
+               variant="outlined"
+               multiline
+               rowsMax={4}
+               rows={2}
+           > </TextField>
+           </div>
+            <div>
+                <AnswersSegment/>
+                <AnswersSegment/>
+            </div>
         </Card>
     );
 };
