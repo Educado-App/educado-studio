@@ -317,11 +317,11 @@ module.exports = (app) => {
 
   //Create quiz component
   app.post("/api/component/quiz/create", async (req, res) => {
-    const { section_id } = req.body;
+    const  component_id  = req.body;
 
     const quizComponent = new Quiz({
-      question: {},
-      answers: [{}],
+      question: { textQuestion: "", audioQuestion: "" },
+      answers: [{ textAnswer: "", audioAnswer: "", correctAnswer: false }],
       points: "",
       dateCreated: Date.now(),
       dateUpdated: Date.now(),
@@ -329,10 +329,10 @@ module.exports = (app) => {
 
     try {
       await quizComponent.save();
-      section  = await Section.findById(section_id);
-      await section.components.quizzes.push(quizComponent._id);
-      await section.save();
-      res.send(section);
+      component = await Component.findById(component_id.section_id);
+      await component.quizzes.push(quizComponent._id);
+      await component.save();
+      res.send(component);
     } catch (err) {
       res.status(422).send(err);
     }
