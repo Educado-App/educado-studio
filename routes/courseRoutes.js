@@ -386,6 +386,7 @@ module.exports = (app) => {
     });
 
     let componentIds = section.components;
+    let quizIds = await Component.findById(componentIds);
 
     let index = componentIds.indexOf(component_id);
     if (index !== -1) {
@@ -398,6 +399,10 @@ module.exports = (app) => {
         { components: componentIds }
       )
     ).save;
+    
+    await Quiz.deleteMany({ _id: { $in: quizIds.quizzes }}, (err) => {
+      console.log(err);
+    });
 
     await Component.deleteOne({ _id: component_id }, (err) => {
       console.log(err);
