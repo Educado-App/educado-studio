@@ -39,11 +39,12 @@ const QuestionSegment = (props) => {
                <TextField
                className={classes.media}
                required
-               id="outlined-multiline-static"
-               variant="outlined"
+               id="filled-search"
+               variant="filled"
                multiline
                rowsMax={4}
                rows={2}
+               label={"Question"}
            > </TextField>
            </div>
             <div>
