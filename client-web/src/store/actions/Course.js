@@ -142,9 +142,9 @@ export const createComponent = (type, section_id) => {
 // Create New Quiz
 export const CREATE_QUIZ = "CREATE_QUIZ";
 
-export const createQuiz = (section_id) => {
+export const createQuiz = (component) => {
   const obj = {
-    section_id: section_id,
+    component_id: component,
   };
   return async (dispatch) => {
     const res = await axios.post("/api/component/quiz/create", obj);

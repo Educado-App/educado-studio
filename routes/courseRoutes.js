@@ -317,7 +317,7 @@ module.exports = (app) => {
 
   //Create quiz component
   app.post("/api/component/quiz/create", async (req, res) => {
-    const  component_id  = req.body;
+    const  componentObj  = req.body;
 
     const quizComponent = new Quiz({
       question: { textQuestion: "", audioQuestion: "" },
@@ -329,7 +329,7 @@ module.exports = (app) => {
 
     try {
       await quizComponent.save();
-      component = await Component.findById(component_id.section_id);
+      component = await Component.findById(componentObj.component_id);
       await component.quizzes.push(quizComponent._id);
       await component.save();
       res.send(component);

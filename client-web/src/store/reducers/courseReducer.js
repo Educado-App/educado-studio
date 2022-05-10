@@ -37,12 +37,6 @@ const reducer = (state = initialState, action) => {
         activeCourse: action.payload,
       };
 
-    case CREATE_QUIZ:
-      return {
-        ...state,
-        activeCourse: action.payload,
-      };
-
     case GET_ALL_COURSES:
       return {
         ...state,
@@ -123,6 +117,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeSection: action.payload,
+      };
+
+    case CREATE_QUIZ:
+      return {
+        ...state,
+        activeCourse: action.payload,
       };
 
     case GET_ALL_COMPONENTS:

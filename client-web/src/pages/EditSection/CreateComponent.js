@@ -68,7 +68,7 @@ const CreateComponent = (props) => {
   //Quiz creation handler function made by CCT2 G3
   const handleCreateQuiz = async (event) => {
     let obj = await props.createComponent("QUIZ", props.course.activeSection._id);
-    await props.createQuiz(obj.payload.components[0]);
+    await props.createQuiz(obj.payload.components[obj.payload.components.length-1]);
     props.trigger();
   }
 
