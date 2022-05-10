@@ -316,6 +316,7 @@ module.exports = (app) => {
   });
 
   //Create quiz component
+  // Does the same as create component except creating an entry for the quiz itself in mongodb
   app.post("/api/component/quiz/create", async (req, res) => {
     const  componentObj  = req.body;
 
@@ -336,6 +337,28 @@ module.exports = (app) => {
     } catch (err) {
       res.status(422).send(err);
     }
+  });
+
+  //Create answer in quiz component
+  app.post("/api/component/quiz/answer/create", async (req, res) => {
+    const componentObj = req.body;
+
+    const answerObject = {
+      textAnswer: "",
+      audioAnswer: "",
+      correctAnswer: false,
+    };
+
+    try {
+      component = await Component.findById(componentObj.component_id);
+      // this line finds the quiz we're adding an answer to and updates it
+      // $push appends a value to an array on mongodb, here we're appending a default answer object
+      await Quiz.findOneAndUpdate({ _id: component.quizzes }, { $push: { answers: answerObject } });
+      await component.save();
+      res.send(component);
+    } catch (err) {
+      res.status(422).send(err);
+    };
   });
 
   //Get all components

@@ -152,6 +152,19 @@ export const createQuiz = (component) => {
   };
 };
 
+// Create new answer
+export const CREATE_ANSWER = "CREATE_ANSWER";
+
+export const createAnswer = (component) => {
+  const obj = {
+    component_id: component,
+  };
+  return async (dispatch) => {
+    const res = await axios.post("/api/component/quiz/answer/create", obj);
+    return dispatch({ type: CREATE_ANSWER, payload: res.data });
+  };
+};
+
 // Create New Sub-Component (below)
 
 

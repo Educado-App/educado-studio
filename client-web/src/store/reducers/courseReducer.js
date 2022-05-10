@@ -13,6 +13,7 @@ import {
   UPDATE_PUBLISHED_SATE,
   CREATE_COMPONENT,
   CREATE_QUIZ,
+  CREATE_ANSWER,
   GET_ALL_COMPONENTS,
   UPDATE_COMPONENTS_ORDER,
   UPDATE_COMPONENT_TEXT,
@@ -120,6 +121,12 @@ const reducer = (state = initialState, action) => {
       };
 
     case CREATE_QUIZ:
+      return {
+        ...state,
+        activeCourse: action.payload,
+      };
+
+    case CREATE_ANSWER:
       return {
         ...state,
         activeCourse: action.payload,

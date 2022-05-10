@@ -55,7 +55,7 @@ const AnswersSegment = (props) => {
                     id="filled-adornment-amount"
                     endAdornment={<InputAdornment position="end">
                         <Checkbox
-                        defaultUnChecked
+                        defaultChecked={false}
                         color="primary"
                         edge="end"
                         />
