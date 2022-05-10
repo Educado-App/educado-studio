@@ -85,7 +85,7 @@ const QuizComponent = (props) => {
     };
 
     const handleCreateNewQuestion = async (event) => {
-        await props.createComponent("QuestionSegment", props.course.activeSection._id);
+        await props.createQuiz(activeComponent._id);
         props.trigger();
     };
 

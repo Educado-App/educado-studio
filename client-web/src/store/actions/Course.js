@@ -165,9 +165,6 @@ export const createAnswer = (component) => {
   };
 };
 
-// Create New Sub-Component (below)
-
-
 // Get All Components for corrosponding section
 export const GET_ALL_COMPONENTS = "GET_ALL_COMPONENTS";
 

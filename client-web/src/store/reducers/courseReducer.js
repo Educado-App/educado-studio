@@ -131,7 +131,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         activeCourse: action.payload,
       };
-
+    
     case GET_ALL_COMPONENTS:
       return {
         ...state,

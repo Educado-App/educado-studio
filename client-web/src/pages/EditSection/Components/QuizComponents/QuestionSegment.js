@@ -49,7 +49,6 @@ const QuestionSegment = (props) => {
            </div>
             <div>
                 <AnswersSegment/>
-                <AnswersSegment/>
             </div>
         </Card>
     );
