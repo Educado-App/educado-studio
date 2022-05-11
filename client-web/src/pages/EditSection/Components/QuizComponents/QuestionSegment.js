@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../../store/actions/Course";
 import AnswersSegment from "./AnswersSegment";
+import PointsSegment from "./PointsSegment";
 
 
 
@@ -10,14 +11,28 @@ import AnswersSegment from "./AnswersSegment";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card } from "@material-ui/core";
 
+
 // Material UI components
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FilledInput from "@material-ui/core/FilledInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
 
 const useStyles = makeStyles((theme) => ({
     media: {
         width: "720px",
         background: "lightblue",
+    },
+    check: {
+      width: "720px",
+      height: "60px",
+      background: "lightblue",
     },
 }));
 
@@ -35,6 +50,7 @@ const QuestionSegment = (props) => {
     
     return (
         <Card>
+            <PointsSegment/>
            <div>
                <TextField
                className={classes.media}
