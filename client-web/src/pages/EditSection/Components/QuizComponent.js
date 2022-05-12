@@ -75,8 +75,8 @@ const QuizComponent = (props) => {
     const [text, setText] = React.useState(activeComponent.text);
     const classes = useStyles();
 
-    const onChangeText = (event) => {
-        setText(event.target.value);
+    const onChangeText = () => {
+        gi
     };
 
     const handleCreateNewAnswer = async (event) => {

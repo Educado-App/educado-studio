@@ -1,5 +1,5 @@
 // Base imports
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../../store/actions/Course";
 import clsx from 'clsx';
@@ -31,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AnswersSegment = (props) => {
-    // props.id = activeComponentId
-    // Find component i sectionComponents med tilsvarende id
-    // Upon changes, update redux state
 
     const activeComponent = props.course.sectionComponents.find((component) => {
         return component._id === props.id;
@@ -41,15 +38,21 @@ const AnswersSegment = (props) => {
 
     const classes = useStyles();
 
-    const [checked, setChecked] = React.useState(true);
 
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
+    const [checked, setChecked] = useState(false);
+    const [answerText, setAnswerText] = useState("");
+
+    const answerTextChangeHandler = (event) => {
+        setChecked(event.target.value);
+    };
+
+    const checkboxHandler = (event) => {
+        setAnswerText(event.target.checked);
     };
 
     return (
         <Card>
-            <FormControl fullWidth className={classes.margin} variant="filled">
+            <FormControl fullWidth className={classes.margin} variant="filled" onChange={answerTextChangeHandler}>
                 <InputLabel htmlFor="filled-adornment-amount">Answer</InputLabel>
                 <FilledInput
                     id="filled-adornment-amount"
@@ -58,6 +61,7 @@ const AnswersSegment = (props) => {
                         defaultChecked={false}
                         color="primary"
                         edge="end"
+                        onClick={checkboxHandler}
                         />
                 </InputAdornment>}
                 />

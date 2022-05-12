@@ -45,10 +45,11 @@ const QuestionSegment = (props) => {
                rowsMax={4}
                rows={2}
                label={"Question"}
+
            > </TextField>
            </div>
             <div>
-                <AnswersSegment/>
+                <AnswersSegment />
             </div>
         </Card>
     );
