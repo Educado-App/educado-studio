@@ -50,8 +50,8 @@ const TextComponent = (props) => {
 
   const onChangeText = (event) => {
     setText(event.target.value);
-    console.log(event);
-    console.log(event.target.value);
+    //console.log(event);
+    //console.log(event.target.value);
   };
 
   const onSave = async () => {

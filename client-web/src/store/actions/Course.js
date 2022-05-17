@@ -179,7 +179,7 @@ export const getAllComponents = (components) => {
   };
 };
 
-// Update order of componenets for given section
+// Update order of components for given section
 export const UPDATE_COMPONENTS_ORDER = "UPDATE_COMPONENTS_ORDER";
 
 export const updateComponentsOrder = (components, section_id) => {
@@ -210,19 +210,19 @@ export const updateComponentText = (text, component_id) => {
 };
 
 // Update Quiz
-/*export const UPDATE_COMPONENT_QUIZ = "UPDATE_COMPONENT_QUIZ";
+export const UPDATE_COMPONENT_QUIZ = "UPDATE_COMPONENT_QUIZ";
 
 export const updateComponentQuiz = (quiz, component_id) => {
   const obj = {
     quiz: quiz,
     component_id: component_id,
   };
-
+  console.log(obj);
   return async (dispatch) => {
     const res = await axios.post("/api/component/quiz/update", obj);
     dispatch({ type: UPDATE_COMPONENT_QUIZ, payload: res.data });
   };
-};*/
+};
 
 // Delete component
 export const DELETE_COMPONENT = "DELETE_COMPONENT";

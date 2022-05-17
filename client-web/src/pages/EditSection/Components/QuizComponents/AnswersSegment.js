@@ -1,5 +1,5 @@
 // Base imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../../store/actions/Course";
 import clsx from 'clsx';
@@ -32,42 +32,62 @@ const useStyles = makeStyles((theme) => ({
 
 const AnswersSegment = (props) => {
 
-    const activeComponent = props.course.sectionComponents.find((component) => {
-        return component._id === props.id;
-    });
+  const activeComponent = props.course.sectionComponents.find((component) => {
+    return component._id === props.id;
+  });
 
-    const classes = useStyles();
+  const classes = useStyles();
 
+  const [checked, setChecked] = useState(props.check);
+  const [answerText, setAnswerText] = useState(props.text);
+  //const [answerAudio, setAnswerAudio] = useState(props.audio)
 
-    const [checked, setChecked] = useState(false);
-    const [answerText, setAnswerText] = useState("");
+  const answerTextHandler = (event) => {
+    if (event.target.value !== null) {
+      setAnswerText(event.target.value);
+    }
+  };
 
-    const answerTextChangeHandler = (event) => {
-        setChecked(event.target.value);
+  /*
+  const answerAudioHandler = (event) => {
+    setAnswerAudio();
+  };
+  */
+
+  const checkboxHandler = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  useEffect(() => {
+    const answerData = {
+      textAnswer: answerText,
+      //audioAnswer: answerAudio,
+      checkbox: checked
     };
+    props.onAnswerChange(answerData);
+  },[checked, answerText]);
 
-    const checkboxHandler = (event) => {
-        setAnswerText(event.target.checked);
-    };
 
-    return (
-        <Card>
-            <FormControl fullWidth className={classes.margin} variant="filled" onChange={answerTextChangeHandler}>
-                <InputLabel htmlFor="filled-adornment-amount">Answer</InputLabel>
-                <FilledInput
-                    id="filled-adornment-amount"
-                    endAdornment={<InputAdornment position="end">
-                        <Checkbox
-                        defaultChecked={false}
-                        color="primary"
-                        edge="end"
-                        onClick={checkboxHandler}
-                        />
-                </InputAdornment>}
-                />
-            </FormControl>
-        </Card>
-    );
+  return (
+      <Card>
+        <FormControl fullWidth className={classes.margin} variant="filled" >
+          <InputLabel htmlFor="filled-adornment-amount">Answer</InputLabel>
+          <FilledInput
+              value={answerText}
+              id="filled-adornment-amount"
+              endAdornment={<InputAdornment position="end">
+                <Checkbox
+                  checked={checked}
+                  color="primary"
+                  edge="end"
+                  onClick={checkboxHandler}
+                /></InputAdornment>
+              }
+              onChange={answerTextHandler}
+          />
+        </FormControl>
+      </Card>
+  );
 };
 
 function mapStateToProps(state) {

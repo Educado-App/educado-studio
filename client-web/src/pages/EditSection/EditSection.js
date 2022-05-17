@@ -1,10 +1,10 @@
 // Base imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import * as courseActions from "../../store/actions/Course";
 
 // Material UI base
 import { withStyles } from "@material-ui/core/styles";
-import * as courseActions from "../../store/actions/Course";
 import { DragDropContext } from "react-beautiful-dnd";
 
 // Material UI components

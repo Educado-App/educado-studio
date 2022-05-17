@@ -9,13 +9,6 @@ import { Card } from "@material-ui/core";
 // Material UI components
 import Fab from "@material-ui/core/Fab";
 import SaveIcon from "@material-ui/icons/Save";
-// Material UI icons
-
-// Project imports
-import DeleteComponentButton from "./DeleteComponentButton";
-import AnswersSegment from "./QuizComponents/AnswersSegment";
-import PointsSegment from "./QuizComponents/PointsSegment";
-import QuestionSegment from "./QuizComponents/QuestionSegment";
 import AddIcon from "@material-ui/icons/Add";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -24,6 +17,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Menu from "@material-ui/core/Menu";
 import HelpIcon from '@material-ui/icons/Help';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+// Material UI icons
+
+// Project imports
+import DeleteComponentButton from "./DeleteComponentButton";
+import QuestionWithAnswersBucket from "./QuizComponents/QuestionWithAnswersBucket";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,12 +51,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 const QuizComponent = (props) => {
     // props.id = activeComponentId
     // Find component i sectionComponents med tilsvarende id
     // Upon changes, update redux state
+    const activeComponent = props.course.sectionComponents.find((component) => {
+        return component._id === props.id;
+    });
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const classes = useStyles();
+
+    const [ anchorEl, setAnchorEl ] = React.useState(null);
+    const [ quizContent, setQuizContent ] = React.useState({});
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -67,17 +73,9 @@ const QuizComponent = (props) => {
         setAnchorEl(null);
     };
 
-
-    const activeComponent = props.course.sectionComponents.find((component) => {
-        return component._id === props.id;
-    });
-
-    const [text, setText] = React.useState(activeComponent.text);
-    const classes = useStyles();
-
-    const onChangeText = () => {
-        gi
-    };
+    const quizContentUpdate = (obj) => {
+      setQuizContent(obj);
+    }
 
     const handleCreateNewAnswer = async (event) => {
         await props.createAnswer(activeComponent._id);
@@ -90,13 +88,16 @@ const QuizComponent = (props) => {
     };
 
     const onSave = async () => {
-        await props.updateComponentText(text, activeComponent._id);
+        await props.updateComponentQuiz(quizContent, activeComponent._id);
     };
 
     return (
         <Card className={classes.root}>
             <div className={classes.media}>
-                <QuestionSegment onChange={onChangeText}></QuestionSegment>
+                <QuestionWithAnswersBucket
+                    qwasList={props.course.}
+                    onQuizChange={quizContentUpdate}
+                />
             </div>
             <div className={classes.createComponent}>
                 <Fab

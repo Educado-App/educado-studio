@@ -125,7 +125,7 @@ module.exports = (app) => {
     res.send(course);
   });
 
-  // Delete all documents for user - the Nueclear option.
+  // Delete all documents for user - the Nuclear option.
   app.post("/api/course/delete", requireLogin, async (req, res) => {
     const { course_id } = req.body;
     let course;
@@ -315,7 +315,7 @@ module.exports = (app) => {
     }
   });
 
-  //Create quiz component
+  // Create quiz component
   // Does the same as create component except creating an entry for the quiz itself in mongodb
   // Also used for creating a new question linked to the same quiz component
   app.post("/api/component/quiz/create", async (req, res) => {
@@ -359,8 +359,26 @@ module.exports = (app) => {
       res.send(component);
     } catch (err) {
       res.status(422).send(err);
-    };
+    }
   });
+
+  app.post("/api/component/quiz/update", async (req, res) => {
+    const { quiz, component_id } = req.body;
+
+    let qwas = [];
+
+    component = await Component.findById(component_id);
+
+    for (let i = 0; i < component.quizzes.length; i++) {
+        qwas[i] = await Quiz.findById(component.quizzes[i]);
+    }
+
+
+
+    // Send response
+    //res.send(component);
+  });
+
 
   //Get all components
   app.post("/api/component/getallcomponents", async (req, res) => {
