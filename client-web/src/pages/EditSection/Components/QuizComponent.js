@@ -94,7 +94,7 @@ const QuizComponent = (props) => {
             <div className={classes.media}>
                 <QuestionSegment onChange={onChangeText}/>
                 <QuestionWithAnswersBucket
-                    qwasList={props.course.fhgghfhjgfh}
+                    qwasList={props.course.somelistfromcourse}
                     onQuizChange={quizContentUpdate}
                 />
             </div>
