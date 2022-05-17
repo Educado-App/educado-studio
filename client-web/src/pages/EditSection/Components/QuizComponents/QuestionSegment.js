@@ -65,6 +65,8 @@ const QuestionSegment = (props) => {
            </div>
             <div>
                 <AnswersSegment/>
+                <AnswersSegment/>
+                <AnswersSegment/>
             </div>
         </Card>
     );

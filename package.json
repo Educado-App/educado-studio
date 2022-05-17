@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/icons-material": "^5.5.1",
     "aws-sdk": "^2.1083.0",
     "cli": "^1.0.1",
@@ -31,6 +32,7 @@
     "multer-s3": "^2.10.0",
     "nodemon": "^2.0.6",
     "passport": "^0.4.1",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "react-star-ratings": "^2.3.0"
   }
 }
