@@ -8,11 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Card } from "@material-ui/core";
 
 // Material UI components
-import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Checkbox from "@material-ui/core/Checkbox";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
-import StarIcon from "@material-ui/icons/Star";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import FilledInput from "@material-ui/core/FilledInput";
@@ -48,9 +44,8 @@ const PointsSegment = (props) => {
                 <InputLabel htmlFor="filled-adornment-amount">Difficulty</InputLabel>
                 <FilledInput
                     endAdornment={ <InputAdornment position="end">
-
-                        <Box component="fieldset" mb={3} borderColor="transparent">
-                            <Typography component="legend">Controlled</Typography>
+                        <Box component="fieldset" borderColor="transparent">
+                            <Typography component="legend"> </Typography>
                             <Rating
                                 name="simple-controlled"
                                 value={value}

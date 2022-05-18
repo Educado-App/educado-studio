@@ -19,10 +19,8 @@ import QuestionSegment from "./QuizComponents/QuestionSegment";
 import AddIcon from "@material-ui/icons/Add";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import TextFieldsIcon from "@material-ui/icons/TextFields";
 import ListItemText from "@material-ui/core/ListItemText";
 import Menu from "@material-ui/core/Menu";
-import HelpIcon from '@material-ui/icons/Help';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 
 
@@ -96,7 +94,7 @@ const QuizComponent = (props) => {
     return (
         <Card className={classes.root}>
             <div className={classes.media}>
-                <QuestionSegment onChange={onChangeText}></QuestionSegment>
+                <QuestionSegment onChange={onChangeText}/>
             </div>
             <div className={classes.createComponent}>
                 <Fab
@@ -106,7 +104,7 @@ const QuizComponent = (props) => {
                     aria-haspopup="true"
                     onClick={handleClick}
                 >
-                    <AddIcon> </AddIcon>
+                    <AddIcon/>
                 </Fab>
             </div>
             <Menu

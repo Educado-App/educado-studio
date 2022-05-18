@@ -13,21 +13,19 @@ import { Card } from "@material-ui/core";
 
 
 // Material UI components
-import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import StarIcon from '@material-ui/icons/Star';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import FilledInput from "@material-ui/core/FilledInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
+import CancelIcon from "@material-ui/icons/Cancel";
+import IconButton from "@material-ui/core/IconButton";
+
 
 const useStyles = makeStyles((theme) => ({
     media: {
         width: "720px",
         background: "lightblue",
+        textEmphasisColor: "lightblue",
     },
     check: {
       width: "720px",
@@ -46,26 +44,39 @@ const QuestionSegment = (props) => {
         return component._id === props.id;
     });
 
+    const handleDeleteQuestion = (event) => {
+      //missing routing
+    }
+
     const classes = useStyles();
     
     return (
         <Card>
             <PointsSegment/>
            <div>
-               <TextField
-               className={classes.media}
-               required
-               id="filled-search"
-               variant="filled"
-               multiline
-               rowsMax={4}
-               rows={2}
-               label={"Question"}
-           > </TextField>
+               <FormControl
+                   fullWidth
+                   variant="filled"
+                   className={classes.media}>
+                   <InputLabel htmlFor="filled-adornment-amount">Question</InputLabel>
+                   <FilledInput
+                        id="filled-adornment-amount"
+                        multiline
+                        endAdornment={<InputAdornment position="end">
+                            <InputLabel>
+                                 <IconButton
+                                  color="primary"
+                                  component="span"
+                                  onClick={handleDeleteQuestion}
+                                 >
+                                     <CancelIcon/>
+                                 </IconButton>
+                            </InputLabel>
+                        </InputAdornment>}
+                   />
+               </FormControl>
            </div>
             <div>
-                <AnswersSegment/>
-                <AnswersSegment/>
                 <AnswersSegment/>
             </div>
         </Card>
