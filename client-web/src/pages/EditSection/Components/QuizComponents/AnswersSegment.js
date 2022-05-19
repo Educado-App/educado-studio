@@ -29,6 +29,7 @@ const AnswersSegment = (props) => {
   const activeComponent = props.course.sectionComponents.find((component) => {
     return component._id === props.id;
   });
+<<<<<<< HEAD
 
   const classes = useStyles();
 
@@ -48,6 +49,27 @@ const AnswersSegment = (props) => {
   };
   */
 
+=======
+
+  const classes = useStyles();
+
+  const [checked, setChecked] = useState(props.check);
+  const [answerText, setAnswerText] = useState(props.text);
+  //const [answerAudio, setAnswerAudio] = useState(props.audio)
+
+  const answerTextHandler = (event) => {
+    if (event.target.value !== null) {
+      setAnswerText(event.target.value);
+    }
+  };
+
+  /*
+  const answerAudioHandler = (event) => {
+    setAnswerAudio();
+  };
+  */
+
+>>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
   const checkboxHandler = (event) => {
     setChecked(event.target.checked);
   };
@@ -57,13 +79,20 @@ const AnswersSegment = (props) => {
       textAnswer: answerText,
       //audioAnswer: answerAudio,
       checkbox: checked
+<<<<<<< HEAD
     };
 <<<<<<< HEAD
 
     const checkboxHandler = (event) => {
         setAnswerText(event.target.checked);
+=======
+>>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
     };
+    props.onAnswerChange(answerData);
+  },[checked, answerText]);
 
+
+<<<<<<< HEAD
     const handleCorrectAnswer = (event) => {
       //missing routing
     }
@@ -72,6 +101,8 @@ const AnswersSegment = (props) => {
        //missing routing
     }
 
+=======
+>>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
   return (
       <Card>
         <FormControl fullWidth className={classes.margin} variant="filled" >
@@ -92,7 +123,10 @@ const AnswersSegment = (props) => {
         </FormControl>
       </Card>
   );
+<<<<<<< HEAD
 >>>>>>> d6e3c0e (bucket mm.)
+=======
+>>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
 };
 
 function mapStateToProps(state) {

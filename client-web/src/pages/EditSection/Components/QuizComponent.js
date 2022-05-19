@@ -92,7 +92,10 @@ const QuizComponent = (props) => {
     return (
         <Card className={classes.root}>
             <div className={classes.media}>
+<<<<<<< HEAD
                 <QuestionSegment onChange={onChangeText}/>
+=======
+>>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
                 <QuestionWithAnswersBucket
                     qwasList={props.course.somelistfromcourse}
                     onQuizChange={quizContentUpdate}
