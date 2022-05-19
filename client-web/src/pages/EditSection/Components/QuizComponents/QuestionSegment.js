@@ -2,16 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../../store/actions/Course";
-<<<<<<< HEAD
-<<<<<<< HEAD
 import AnswersSegment from "./AnswersSegment";
 import PointsSegment from "./PointsSegment";
-
-
-=======
->>>>>>> d6e3c0e (bucket mm.)
-=======
->>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
 
 // Material UI base
 import { makeStyles } from "@material-ui/core/styles";
@@ -53,57 +45,22 @@ const QuestionSegment = (props) => {
   });
 
   const classes = useStyles();
-<<<<<<< HEAD
 
   const [ questionText, setQuestionText ] = useState(props.text);
   //const [ questionAudio, setQuestionAudio ] = useState(props.audio)
 
-<<<<<<< HEAD
     const handleDeleteQuestion = (event) => {
       //missing routing
     }
 
-    const classes = useStyles();
-    
-    return (
-=======
-  const questionTextChangeHandler = (event) => {
+    const questionTextChangeHandler = (event) => {
     setQuestionText(event.target.value);
   };
-  /*
-  const questionAudioChangeHandler = () => {
-    setQuestionAudio();
-  };
-  */
-
-
-
 
   return (
->>>>>>> d6e3c0e (bucket mm.)
-=======
-
-  const [ questionText, setQuestionText ] = useState(props.text);
-  //const [ questionAudio, setQuestionAudio ] = useState(props.audio)
-
-  const questionTextChangeHandler = (event) => {
-    setQuestionText(event.target.value);
-  };
-  /*
-  const questionAudioChangeHandler = () => {
-    setQuestionAudio();
-  };
-  */
-
-
-
-
-  return (
->>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
         <Card>
             <PointsSegment/>
            <div>
-<<<<<<< HEAD
                <FormControl
                    fullWidth
                    variant="filled"
@@ -125,25 +82,10 @@ const QuestionSegment = (props) => {
                         </InputAdornment>}
                    />
                </FormControl>
-=======
-               <TextField
-               className={classes.media}
-               required
-               id="filled-search"
-               variant="filled"
-               multiline
-               rowsMax={4}
-               rows={2}
-               label={"Question"}
-               onChange={questionTextChangeHandler}
-           > </TextField>
->>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
            </div>
-            <!--
             <div>
-                <AnswersSegment onAnswerChange={answerChangeHandler}/>
+                <AnswersSegment />
             </div>
-            -->
         </Card>
     );
 };

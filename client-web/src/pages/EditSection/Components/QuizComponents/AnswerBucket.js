@@ -1,7 +1,7 @@
 // Base imports
 import React, {useState} from "react";
 import { connect } from "react-redux";
-import * as courseActions from "../../store/actions/Course";
+import * as courseActions from "../../../../store/actions/Course";
 
 // Material UI components
 import { List, ListItem } from "@material-ui/core";

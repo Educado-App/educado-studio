@@ -1,8 +1,7 @@
 // Base imports
 import React, {useEffect, useState} from "react";
 import { connect } from "react-redux";
-import * as courseActions from "../../store/actions/Course";
-import AnswersSegment from "./AnswersSegment";
+import * as courseActions from "../../../../store/actions/Course";
 
 // Material UI components
 import { List, ListItem } from "@material-ui/core";
@@ -10,8 +9,6 @@ import { List, ListItem } from "@material-ui/core";
 // Project imports
 import QuestionSegment from "./QuestionSegment";
 import AnswerBucket from "./AnswerBucket";
-
-
 
 const QuestionWithAnswersBucket = (props) => {
   const [ answers, setAnswers ] = useState();
