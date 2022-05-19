@@ -404,7 +404,7 @@ module.exports = (app) => {
 
   // Delete question
   app.post("/api/component/quiz/deletequestion", async (req, res) => {
-    const { questionId, componentId } = req.body;
+    /*const { questionId, componentId } = req.body;
 
     await Quiz.deleteOne({ _id: questionId }, (err) => {
       console.log(err);
@@ -414,7 +414,7 @@ module.exports = (app) => {
     const quizExists = (quizId) => quizId === questionId;
     quizIndex = component.quizzes.findIndex(quizExists);
     console.log(quizIndex);
-
+*/
   });
 
   //Update Component order
