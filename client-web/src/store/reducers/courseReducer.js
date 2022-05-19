@@ -158,7 +158,7 @@ const reducer = (state = initialState, action) => {
         sectionComponents: tempState,
       };
 
-  /*  case UPDATE_COMPONENT_QUIZ:
+    case UPDATE_COMPONENT_QUIZ:
       const objectIndex = state.sectionComponents.findIndex(
         (obj) => obj._id === action.payload._id
       );
@@ -169,8 +169,8 @@ const reducer = (state = initialState, action) => {
 
       return {
         ...state,
-        sectionComponents: tempState,
-      }*/
+        sectionComponents: temporaryState,
+      }
 
     default:
       return {

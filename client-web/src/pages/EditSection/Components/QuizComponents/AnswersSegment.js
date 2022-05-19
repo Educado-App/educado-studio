@@ -1,5 +1,5 @@
 // Base imports
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../../store/actions/Course";
 import clsx from 'clsx';
@@ -25,22 +25,74 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AnswersSegment = (props) => {
-    // props.id = activeComponentId
-    // Find component i sectionComponents med tilsvarende id
-    // Upon changes, update redux state
 
-    const activeComponent = props.course.sectionComponents.find((component) => {
-        return component._id === props.id;
-    });
+  const activeComponent = props.course.sectionComponents.find((component) => {
+    return component._id === props.id;
+  });
+<<<<<<< HEAD
 
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = useState(props.check);
+  const [answerText, setAnswerText] = useState(props.text);
+  //const [answerAudio, setAnswerAudio] = useState(props.audio)
 
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
+  const answerTextHandler = (event) => {
+    if (event.target.value !== null) {
+      setAnswerText(event.target.value);
+    }
+  };
+
+  /*
+  const answerAudioHandler = (event) => {
+    setAnswerAudio();
+  };
+  */
+
+=======
+
+  const classes = useStyles();
+
+  const [checked, setChecked] = useState(props.check);
+  const [answerText, setAnswerText] = useState(props.text);
+  //const [answerAudio, setAnswerAudio] = useState(props.audio)
+
+  const answerTextHandler = (event) => {
+    if (event.target.value !== null) {
+      setAnswerText(event.target.value);
+    }
+  };
+
+  /*
+  const answerAudioHandler = (event) => {
+    setAnswerAudio();
+  };
+  */
+
+>>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
+  const checkboxHandler = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  useEffect(() => {
+    const answerData = {
+      textAnswer: answerText,
+      //audioAnswer: answerAudio,
+      checkbox: checked
+<<<<<<< HEAD
     };
+<<<<<<< HEAD
 
+    const checkboxHandler = (event) => {
+        setAnswerText(event.target.checked);
+=======
+>>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
+    };
+    props.onAnswerChange(answerData);
+  },[checked, answerText]);
+
+
+<<<<<<< HEAD
     const handleCorrectAnswer = (event) => {
       //missing routing
     }
@@ -49,38 +101,32 @@ const AnswersSegment = (props) => {
        //missing routing
     }
 
-    return (
-        <Card>
-            <FormControl fullWidth className={classes.margin} variant="filled">
-                <InputLabel htmlFor="filled-adornment-amount">Answer</InputLabel>
-                <FilledInput
-                    id="filled-adornment-amount"
-                    multiline
-                    minRow={2}
-                    maxRows={4}
-                    endAdornment={<InputAdornment position="end">
-                       <label>
-                           <Checkbox
-                               defaultChecked={false}
-                               color="primary"
-                               edge="end"
-                               onClick={handleCorrectAnswer}
-                           />
-                       </label>
-                        <label>
-                            <IconButton
-                                color="primary"
-                                component="span"
-                                onClick={deleteAnswer}
-                            >
-                                <CancelIcon/>
-                            </IconButton>
-                        </label>
-                </InputAdornment>}
-                />
-            </FormControl>
-        </Card>
-    );
+=======
+>>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
+  return (
+      <Card>
+        <FormControl fullWidth className={classes.margin} variant="filled" >
+          <InputLabel htmlFor="filled-adornment-amount">Answer</InputLabel>
+          <FilledInput
+              value={answerText}
+              id="filled-adornment-amount"
+              endAdornment={<InputAdornment position="end">
+                <Checkbox
+                  checked={checked}
+                  color="primary"
+                  edge="end"
+                  onClick={checkboxHandler}
+                /></InputAdornment>
+              }
+              onChange={answerTextHandler}
+          />
+        </FormControl>
+      </Card>
+  );
+<<<<<<< HEAD
+>>>>>>> d6e3c0e (bucket mm.)
+=======
+>>>>>>> ad1b31ba76df5d3d2975b91f94e54c0cd35ae6ba
 };
 
 function mapStateToProps(state) {
