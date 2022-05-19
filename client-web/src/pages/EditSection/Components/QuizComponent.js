@@ -82,7 +82,6 @@ const QuizComponent = (props) => {
 
     useEffect(() => {
         getQuizList();
-        console.log(props.course.componentQuizzes);
     }, []);
 
     const handleCreateNewAnswer = async (event) => {
@@ -91,10 +90,8 @@ const QuizComponent = (props) => {
     };
 
     const handleCreateNewQuestion = async (event) => {
-        console.log(props.course.componentQuizzes);
         await props.createQuiz(activeComponent._id);
         props.trigger();
-        console.log(props.course.componentQuizzes);
     };
 
     const onSave = async () => {
