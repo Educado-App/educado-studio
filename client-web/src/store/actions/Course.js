@@ -193,6 +193,21 @@ export const getAllQuizzes = (quizzes) => {
   };
 };
 
+// Delete question and connected answers
+export const DELETE_QUESTION = "DELETE_QUESTION";
+
+export const deleteQuestion = (question, component) => {
+  const obj = {
+    question: question,
+    component: component,
+  };
+
+  return async (dispatch) => {
+    const res = await axios.post("/api/component/quiz/deletequestion", obj);
+    dispatch({ type: DELETE_QUESTION, payload: res.data });
+  };
+};
+
 // Update order of components for given section
 export const UPDATE_COMPONENTS_ORDER = "UPDATE_COMPONENTS_ORDER";
 

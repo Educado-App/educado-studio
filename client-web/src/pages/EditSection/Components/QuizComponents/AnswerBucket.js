@@ -18,20 +18,31 @@ const AnswerBucket = (props) => {
   };
 
   return (
-      <List>
-        {props.answerList.map((answer) => (
-            <ListItem
-                button
-                disableRipple
-            >
-              <AnswersSegment
-                  text={answer.textAnswer}
-                  check={answer.correctAnswer}
-                  audio={answer.audioAnswer}
-                  onAnswerChange={answerChangeHandler}
-              />
-            </ListItem>
-        ))
+      <List type="dense">
+        {props.answersList.map((answer) => {
+          let answerToRender = (
+              <div>
+                <AnswersSegment/>
+              </div>
+          );
+
+          let keyValue;
+            if (!answer._id) {
+              keyValue = "temp";
+            } else {
+              keyValue = answer._id;
+            }
+
+          return (
+              <ListItem
+                  button
+                  disableRipple
+                  key={keyValue}
+              >
+                {answerToRender}
+              </ListItem>
+          );
+        })
         }
       </List>
   );

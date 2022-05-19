@@ -25,14 +25,14 @@ const QuestionWithAnswersBucket = (props) => {
   }, [question, answers]);
   */
 
-
   return (
       <List type="dense">
         {props.qwasList.map((qwas) => {
           let QwAsToRender = (
               <div>
-                <QuestionSegment
-                  id={qwas._id}
+                <QuestionSegment 
+                  id={qwas} 
+                  componentId={props.componentId}
                 />
               </div>
           );

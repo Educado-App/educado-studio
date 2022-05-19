@@ -396,10 +396,25 @@ module.exports = (app) => {
     const { quizzes } = req.body;
     let list = [];
     for (let i = 0; i < quizzes.length; i++) {
-      const temp = await Quiz.findOne({ _id: components[i] });
+      const temp = await Quiz.findOne({ _id: quizzes[i] });
       list.push(temp);
     }
     res.send(list);
+  });
+
+  // Delete question
+  app.post("/api/component/quiz/deletequestion", async (req, res) => {
+    const { questionId, componentId } = req.body;
+
+    await Quiz.deleteOne({ _id: questionId }, (err) => {
+      console.log(err);
+    });
+
+    component = await Component.findById(componentId);
+    const quizExists = (quizId) => quizId === questionId;
+    quizIndex = component.quizzes.findIndex(quizExists);
+    console.log(quizIndex);
+
   });
 
   //Update Component order

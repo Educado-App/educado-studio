@@ -76,12 +76,11 @@ const QuizComponent = (props) => {
     };
 
     const getQuizList = async () => {
-        await courseActions.getAllQuizzes(activeComponent.quizzes);
-        props.trigger();
-    }
+        await props.getAllQuizzes(activeComponent.quizzes);
+    };
 
     useEffect(() => {
-        getQuizList();
+       getQuizList();
     }, []);
 
     const handleCreateNewAnswer = async (event) => {
@@ -104,6 +103,7 @@ const QuizComponent = (props) => {
                 <QuestionWithAnswersBucket
                     qwasList={props.course.componentQuizzes}
                     onQuizChange={quizContentUpdate}
+                    componentId={activeComponent._id}
                 />
             </div>
             <div className={classes.createComponent}>

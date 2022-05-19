@@ -49,11 +49,11 @@ const QuestionSegment = (props) => {
   const [ questionText, setQuestionText ] = useState(props.text);
   //const [ questionAudio, setQuestionAudio ] = useState(props.audio)
 
-    const handleDeleteQuestion = (event) => {
-      //missing routing
-    }
+  const handleDeleteQuestion = (event) => {
+    props.deleteQuestion(props.id, props.componentId);
+  };
 
-    const questionTextChangeHandler = (event) => {
+  const questionTextChangeHandler = (event) => {
     setQuestionText(event.target.value);
   };
 
