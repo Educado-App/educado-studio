@@ -179,6 +179,20 @@ export const getAllComponents = (components) => {
   };
 };
 
+// Get all quizzes for component
+export const GET_ALL_QUIZZES = "GET_ALL_QUIZZES";
+
+export const getAllQuizzes = (quizzes) => {
+  const obj = {
+    quizzes: quizzes,
+  };
+
+  return async (dispatch) => {
+    const res = await axios.post("/api/component/quiz/getallquizzes", obj);
+    dispatch({ type: GET_ALL_QUIZZES, payload: res.data });
+  };
+};
+
 // Update order of components for given section
 export const UPDATE_COMPONENTS_ORDER = "UPDATE_COMPONENTS_ORDER";
 

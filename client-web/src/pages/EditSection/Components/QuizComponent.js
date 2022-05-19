@@ -1,5 +1,5 @@
 // Base imports
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../store/actions/Course";
 // Material UI base
@@ -73,7 +73,17 @@ const QuizComponent = (props) => {
 
     const quizContentUpdate = (obj) => {
       setQuizContent(obj);
+    };
+
+    const getQuizList = async () => {
+        await courseActions.getAllQuizzes(activeComponent.quizzes);
+        props.trigger();
     }
+
+    useEffect(() => {
+        getQuizList();
+        console.log(props.course.componentQuizzes);
+    }, []);
 
     const handleCreateNewAnswer = async (event) => {
         await props.createAnswer(activeComponent._id);
@@ -81,8 +91,10 @@ const QuizComponent = (props) => {
     };
 
     const handleCreateNewQuestion = async (event) => {
+        console.log(props.course.componentQuizzes);
         await props.createQuiz(activeComponent._id);
         props.trigger();
+        console.log(props.course.componentQuizzes);
     };
 
     const onSave = async () => {
@@ -93,7 +105,7 @@ const QuizComponent = (props) => {
         <Card className={classes.root}>
             <div className={classes.media}>
                 <QuestionWithAnswersBucket
-                    qwasList={props.course.somelistfromcourse}
+                    qwasList={props.course.componentQuizzes}
                     onQuizChange={quizContentUpdate}
                 />
             </div>

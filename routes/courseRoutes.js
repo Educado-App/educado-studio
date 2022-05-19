@@ -361,7 +361,7 @@ module.exports = (app) => {
       res.status(422).send(err);
     }
   });
-
+/*
   app.post("/api/component/quiz/update", async (req, res) => {
     const { quiz, component_id } = req.body;
 
@@ -377,7 +377,7 @@ module.exports = (app) => {
 
     // Send response
     //res.send(component);
-  });
+  });*/
 
 
   //Get all components
@@ -386,6 +386,17 @@ module.exports = (app) => {
     let list = [];
     for (let i = 0; i < components.length; i++) {
       const temp = await Component.findOne({ _id: components[i] });
+      list.push(temp);
+    }
+    res.send(list);
+  });
+
+  // Get all quizzes 
+  app.post("/api/component/quiz/getallquizzes", async (req, res) => {
+    const { quizzes } = req.body;
+    let list = [];
+    for (let i = 0; i < quizzes.length; i++) {
+      const temp = await Quiz.findOne({ _id: components[i] });
       list.push(temp);
     }
     res.send(list);

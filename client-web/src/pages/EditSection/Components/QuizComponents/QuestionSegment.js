@@ -41,7 +41,7 @@ const QuestionSegment = (props) => {
   // Upon changes, update redux state
 
   const activeComponent = props.course.sectionComponents.find((component) => {
-    return component._id === props.id;
+    return component._id === props._id;
   });
 
   const classes = useStyles();
@@ -83,9 +83,6 @@ const QuestionSegment = (props) => {
                    />
                </FormControl>
            </div>
-            <div>
-                <AnswersSegment />
-            </div>
         </Card>
     );
 };

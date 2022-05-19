@@ -52,7 +52,7 @@ const AnswersSegment = (props) => {
     setChecked(event.target.checked);
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     const answerData = {
       textAnswer: answerText,
       //audioAnswer: answerAudio,
@@ -63,7 +63,7 @@ const AnswersSegment = (props) => {
         setAnswerText(event.target.checked);
     };
     props.onAnswerChange(answerData);
-  },[checked, answerText]);
+  },[checked, answerText]);*/
 
 
     const handleCorrectAnswer = (event) => {

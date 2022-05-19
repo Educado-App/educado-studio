@@ -16,6 +16,7 @@ import ImageComponent from "./Components/ImageComponent";
 import VideoComponent from "./Components/VideoComponent";
 import AudioComponent from "./Components/AudioComponent";
 import QuizComponent from "./Components/QuizComponent";
+import QuestionWithAnswersBucket from "./Components/QuizComponents/QuestionWithAnswersBucket";
 
 
 const ComponentBucket = (props) => {

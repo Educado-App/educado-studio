@@ -15,6 +15,7 @@ import {
   CREATE_QUIZ,
   CREATE_ANSWER,
   GET_ALL_COMPONENTS,
+  GET_ALL_QUIZZES,
   UPDATE_COMPONENTS_ORDER,
   UPDATE_COMPONENT_TEXT,
   UPDATE_COMPONENT_QUIZ,
@@ -28,6 +29,7 @@ const initialState = {
   userCourses: [{}],
   courseSections: [{}],
   sectionComponents: [{}],
+  componentQuizzes: [{}],
 };
 
 const reducer = (state = initialState, action) => {
@@ -124,6 +126,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeCourse: action.payload,
+        componentQuizzes: action.payload.quizzes,
       };
 
     case CREATE_ANSWER:
@@ -136,6 +139,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         sectionComponents: action.payload,
+      };
+
+    case GET_ALL_QUIZZES:
+      return {
+        ...state,
+        componentQuizzes: action.payload,
       };
 
     case UPDATE_COMPONENTS_ORDER:

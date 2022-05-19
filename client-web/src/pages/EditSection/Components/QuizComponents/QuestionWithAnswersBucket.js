@@ -10,7 +10,9 @@ import { List, ListItem } from "@material-ui/core";
 import QuestionSegment from "./QuestionSegment";
 import AnswerBucket from "./AnswerBucket";
 
+
 const QuestionWithAnswersBucket = (props) => {
+
   const [ answers, setAnswers ] = useState();
   const [ x, setX ] = useState();
   /*
@@ -30,19 +32,23 @@ const QuestionWithAnswersBucket = (props) => {
           let QwAsToRender = (
               <div>
                 <QuestionSegment
-                    text={qwas.question.textQuestion}
-                    audio={qwas.question.audioQuestion}
-                />
-                <AnswerBucket
-                    answerList={qwas.answers}
+                  id={qwas._id}
                 />
               </div>
           );
+
+          let keyValue;
+            if (!qwas._id) {
+              keyValue = "temp";
+            } else {
+              keyValue = qwas._id;
+            }
 
           return (
               <ListItem
                   button
                   disableRipple
+                  key={keyValue}
               >
                 {QwAsToRender}
               </ListItem>
