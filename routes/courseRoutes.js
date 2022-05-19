@@ -403,17 +403,22 @@ module.exports = (app) => {
   });
 
   // Delete question
+  // TODO: when there's only one question present and the user deletes, it crashes the site
+  // this is because the only quiz is removed from the components array of quizIds
+  // the component should then be deleted (but currently isn't) and therefore doesn't have any questions to render
   app.post("/api/component/quiz/deletequestion", async (req, res) => {
-    const { questionId, componentId } = req.body;
+    const idObj = req.body;
 
-    await Quiz.deleteOne({ _id: questionId }, (err) => {
+    await Quiz.deleteOne({ _id: idObj.question }, (err) => {
       console.log(err);
     });
 
-    component = await Component.findById(componentId);
-    const quizExists = (quizId) => quizId === questionId;
-    quizIndex = component.quizzes.findIndex(quizExists);
-    console.log(quizIndex);
+    // Find component that holds question to be deleted
+    component = await Component.findById(idObj.component);
+    // Find index of question to be removed from array of Ids, then splice said index from array
+    quizIndex = component.quizzes.findIndex((quizId) => quizId == idObj.question);
+    component.quizzes.splice(quizIndex, 1);
+    res.send(component.quizzes);
 
   });
 

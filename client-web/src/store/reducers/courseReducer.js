@@ -148,6 +148,12 @@ const reducer = (state = initialState, action) => {
         componentQuizzes: action.payload,
       };
 
+    case DELETE_QUESTION:
+      return {
+        ...state,
+        componentQuizzes: action.payload,
+      };
+
     case UPDATE_COMPONENTS_ORDER:
       return {
         ...state,

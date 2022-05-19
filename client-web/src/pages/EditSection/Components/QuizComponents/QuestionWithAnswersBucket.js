@@ -31,8 +31,8 @@ const QuestionWithAnswersBucket = (props) => {
           let QwAsToRender = (
               <div>
                 <QuestionSegment 
-                  id={qwas} 
-                  componentId={props.componentId}
+                  id={qwas._id} 
+                  componentId={props.component}
                 />
               </div>
           );
