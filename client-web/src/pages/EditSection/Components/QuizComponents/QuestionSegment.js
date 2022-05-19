@@ -77,7 +77,7 @@ const QuestionSegment = (props) => {
                </FormControl>
            </div>
             <div>
-                <AnswersSegment/>
+                <AnswersSegment />
             </div>
         </Card>
     );
