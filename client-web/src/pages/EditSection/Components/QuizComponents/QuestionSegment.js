@@ -40,15 +40,18 @@ const QuestionSegment = (props) => {
   // Find component i sectionComponents med tilsvarende id
   // Upon changes, update redux state
 
+  const activeComponent = props.course.sectionComponents.find((component) => {
+    return component._id === props._id;
+  });
+
   const classes = useStyles();
 
   const [ questionText, setQuestionText ] = useState(props.text);
   //const [ questionAudio, setQuestionAudio ] = useState(props.audio)
 
   const handleDeleteQuestion = (event) => {
-    props.deleteQuestion(props.id, props.component);
+    props.deleteQuestion(props.id, props.componentId);
   };
-
 
   const questionTextChangeHandler = (event) => {
     setQuestionText(event.target.value);

@@ -103,7 +103,7 @@ const QuizComponent = (props) => {
                 <QuestionWithAnswersBucket
                     qwasList={props.course.componentQuizzes}
                     onQuizChange={quizContentUpdate}
-                    component={activeComponent._id}
+                    componentId={activeComponent._id}
                 />
             </div>
             <div className={classes.createComponent}>
