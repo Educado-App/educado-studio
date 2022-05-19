@@ -92,14 +92,11 @@ const QuizComponent = (props) => {
     return (
         <Card className={classes.root}>
             <div className={classes.media}>
-<<<<<<< HEAD
                 <QuestionSegment onChange={onChangeText}/>
-=======
                 <QuestionWithAnswersBucket
-                    qwasList={props.course.}
+                    qwasList={props.course.fhgghfhjgfh}
                     onQuizChange={quizContentUpdate}
                 />
->>>>>>> d6e3c0e (bucket mm.)
             </div>
             <div className={classes.createComponent}>
                 <Fab
