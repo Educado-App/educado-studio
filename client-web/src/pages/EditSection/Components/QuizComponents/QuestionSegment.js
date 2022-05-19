@@ -1,11 +1,14 @@
 // Base imports
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../../store/actions/Course";
+<<<<<<< HEAD
 import AnswersSegment from "./AnswersSegment";
 import PointsSegment from "./PointsSegment";
 
 
+=======
+>>>>>>> d6e3c0e (bucket mm.)
 
 // Material UI base
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,6 +22,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import CancelIcon from "@material-ui/icons/Cancel";
 import IconButton from "@material-ui/core/IconButton";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,14 +40,20 @@ const useStyles = makeStyles((theme) => ({
 
 
 const QuestionSegment = (props) => {
-    // props.id = activeComponentId
-    // Find component i sectionComponents med tilsvarende id
-    // Upon changes, update redux state
+  // props.id = activeComponentId
+  // Find component i sectionComponents med tilsvarende id
+  // Upon changes, update redux state
 
-    const activeComponent = props.course.sectionComponents.find((component) => {
-        return component._id === props.id;
-    });
+  const activeComponent = props.course.sectionComponents.find((component) => {
+    return component._id === props.id;
+  });
 
+  const classes = useStyles();
+
+  const [ questionText, setQuestionText ] = useState(props.text);
+  //const [ questionAudio, setQuestionAudio ] = useState(props.audio)
+
+<<<<<<< HEAD
     const handleDeleteQuestion = (event) => {
       //missing routing
     }
@@ -51,6 +61,21 @@ const QuestionSegment = (props) => {
     const classes = useStyles();
     
     return (
+=======
+  const questionTextChangeHandler = (event) => {
+    setQuestionText(event.target.value);
+  };
+  /*
+  const questionAudioChangeHandler = () => {
+    setQuestionAudio();
+  };
+  */
+
+
+
+
+  return (
+>>>>>>> d6e3c0e (bucket mm.)
         <Card>
             <PointsSegment/>
            <div>
@@ -77,7 +102,7 @@ const QuestionSegment = (props) => {
                </FormControl>
            </div>
             <div>
-                <AnswersSegment />
+                <AnswersSegment onAnswerChange={answerChangeHandler}/>
             </div>
         </Card>
     );

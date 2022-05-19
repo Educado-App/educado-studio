@@ -1,5 +1,5 @@
 // Base imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../../store/actions/Course";
 import clsx from 'clsx';
@@ -26,19 +26,39 @@ const useStyles = makeStyles((theme) => ({
 
 const AnswersSegment = (props) => {
 
-    const activeComponent = props.course.sectionComponents.find((component) => {
-        return component._id === props.id;
-    });
+  const activeComponent = props.course.sectionComponents.find((component) => {
+    return component._id === props.id;
+  });
 
-    const classes = useStyles();
+  const classes = useStyles();
 
+  const [checked, setChecked] = useState(props.check);
+  const [answerText, setAnswerText] = useState(props.text);
+  //const [answerAudio, setAnswerAudio] = useState(props.audio)
 
-    const [checked, setChecked] = useState(false);
-    const [answerText, setAnswerText] = useState("");
+  const answerTextHandler = (event) => {
+    if (event.target.value !== null) {
+      setAnswerText(event.target.value);
+    }
+  };
 
-    const answerTextChangeHandler = (event) => {
-        setChecked(event.target.value);
+  /*
+  const answerAudioHandler = (event) => {
+    setAnswerAudio();
+  };
+  */
+
+  const checkboxHandler = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  useEffect(() => {
+    const answerData = {
+      textAnswer: answerText,
+      //audioAnswer: answerAudio,
+      checkbox: checked
     };
+<<<<<<< HEAD
 
     const checkboxHandler = (event) => {
         setAnswerText(event.target.checked);
@@ -52,38 +72,27 @@ const AnswersSegment = (props) => {
        //missing routing
     }
 
-    return (
-        <Card>
-            <FormControl fullWidth className={classes.margin} variant="filled" onChange={answerTextChangeHandler}>
-                <InputLabel htmlFor="filled-adornment-amount">Answer</InputLabel>
-                <FilledInput
-                    id="filled-adornment-amount"
-                    multiline
-                    minRow={2}
-                    maxRows={4}
-                    endAdornment={<InputAdornment position="end">
-                       <label>
-                           <Checkbox
-                               defaultChecked={false}
-                               color="primary"
-                               edge="end"
-                               onClick={handleCorrectAnswer}
-                           />
-                       </label>
-                        <label>
-                            <IconButton
-                                color="primary"
-                                component="span"
-                                onClick={deleteAnswer}
-                            >
-                                <CancelIcon/>
-                            </IconButton>
-                        </label>
-                </InputAdornment>}
-                />
-            </FormControl>
-        </Card>
-    );
+  return (
+      <Card>
+        <FormControl fullWidth className={classes.margin} variant="filled" >
+          <InputLabel htmlFor="filled-adornment-amount">Answer</InputLabel>
+          <FilledInput
+              value={answerText}
+              id="filled-adornment-amount"
+              endAdornment={<InputAdornment position="end">
+                <Checkbox
+                  checked={checked}
+                  color="primary"
+                  edge="end"
+                  onClick={checkboxHandler}
+                /></InputAdornment>
+              }
+              onChange={answerTextHandler}
+          />
+        </FormControl>
+      </Card>
+  );
+>>>>>>> d6e3c0e (bucket mm.)
 };
 
 function mapStateToProps(state) {
