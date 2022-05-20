@@ -51,7 +51,9 @@ const QuestionSegment = (props) => {
   //const [ questionAudio, setQuestionAudio ] = useState(props.audio)
 
   const handleDeleteQuestion = (event) => {
-    props.deleteQuestion(props.id, props.componentId);
+    // both are ids - of this question and from the component holding this question 
+    props.deleteQuestion(props.thisQuestion._id, props.componentId, props.sectionId);
+    props.trigger();
   };
 
   const questionTextChangeHandler = (event) => {

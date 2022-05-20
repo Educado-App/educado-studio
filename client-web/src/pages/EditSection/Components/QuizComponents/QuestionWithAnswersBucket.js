@@ -31,14 +31,15 @@ const QuestionWithAnswersBucket = (props) => {
           let QwAsToRender = (
               <div>
                 <QuestionSegment 
-                  id={qwas} 
+                  thisQuestion={qwas} 
                   componentId={props.componentId}
+                  sectionId={props.sectionId}
+                  trigger={props.trigger}
                 />
               </div>
           );
-
           let keyValue;
-            if (!qwas._id) {
+            if (!qwas) {
               keyValue = "temp";
             } else {
               keyValue = qwas._id;

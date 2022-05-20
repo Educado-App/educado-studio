@@ -104,6 +104,8 @@ const QuizComponent = (props) => {
                     qwasList={props.course.componentQuizzes}
                     onQuizChange={quizContentUpdate}
                     componentId={activeComponent._id}
+                    sectionId={props.course.activeSection}
+                    trigger={props.trigger}
                 />
             </div>
             <div className={classes.createComponent}>

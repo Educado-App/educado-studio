@@ -7,6 +7,7 @@ const Quiz = mongoose.model("quizzes");
 const Component = mongoose.model("components");
 
 const requireLogin = require("../middlewares/requireLogin");
+const { exit } = require("cli");
 
 // Routes are sorted into COURSE - SECTION - COMPONENT each with ASCII art, within each functions are in order of CRUD
 // NOTE Files do NOT delete from the backend yet, on the TODO as of 03/2022
@@ -404,17 +405,58 @@ module.exports = (app) => {
 
   // Delete question
   app.post("/api/component/quiz/deletequestion", async (req, res) => {
-    /*const { questionId, componentId } = req.body;
+    const idObj = req.body;
+    // TODO:
+    // IF IT'S THE ONLY QUESTION, DELETE COMPONENT AND UPDATE SECTION COMPONENTS ON MONGODB
 
-    await Quiz.deleteOne({ _id: questionId }, (err) => {
-      console.log(err);
-    });
+    component = await Component.findById(idObj.component);
+    let quizIndex = component.quizzes.findIndex((quizId) => quizId == idObj.question);
+    if (quizIndex !== -1 ) {
+      component.quizzes.splice(quizIndex, 1);
+    }
 
-    component = await Component.findById(componentId);
-    const quizExists = (quizId) => quizId === questionId;
-    quizIndex = component.quizzes.findIndex(quizExists);
-    console.log(quizIndex);
-*/
+    // if the only question in quiz, delete the component
+    if (component.quizzes.length < 1) {
+      const section = await Section.findById(idObj.section).catch((err) => {
+        console.log(err);
+      });
+
+      const sectionComponents = section.components;
+      let index = sectionComponents.indexOf(idObj.component);
+      if (index !== -1) {
+        sectionComponents.splice(index, 1);
+      }
+
+      await Section.findOneAndUpdate(
+        { _id: section._id },
+        { components: sectionComponents }
+      );
+
+      await Quiz.findByIdAndDelete(idObj.question);
+      await Component.findByIdAndDelete(idObj.component);
+
+      let resObj = {
+        sectionComponents: sectionComponents,
+        getComps: true,
+      };
+      res.send(resObj);
+      return;
+    }
+
+    // update component with amount of questions (quizzes entry)
+    (await Component.findByIdAndUpdate
+      (
+        { _id: component._id },
+        { quizzes: component.quizzes }
+      )
+    );
+  
+    let resObj = {
+      componentQuizzes: component.quizzes,
+      getComps: false,
+    };
+
+    res.send(resObj);
   });
 
   //Update Component order
@@ -454,7 +496,7 @@ module.exports = (app) => {
     });
 
     let componentIds = section.components;
-    let quizIds = await Component.findById(componentIds);
+    let components = await Component.findById(componentIds);
 
     let index = componentIds.indexOf(component_id);
     if (index !== -1) {
@@ -468,7 +510,7 @@ module.exports = (app) => {
       )
     ).save;
     
-    await Quiz.deleteMany({ _id: { $in: quizIds.quizzes }}, (err) => {
+    await Quiz.deleteMany({ _id: { $in: components.quizzes }}, (err) => {
       console.log(err);
     });
 

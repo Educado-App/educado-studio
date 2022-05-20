@@ -196,15 +196,31 @@ export const getAllQuizzes = (quizzes) => {
 // Delete question and connected answers
 export const DELETE_QUESTION = "DELETE_QUESTION";
 
-export const deleteQuestion = (question, component) => {
+export const deleteQuestion = (question, component, sectionId) => {
   const obj = {
     question: question,
     component: component,
+    section: sectionId,
   };
 
   return async (dispatch) => {
-    const res = await axios.post("/api/component/quiz/deletequestion", obj);
-    dispatch({ type: DELETE_QUESTION, payload: res.data });
+    const resFromDelete = await axios.post("/api/component/quiz/deletequestion", obj);
+    
+    if (resFromDelete.data.getComps !== false) {
+      const newObj = {
+        components: resFromDelete.data.sectionComponents,
+      };
+
+      const res = await axios.post("/api/component/getallcomponents", newObj);
+      dispatch({ type: GET_ALL_COMPONENTS, payload: res.data });
+      return;
+    }
+
+    const newObj = {
+      quizzes: resFromDelete.data.componentQuizzes,
+    };
+    const res = await axios.post("/api/component/quiz/getallquizzes", newObj)
+    dispatch({ type: GET_ALL_QUIZZES, payload: res.data });
   };
 };
 
