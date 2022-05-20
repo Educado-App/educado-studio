@@ -95,7 +95,7 @@ class AudioComponent extends Component {
           </label>
           <DeleteComponentButton
             component_id={this.state.componentId}
-          ></DeleteComponentButton>
+          > </DeleteComponentButton>
         </div>
       </Card>
     );

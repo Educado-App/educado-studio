@@ -17,6 +17,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import CancelIcon from "@material-ui/icons/Cancel";
 import IconButton from "@material-ui/core/IconButton";
+import AudioQA from "./AudioQA";
 
 
 
@@ -82,7 +83,11 @@ const QuestionSegment = (props) => {
                         </InputAdornment>}
                    />
                </FormControl>
+               <AudioQA/>
            </div>
+            <div>
+            <AnswersSegment/>
+        </div>
         </Card>
     );
 };

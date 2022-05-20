@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../../store/actions/Course";
+import AudioQA from "./AudioQA";
 import clsx from 'clsx';
 
 // Material UI base
@@ -70,7 +71,7 @@ const AnswersSegment = (props) => {
       //missing routing
     }
 
-    const deleteAnswer = (event) => {
+    const handleDeleteAnswer = (event) => {
        //missing routing
     }
 
@@ -81,17 +82,30 @@ const AnswersSegment = (props) => {
           <FilledInput
               value={answerText}
               id="filled-adornment-amount"
+              multiline
               endAdornment={<InputAdornment position="end">
-                <Checkbox
+                  <Checkbox
                   checked={checked}
                   color="primary"
                   edge="end"
                   onClick={checkboxHandler}
-                /></InputAdornment>
-              }
+                  />
+                  <InputLabel>
+                      <IconButton
+                          color="primary"
+                          component="span"
+                          onClick={handleDeleteAnswer}
+                      >
+                          <CancelIcon/>
+                      </IconButton>
+                  </InputLabel>
+
+
+          </InputAdornment>}
               onChange={answerTextHandler}
           />
         </FormControl>
+          <AudioQA/>
       </Card>
   );
 };
