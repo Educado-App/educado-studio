@@ -204,8 +204,10 @@ export const deleteQuestion = (question, component, sectionId) => {
   };
 
   return async (dispatch) => {
+    // post-request to the deletion part 
     const resFromDelete = await axios.post("/api/component/quiz/deletequestion", obj);
     
+    // if question was the last in quiz, it deletes the component - and the section components should be rerendered
     if (resFromDelete.data.getComps !== false) {
       const newObj = {
         components: resFromDelete.data.sectionComponents,
@@ -215,7 +217,7 @@ export const deleteQuestion = (question, component, sectionId) => {
       dispatch({ type: GET_ALL_COMPONENTS, payload: res.data });
       return;
     }
-
+    // if the question wasn't the last in the quiz, it deletes the question - and all the other questions should be rerendered
     const newObj = {
       quizzes: resFromDelete.data.componentQuizzes,
     };

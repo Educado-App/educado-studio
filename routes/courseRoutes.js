@@ -406,32 +406,34 @@ module.exports = (app) => {
   // Delete question
   app.post("/api/component/quiz/deletequestion", async (req, res) => {
     const idObj = req.body;
-    // TODO:
-    // IF IT'S THE ONLY QUESTION, DELETE COMPONENT AND UPDATE SECTION COMPONENTS ON MONGODB
 
+    // find component and remove the question to be deleted
     component = await Component.findById(idObj.component);
     let quizIndex = component.quizzes.findIndex((quizId) => quizId == idObj.question);
     if (quizIndex !== -1 ) {
       component.quizzes.splice(quizIndex, 1);
     }
 
-    // if the only question in quiz, delete the component
+    // if question to be deleted was the only one, enter these lines of code
     if (component.quizzes.length < 1) {
       const section = await Section.findById(idObj.section).catch((err) => {
         console.log(err);
       });
 
+      // find component in array of components and remove from array
       const sectionComponents = section.components;
       let index = sectionComponents.indexOf(idObj.component);
       if (index !== -1) {
         sectionComponents.splice(index, 1);
       }
 
+      // find the section and update it with the new list of components
       await Section.findOneAndUpdate(
         { _id: section._id },
         { components: sectionComponents }
       );
-
+      
+      // remove question to be deleted and component said question was in
       await Quiz.findByIdAndDelete(idObj.question);
       await Component.findByIdAndDelete(idObj.component);
 
@@ -439,10 +441,12 @@ module.exports = (app) => {
         sectionComponents: sectionComponents,
         getComps: true,
       };
+      // send obj back with list of components and boolean used for checking (see Course.js) - then stop executing
       res.send(resObj);
       return;
     }
 
+    // below only runs if question to be deleted wasn't the only one
     // update component with amount of questions (quizzes entry)
     (await Component.findByIdAndUpdate
       (
