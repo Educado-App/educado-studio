@@ -90,7 +90,7 @@ const QuizComponent = (props) => {
 
     const handleCreateNewQuestion = async (event) => {
         await props.createQuiz(activeComponent._id);
-        props.trigger();
+        getQuizList();
     };
 
     const onSave = async () => {
