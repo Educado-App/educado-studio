@@ -344,8 +344,6 @@ module.exports = (app) => {
   //Create new answer related to question in quiz component
   // should be updated when solution for choosing which question to add the answer onto is found
   // currently just pushes it onto the first quiz found in the component's quizzes array
-  // the response should also be relatede to the componentQuizzes state instead of the active component
-  // so the quiz will re-render once this is complete
   app.post("/api/component/quiz/answer/create", async (req, res) => {
     const componentObj = req.body;
 
@@ -467,6 +465,8 @@ module.exports = (app) => {
     res.send(resObj);
   });
 
+  // Delete Answer
+  // should be rewritten in a way that makes the quiz re-render upon completion
   app.post("/api/component/quiz/deleteanswer", async (req, res) => {
     const { quiz_id, answer_id } = req.body;
     
