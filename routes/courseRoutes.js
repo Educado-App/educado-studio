@@ -361,7 +361,7 @@ module.exports = (app) => {
       // $push appends a value to an array on mongodb, here we're appending a default answer object
       await Quiz.findOneAndUpdate({ _id: component.quizzes }, { $push: { answers: answerObject } });
       await component.save();
-      res.send(component);
+      res.send(component.quizzes);
     } catch (err) {
       res.status(422).send(err);
     }

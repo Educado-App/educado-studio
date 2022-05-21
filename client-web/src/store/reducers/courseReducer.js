@@ -132,7 +132,7 @@ const reducer = (state = initialState, action) => {
     case CREATE_ANSWER:
       return {
         ...state,
-        activeCourse: action.payload,
+        componentQuizzes: action.payload,
       };
     
     case GET_ALL_COMPONENTS:

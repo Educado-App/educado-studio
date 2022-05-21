@@ -85,7 +85,7 @@ const QuizComponent = (props) => {
 
     const handleCreateNewAnswer = async (event) => {
         await props.createAnswer(activeComponent._id);
-        props.trigger();
+        getQuizList();
     };
 
     const handleCreateNewQuestion = async (event) => {
@@ -105,7 +105,6 @@ const QuizComponent = (props) => {
                     onQuizChange={quizContentUpdate}
                     componentId={activeComponent._id}
                     sectionId={props.course.activeSection}
-                    trigger={props.trigger}
                 />
             </div>
             <div className={classes.createComponent}>

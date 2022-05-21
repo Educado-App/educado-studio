@@ -35,7 +35,6 @@ const QuestionWithAnswersBucket = (props) => {
                   thisQuestion={qwas} 
                   componentId={props.componentId}
                   sectionId={props.sectionId}
-                  trigger={props.trigger}
                 />
                 <AnswerBucket 
                   answersList={qwas.answers}
