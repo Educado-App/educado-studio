@@ -37,6 +37,9 @@ const QuestionWithAnswersBucket = (props) => {
                   sectionId={props.sectionId}
                   trigger={props.trigger}
                 />
+                <AnswerBucket 
+                  answersList={qwas.answers}
+                />
               </div>
           );
           let keyValue;

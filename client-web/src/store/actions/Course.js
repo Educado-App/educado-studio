@@ -161,6 +161,7 @@ export const createAnswer = (component) => {
   };
   return async (dispatch) => {
     const res = await axios.post("/api/component/quiz/answer/create", obj);
+    console.log(res.data);
     return dispatch({ type: CREATE_ANSWER, payload: res.data });
   };
 };
@@ -194,6 +195,7 @@ export const getAllQuizzes = (quizzes) => {
 };
 
 // Delete question and connected answers
+// Definitely worst piece of code written in the history of mankind
 export const DELETE_QUESTION = "DELETE_QUESTION";
 
 export const deleteQuestion = (question, component, sectionId) => {
@@ -225,6 +227,20 @@ export const deleteQuestion = (question, component, sectionId) => {
     dispatch({ type: GET_ALL_QUIZZES, payload: res.data });
   };
 };
+
+// Delete answer
+export const DELETE_ANSWER = "DELETE_ANSWER";
+
+export const deleteAnswer = (quiz_id) => {
+  const obj = {
+    quiz_id: quiz_id,
+  };
+
+  return async (dispatch) => {
+    const res = await axios.post("/api/component/quiz/deleteanswer", obj);
+    //dispatch({ type: GET_ALL_ANSWERS, payload: res.data})
+  }
+}
 
 // Update order of components for given section
 export const UPDATE_COMPONENTS_ORDER = "UPDATE_COMPONENTS_ORDER";
