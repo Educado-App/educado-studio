@@ -53,7 +53,6 @@ const QuestionSegment = (props) => {
   const handleDeleteQuestion = (event) => {
     // both are ids - of this question and from the component holding this question 
     props.deleteQuestion(props.thisQuestion._id, props.componentId, props.sectionId);
-    props.trigger();
   };
 
   const questionTextChangeHandler = (event) => {
@@ -85,7 +84,6 @@ const QuestionSegment = (props) => {
                         </InputAdornment>}
                    />
                </FormControl>
-               <AudioQA/>
            </div>
             <div>
             <AnswersSegment/>

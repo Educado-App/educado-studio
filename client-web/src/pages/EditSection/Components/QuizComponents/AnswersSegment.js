@@ -105,7 +105,6 @@ const AnswersSegment = (props) => {
               onChange={answerTextHandler}
           />
         </FormControl>
-          <AudioQA/>
       </Card>
   );
 };

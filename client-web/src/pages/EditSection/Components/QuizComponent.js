@@ -101,7 +101,7 @@ const QuizComponent = (props) => {
         <Card className={classes.root}>
             <div className={classes.media}>
                 <QuestionWithAnswersBucket
-                    qwasList={props.course.componentQuizzes}
+                    activeComponent={activeComponent}
                     onQuizChange={quizContentUpdate}
                     componentId={activeComponent._id}
                     sectionId={props.course.activeSection}

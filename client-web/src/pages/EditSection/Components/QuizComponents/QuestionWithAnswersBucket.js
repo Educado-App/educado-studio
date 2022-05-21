@@ -27,8 +27,9 @@ const QuestionWithAnswersBucket = (props) => {
 
   return (
       <List type="dense">
-        {props.qwasList.map((qwas) => {
-          let QwAsToRender = (
+        {props.course.componentQuizzes.map((qwas) => {
+          if (props.course.componentQuizzes[0]._id != null) {
+            let QwAsToRender = (
               <div>
                 <QuestionSegment 
                   thisQuestion={qwas} 
@@ -39,7 +40,7 @@ const QuestionWithAnswersBucket = (props) => {
               </div>
           );
           let keyValue;
-            if (!qwas) {
+            if (!qwas._id) {
               keyValue = "temp";
             } else {
               keyValue = qwas._id;
@@ -54,6 +55,7 @@ const QuestionWithAnswersBucket = (props) => {
                 {QwAsToRender}
               </ListItem>
           );
+          }
         })
         }
       </List>
