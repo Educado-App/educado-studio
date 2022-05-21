@@ -468,8 +468,19 @@ module.exports = (app) => {
   });
 
   app.post("/api/component/quiz/deleteanswer", async (req, res) => {
-    const { quiz_id } = req.body;
+    const { quiz_id, answer_id } = req.body;
     
+    let quiz = await Quiz.findById(quiz_id);
+    let answers = quiz.answers;
+    let index = answers.findIndex((answer) => answer._id == answer_id);
+    if (index !== -1) {
+      answers.splice(index, 1);
+    };
+
+    await Quiz.findOneAndUpdate(
+      { _id: quiz._id },
+      { answers: answers }
+    );
   })
 
   //Update Component order

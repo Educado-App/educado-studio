@@ -22,10 +22,12 @@ const AnswerBucket = (props) => {
         {props.answersList.map((answer) => {
           let answerToRender = (
               <div>
-                <AnswersSegment/>
+                <AnswersSegment
+                  answer_id={answer._id}
+                  quiz_id={props.quiz_id}
+                />
               </div>
           );
-
           let keyValue;
             if (!answer._id) {
               keyValue = "temp";

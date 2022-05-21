@@ -231,14 +231,20 @@ export const deleteQuestion = (question, component, sectionId) => {
 // Delete answer
 export const DELETE_ANSWER = "DELETE_ANSWER";
 
-export const deleteAnswer = (quiz_id) => {
+export const deleteAnswer = (quiz_id, answer_id, quizzes) => {
   const obj = {
     quiz_id: quiz_id,
+    answer_id: answer_id,
   };
 
+  const quizObj = {
+    quizzes: quizzes,
+  };
+  // TODO: MAKE ANSWER DISAPPEAR AFTER DELETION
   return async (dispatch) => {
-    const res = await axios.post("/api/component/quiz/deleteanswer", obj);
-    //dispatch({ type: GET_ALL_ANSWERS, payload: res.data})
+    await axios.post("/api/component/quiz/deleteanswer", obj);
+    const res = await axios.post("/api/component/quiz/getallquizzes", quizObj);
+    dispatch({ type: GET_ALL_QUIZZES, payload: res.data });
   }
 }
 

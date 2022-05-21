@@ -39,6 +39,8 @@ const QuestionWithAnswersBucket = (props) => {
                 />
                 <AnswerBucket 
                   answersList={qwas.answers}
+                  quiz_id={qwas._id}
+                  trigger={props.trigger}
                 />
               </div>
           );

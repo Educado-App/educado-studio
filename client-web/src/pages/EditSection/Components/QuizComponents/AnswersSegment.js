@@ -71,8 +71,9 @@ const AnswersSegment = (props) => {
       //missing routing
     }
 
-    const handleDeleteAnswer = (event) => {
-       //missing routing
+    const handleDeleteAnswer = async (event) => {
+      // props.course.componentquizzes is used to 
+      await props.deleteAnswer(props.quiz_id, props.answer_id, props.course.componentQuizzes);
     }
 
   return (
