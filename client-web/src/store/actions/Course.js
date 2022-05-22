@@ -281,12 +281,11 @@ export const updateComponentText = (text, component_id) => {
 // Update Quiz
 export const UPDATE_COMPONENT_QUIZ = "UPDATE_COMPONENT_QUIZ";
 
-export const updateComponentQuiz = (quiz, component_id) => {
+export const updateComponentQuiz = (quizzes) => {
   const obj = {
-    quiz: quiz,
-    component_id: component_id,
+    quizzes: quizzes,
   };
-  console.log(obj);
+  
   return async (dispatch) => {
     const res = await axios.post("/api/component/quiz/update", obj);
     dispatch({ type: UPDATE_COMPONENT_QUIZ, payload: res.data });

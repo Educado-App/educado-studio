@@ -33,47 +33,31 @@ const AnswersSegment = (props) => {
 
   const classes = useStyles();
 
-  const [checked, setChecked] = useState(props.check);
-  const [answerText, setAnswerText] = useState(props.text);
-  //const [answerAudio, setAnswerAudio] = useState(props.audio)
+  const [ answerValues, setAnswerValues ] = React.useState(props.answer);
 
-  const answerTextHandler = (event) => {
-    if (event.target.value !== null) {
-      setAnswerText(event.target.value);
-    }
+  // called when the value of answer text is changed
+  const handleAnswerTextUpdate = (event) => {
+    let answer = {...answerValues};
+    answer.textAnswer = event.target.value;
+    setAnswerValues(answer);
   };
 
-  /*
-  const answerAudioHandler = (event) => {
-    setAnswerAudio();
+  // called when checkbox is pressed
+  const handleCheckbox = (event) => {
+    let answer = {...answerValues};
+    answer.correctAnswer = !answer.correctAnswer;
+    setAnswerValues(answer);
   };
-  */
+  
+  // called whenever state changes
+  useEffect(() => {
+    props.setAnswers(answerValues, props.index);
+  }, [answerValues]);
 
-  const checkboxHandler = (event) => {
-    setChecked(event.target.checked);
-  };
-
-  /*useEffect(() => {
-    const answerData = {
-      textAnswer: answerText,
-      //audioAnswer: answerAudio,
-      checkbox: checked
-    };
-
-    const checkboxHandler = (event) => {
-        setAnswerText(event.target.checked);
-    };
-    props.onAnswerChange(answerData);
-  },[checked, answerText]);*/
-
-
-    const handleCorrectAnswer = (event) => {
-      //missing routing
-    }
 
     const handleDeleteAnswer = async (event) => {
       // props.course.componentquizzes is used to 
-      await props.deleteAnswer(props.quiz_id, props.answer_id, props.course.componentQuizzes);
+      await props.deleteAnswer(props.quiz_id, props.answer._id, props.course.componentQuizzes);
     }
 
   return (
@@ -81,15 +65,18 @@ const AnswersSegment = (props) => {
         <FormControl fullWidth className={classes.margin} variant="filled" >
           <InputLabel htmlFor="filled-adornment-amount">Answer</InputLabel>
           <FilledInput
-              value={answerText}
+              onChange={(event) => {
+                handleAnswerTextUpdate(event);
+              }}
+              value={answerValues.textAnswer}
               id="filled-adornment-amount"
               multiline
               endAdornment={<InputAdornment position="end">
                   <Checkbox
-                  checked={checked}
+                  checked={answerValues.correctAnswer}
                   color="primary"
                   edge="end"
-                  onClick={checkboxHandler}
+                  onClick={handleCheckbox}
                   />
                   <InputLabel>
                       <IconButton
@@ -103,7 +90,6 @@ const AnswersSegment = (props) => {
 
 
           </InputAdornment>}
-              onChange={answerTextHandler}
           />
         </FormControl>
       </Card>

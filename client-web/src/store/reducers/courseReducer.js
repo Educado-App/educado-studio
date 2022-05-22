@@ -168,17 +168,10 @@ const reducer = (state = initialState, action) => {
       };
 
     case UPDATE_COMPONENT_QUIZ:
-      const objectIndex = state.sectionComponents.findIndex(
-        (obj) => obj._id === action.payload._id
-      );
-
-      let temporaryState = state.sectionComponents;
-
-      temporaryState[objectIndex] = action.payload;
-
+      
       return {
         ...state,
-        sectionComponents: temporaryState,
+        componentQuizzes: action.payload,
       }
 
     default:

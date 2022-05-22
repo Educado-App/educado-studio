@@ -47,23 +47,45 @@ const QuestionSegment = (props) => {
 
   const classes = useStyles();
 
-  const [ questionText, setQuestionText ] = useState(props.text);
-  //const [ questionAudio, setQuestionAudio ] = useState(props.audio)
+  const [ thisQuestion, setQuestionValues ] = useState({...props.thisQuestion});
 
   const handleDeleteQuestion = (event) => {
-    // both are ids - of this question and from the component holding this question 
     props.deleteQuestion(props.thisQuestion._id, props.componentId, props.sectionId);
   };
 
-  const questionTextChangeHandler = (event) => {
-    setQuestionText(event.target.value);
-  };
+  // type is used to checker whether update is text or points
+  const handleUpdate = (type, newValue, event) => {
+    // create new object from state
+    let quizObj = {...thisQuestion};
+
+    // update values based on whether function is called from points or questions
+    if (type === "POINTS") {
+      quizObj.points = newValue;
+    } else {
+      quizObj.question.textQuestion = event.target.value;
+    }
+
+    // update state with new array
+    setQuestionValues(quizObj);
+  }
+
+  // whenever state changes, give state to parent
+  useEffect(() => {
+    props.handleUpdateQuizzes(thisQuestion, props.index, "QUESTION");
+  }, [thisQuestion]);
+
 
   return (
         <Card>
-            <PointsSegment/>
+            <PointsSegment 
+              thisQuestion={props.thisQuestion}
+              setPoints={handleUpdate}
+            />
            <div>
                <FormControl
+                  onChange={(event, newValue) => {
+                    handleUpdate("QUESTION", newValue, event);
+                  }}
                    fullWidth
                    variant="filled"
                    className={classes.media}>
@@ -71,7 +93,9 @@ const QuestionSegment = (props) => {
                    <FilledInput
                         id="filled-adornment-amount"
                         multiline
-                        endAdornment={<InputAdornment position="end">
+                        value={thisQuestion.question.textQuestion}
+                        endAdornment={
+                          <InputAdornment position="end">
                             <InputLabel>
                                  <IconButton
                                   color="primary"

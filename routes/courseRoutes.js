@@ -7,7 +7,6 @@ const Quiz = mongoose.model("quizzes");
 const Component = mongoose.model("components");
 
 const requireLogin = require("../middlewares/requireLogin");
-const { exit } = require("cli");
 
 // Routes are sorted into COURSE - SECTION - COMPONENT each with ASCII art, within each functions are in order of CRUD
 // NOTE Files do NOT delete from the backend yet, on the TODO as of 03/2022
@@ -325,7 +324,7 @@ module.exports = (app) => {
     const quizComponent = new Quiz({
       question: { textQuestion: "", audioQuestion: "" },
       answers: [{ textAnswer: "", audioAnswer: "", correctAnswer: false }],
-      points: "",
+      points: 0,
       dateCreated: Date.now(),
       dateUpdated: Date.now(),
     });
@@ -364,23 +363,19 @@ module.exports = (app) => {
       res.status(422).send(err);
     }
   });
-/*
+
+  // Update quizzes
   app.post("/api/component/quiz/update", async (req, res) => {
-    const { quiz, component_id } = req.body;
-
-    let qwas = [];
-
-    component = await Component.findById(component_id);
-
-    for (let i = 0; i < component.quizzes.length; i++) {
-        qwas[i] = await Quiz.findById(component.quizzes[i]);
+    const { quizzes } = req.body;
+    // cycle through the whole array of quizzes and update the values for it
+    for (let i = 0; i < quizzes.length; i++) {
+      (await Quiz.findOneAndUpdate(
+        { _id: quizzes[i]._id },
+        quizzes[i]
+      )).save();
     }
-
-
-
-    // Send response
-    //res.send(component);
-  });*/
+    res.send(quizzes);
+  });
 
 
   //Get all components

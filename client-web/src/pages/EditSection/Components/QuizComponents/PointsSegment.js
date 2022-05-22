@@ -1,5 +1,5 @@
 // Base imports
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../../../store/actions/Course";
 
@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
+
 const PointsSegment = (props) => {
     // props.id = activeComponentId
     // Find component i sectionComponents med tilsvarende id
@@ -36,7 +38,17 @@ const PointsSegment = (props) => {
 
     const classes = useStyles();
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(props.thisQuestion.points);
+
+    // send state to parent whenever state is updated
+    useEffect(() => {
+      props.setPoints("POINTS", value);
+    }, [value]);
+    
+    // update state with new value
+    const handleSetValue = (newValue) => {
+      setValue(newValue);
+    }
 
     return (
         <Card>
@@ -50,7 +62,7 @@ const PointsSegment = (props) => {
                                 name="simple-controlled"
                                 value={value}
                                 onChange={(event, newValue) => {
-                                    setValue(newValue);
+                                    handleSetValue(newValue);
                                 }}
                             />
                         </Box>

@@ -61,7 +61,10 @@ const QuizComponent = (props) => {
     const classes = useStyles();
 
     const [ anchorEl, setAnchorEl ] = React.useState(null);
-    const [ quizContent, setQuizContent ] = React.useState({});
+    // quizContent contains the state of all questions
+    // all children and children of children with relevant values/states will end up here
+    const [ quizContent, setQuizContent ] = React.useState();
+    const [ isLoading, setIsLoading ] = React.useState(true);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -71,12 +74,13 @@ const QuizComponent = (props) => {
         setAnchorEl(null);
     };
 
-    const quizContentUpdate = (obj) => {
-      setQuizContent(obj);
+    const handleQuizUpdate = (value) => {
+      setQuizContent(value);
     };
 
     const getQuizList = async () => {
         await props.getAllQuizzes(activeComponent.quizzes);
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -96,13 +100,22 @@ const QuizComponent = (props) => {
     const onSave = async () => {
         await props.updateComponentQuiz(quizContent, activeComponent._id);
     };
+    // use state to stop rendering
+    // used to wait for props.course.componentQuizzes to be fetched
+    if (isLoading === true) {
+        return (
+            <div>
+                <p>loading...</p>
+            </div>
+        )
+    }
 
-    return (
+    return ( 
         <Card className={classes.root}>
             <div className={classes.media}>
                 <QuestionWithAnswersBucket
                     activeComponent={activeComponent}
-                    onQuizChange={quizContentUpdate}
+                    handleQuizUpdate={handleQuizUpdate}
                     componentId={activeComponent._id}
                     sectionId={props.course.activeSection}
                 />

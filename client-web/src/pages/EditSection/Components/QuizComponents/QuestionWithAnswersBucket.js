@@ -13,33 +13,46 @@ import AnswerBucket from "./AnswerBucket";
 
 const QuestionWithAnswersBucket = (props) => {
 
-  const [ answers, setAnswers ] = useState();
-  const [ x, setX ] = useState();
-  /*
+  const [ quizzes, updateQuizzes ] = useState([...props.course.componentQuizzes]);
+
+  // update state in parent whenever state of this component is updated
   useEffect(() => {
-    const data = {
-      question: question,
-      answers: answers
-    };
-    props.onQuizChange(data);
-  }, [question, answers]);
-  */
+    props.handleQuizUpdate(quizzes);
+  }, [quizzes]);
+
+  // is called whenever a child has an update in state
+  const handleUpdateQuizzes = (value, index, type) => {
+    // create new temporary array which is equal to the current state
+    let quizArr = [...quizzes];
+    
+    // used to check if state update was from answer or question
+    if (type === "QUESTION") {
+      quizArr[index].question = value.question;
+      quizArr[index].points = value.points;
+    } else {
+      quizArr[index].answers = value;
+    }
+    // update state with temporary array
+    updateQuizzes(quizArr);    
+  }
 
   return (
       <List type="dense">
-        {props.course.componentQuizzes.map((qwas) => {
-          if (props.course.componentQuizzes[0]._id != null) {
-            let QwAsToRender = (
+        {props.course.componentQuizzes.map((qwas, index) => {
+            let QwasToRender = (
               <div>
                 <QuestionSegment 
                   thisQuestion={qwas} 
                   componentId={props.componentId}
                   sectionId={props.sectionId}
+                  handleUpdateQuizzes={handleUpdateQuizzes}
+                  index={index}
                 />
                 <AnswerBucket 
                   answersList={qwas.answers}
                   quiz_id={qwas._id}
-                  trigger={props.trigger}
+                  answerIndex={index}
+                  handleUpdateQuizzes={handleUpdateQuizzes}
                 />
               </div>
           );
@@ -56,10 +69,9 @@ const QuestionWithAnswersBucket = (props) => {
                   disableRipple
                   key={keyValue}
               >
-                {QwAsToRender}
+                {QwasToRender}
               </ListItem>
           );
-          }
         })
         }
       </List>
