@@ -32,10 +32,6 @@ const PointsSegment = (props) => {
     // Find component i sectionComponents med tilsvarende id
     // Upon changes, update redux state
 
-    const activeComponent = props.course.sectionComponents.find((component) => {
-        return component._id === props.id;
-    });
-
     const classes = useStyles();
 
     const [value, setValue] = React.useState(props.thisQuestion.points);
@@ -44,7 +40,7 @@ const PointsSegment = (props) => {
     useEffect(() => {
       props.setPoints("POINTS", value);
     }, [value]);
-    
+
     // update state with new value
     const handleSetValue = (newValue) => {
       setValue(newValue);
@@ -59,7 +55,7 @@ const PointsSegment = (props) => {
                         <Box component="fieldset" borderColor="transparent">
                             <Typography component="legend"> </Typography>
                             <Rating
-                                name="simple-controlled"
+                                name={props.thisQuestion._id}
                                 value={value}
                                 onChange={(event, newValue) => {
                                     handleSetValue(newValue);

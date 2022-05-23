@@ -78,7 +78,7 @@ const QuestionSegment = (props) => {
   return (
         <Card>
             <PointsSegment 
-              thisQuestion={props.thisQuestion}
+              thisQuestion={thisQuestion}
               setPoints={handleUpdate}
             />
            <div>

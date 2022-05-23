@@ -285,7 +285,7 @@ export const updateComponentQuiz = (quizzes) => {
   const obj = {
     quizzes: quizzes,
   };
-  
+
   return async (dispatch) => {
     const res = await axios.post("/api/component/quiz/update", obj);
     dispatch({ type: UPDATE_COMPONENT_QUIZ, payload: res.data });

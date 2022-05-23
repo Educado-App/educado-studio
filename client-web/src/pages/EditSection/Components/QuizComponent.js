@@ -105,7 +105,7 @@ const QuizComponent = (props) => {
     if (isLoading === true) {
         return (
             <div>
-                <p>loading...</p>
+                <p>Loading...</p>
             </div>
         )
     }
