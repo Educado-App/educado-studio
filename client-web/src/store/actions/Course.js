@@ -161,7 +161,6 @@ export const createAnswer = (component) => {
   };
   return async (dispatch) => {
     const res = await axios.post("/api/component/quiz/answer/create", obj);
-    console.log(res.data);
     return dispatch({ type: CREATE_ANSWER, payload: res.data });
   };
 };
