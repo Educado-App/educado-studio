@@ -98,7 +98,7 @@ const QuizComponent = (props) => {
     };
 
     const onSave = async () => {
-        await props.updateComponentQuiz(quizContent, activeComponent._id);
+        await props.updateComponentQuiz(quizContent);
     };
     // use state to stop rendering
     // used to wait for props.course.componentQuizzes to be fetched
