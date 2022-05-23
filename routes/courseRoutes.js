@@ -316,7 +316,6 @@ module.exports = (app) => {
   });
 
   // Create quiz component
-  // Does the same as create component except creating an entry for the quiz itself in mongodb
   // Also used for creating a new question linked to the same quiz component
   app.post("/api/component/quiz/create", async (req, res) => {
     const  componentObj  = req.body;
