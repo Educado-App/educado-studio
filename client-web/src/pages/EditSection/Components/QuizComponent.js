@@ -138,17 +138,17 @@ const QuizComponent = (props) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem button onClick={handleCreateNewAnswer}>
-                    <ListItemIcon>
-                        <AddBoxIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText primary="Answer" />
-                </MenuItem>
                 <MenuItem button onClick={handleCreateNewQuestion}>
                     <ListItemIcon>
                         <AddBoxIcon fontSize="small" />
                     </ListItemIcon>
                     <ListItemText primary="Question" />
+                </MenuItem>
+                <MenuItem button onClick={handleCreateNewAnswer}>
+                    <ListItemIcon>
+                        <AddBoxIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Answer" />
                 </MenuItem>
             </Menu>
 
