@@ -410,6 +410,8 @@ module.exports = (app) => {
     if (quizIndex !== -1 ) {
       component.quizzes.splice(quizIndex, 1);
     }
+    
+    await Quiz.findByIdAndDelete(idObj.question);
 
     // if question to be deleted was the only one, enter these lines of code
     if (component.quizzes.length < 1) {
@@ -430,8 +432,7 @@ module.exports = (app) => {
         { components: sectionComponents }
       );
       
-      // remove question to be deleted and component said question was in
-      await Quiz.findByIdAndDelete(idObj.question);
+      // remove component said quiz was in
       await Component.findByIdAndDelete(idObj.component);
 
       let resObj = {
