@@ -13,7 +13,7 @@ import AnswerBucket from "./AnswerBucket";
 
 const QuestionWithAnswersBucket = (props) => {
 
-  const [ quizzes, updateQuizzes ] = useState([...props.course.componentQuizzes]);
+  const [ quizzes, updateQuizzes ] = useState([...props.quizzes]);
 
   // update state in parent whenever state of this component is updated
   useEffect(() => {
