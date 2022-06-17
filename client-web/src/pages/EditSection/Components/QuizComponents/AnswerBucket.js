@@ -8,9 +8,18 @@ import { List, ListItem } from "@material-ui/core";
 
 // Project imports
 import AnswersSegment from "./AnswersSegment";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  listStyles: {
+    width: "720px",
+  },
+}));
 
 
 const AnswerBucket = (props) => {
+  const classes = useStyles();
+
   const [answers, setAnswers] = useState([...props.answersList]);
 
   // called when the text of an answer is changed
@@ -29,7 +38,7 @@ const AnswerBucket = (props) => {
       <List type="dense">
         {props.answersList.map((answer, index) => {
           let answerToRender = (
-              <div>
+              <div className={classes.listStyles}>
                 <AnswersSegment
                   answer={answer}
                   quiz_id={props.quiz_id}
@@ -47,6 +56,7 @@ const AnswerBucket = (props) => {
 
           return (
               <ListItem
+                  className={classes.listStyles}
                   button
                   disableRipple
                   key={keyValue}

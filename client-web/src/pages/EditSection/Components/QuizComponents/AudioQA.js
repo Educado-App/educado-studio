@@ -1,3 +1,4 @@
+/*
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Component } from "react";
@@ -11,6 +12,7 @@ import getPresignedUrl from "../../../../hooks/getPresignedUrl";
 import PublishIcon from "@material-ui/icons/Publish";
 import shadows from "@material-ui/core/styles/shadows";
 import QuestionSegment from "./QuestionSegment";
+
 
 const useStyles = (theme) => ({
     root: {
@@ -111,3 +113,4 @@ export default connect(
     mapStateToProps,
     courseActions
 )(withStyles(useStyles, { withTheme: true })(AudioComponent));
+*/
