@@ -11,7 +11,9 @@
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm start --prefix client-web",
+    "client-prod": "npm run build --prefix client-web",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "prod": "concurrently \"npm run server\" \"npm run client-prod\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client-web && npm run build --prefix client-web"
   },
   "author": "",
