@@ -3,16 +3,8 @@ const express = require("express"); // Import express
 const mongoose = require("mongoose"); // Import mongoose
 const keys = require("./config/keys");
 const cookieSession = require("cookie-session");
+const router = require("./routes")
 const passport = require("passport");
-
-// Mongoose Model executions
-require("./models/User");
-require("./models/Courses");
-require("./models/Sections");
-require("./models/Components");
-
-// Execution requires
-require("./services/passport"); // Execute passport config
 
 // Application
 mongoose.connect(keys.mongoURI, {
@@ -23,23 +15,20 @@ mongoose.connect(keys.mongoURI, {
 
 const app = express(); // Configuration for listening, communicate to handlers
 
-// ** MIDDLEWARE ** //
-// app.use wires up "middlewares", that modify incoming requests before being passed on to handlers.
 app.use(
   cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1001, // Cookie should last for 30 days before automatic expiration
+    maxAge: 30 * 24 * 60 * 60 * 1000, // Cookie should last for 30 days before automatic expiration
     keys: [keys.cookieKey], // Specify encryption key for cookie
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
-// ** END SECTION ** //
 
-// Setup authentication routes
-require("./routes/authRoutes")(app);
-require("./routes/courseRoutes")(app);
-require("./routes/bucketRoutes")(app);
+
+app.use('', router)
+
+//require("./routes/courseRoutes")(app);
 
 // Run if running in production on Heroku
 if (process.env.NODE_ENV === "production") {

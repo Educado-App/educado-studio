@@ -2,11 +2,11 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
-const mongoose = require("mongoose");
+// Models
+const { UserModel } = require('../models/User')
 
 // Import consts
 const keys = require("./../config/keys");
-const User = mongoose.model("users"); // Pulls out the users collection from mongoose. User object is our model class
 
 // ** SERIALIZATION & DESERIALIZATION ** //
 passport.serializeUser((user, done) => {
@@ -16,7 +16,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   // When client contacts server with cookie, desearilise extracts the ID, Find user in Database with that ID, and return user.
-  User.findById(id).then((user) => {
+  UserModel.findById(id).then((user) => {
     done(null, user);
   });
 });
@@ -32,13 +32,13 @@ passport.use(
       proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await User.findOne({ googleID: profile.id }); // Look through User collection for an instance already with the ID
+      const existingUser = await UserModel.findOne({ googleID: profile.id }); // Look through User collection for an instance already with the ID
       if (existingUser) {
         // If existingUser exists, we already have a record with the given profile ID
         done(null, existingUser); // Inform passport that authentication is done. Return null for error, and the existing user
       } else {
         // We dont have a user record with this ID, make a new record
-        const user = await new User({
+        const user = await new UserModel({
           googleID: profile.id, // Creates instance of User with the unique profile ID from Google OAuth
         }).save();
         done(null, user); // Wait for asyncronious DB call to finish, and return the created user
@@ -63,7 +63,7 @@ passport.use(
       let index;
 
       for (i = 0; i < profile.emails.length; i++) {
-        const tempUser = await User.findOne({ email: profile.emails[i].value });
+        const tempUser = await UserModel.findOne({ email: profile.emails[i].value });
 
         if (tempUser) {
           existingUser = tempUser;
@@ -78,8 +78,8 @@ passport.use(
           done(null, existingUser);
         } else {
           // Else remove user, add new with ID and email
-          const rem = await User.remove({ email: profile.emails[index].value });
-          const user = await new User({
+          const rem = await UserModel.remove({ email: profile.emails[index].value });
+          const user = await new UserModel({
             googleID: profile.id,
             email: profile.emails[index].value,
           }).save();

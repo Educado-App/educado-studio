@@ -11,4 +11,6 @@ const componentsSchema = new Schema({
   dateUpdated: Date, // If its a text component
 });
 
-mongoose.model("components", componentsSchema); // Create new collection called users, using the userSchema
+const ComponentModel = mongoose.model("components", componentsSchema);
+
+module.exports = { ComponentModel }
