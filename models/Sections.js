@@ -11,4 +11,6 @@ const sectionSchema = new Schema({
   components: [{ type: Schema.Types.ObjectId, ref: "Component" }],
 });
 
-mongoose.model("sections", sectionSchema); // Create new collection called users, using the userSchema
+const SectionModel = mongoose.model("sections", sectionSchema);
+
+module.exports = { SectionModel }

@@ -5,12 +5,6 @@ const keys = require("./config/keys");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
 
-// Mongoose Model executions
-require("./models/User");
-require("./models/Courses");
-require("./models/Sections");
-require("./models/Components");
-
 // Execution requires
 require("./services/passport"); // Execute passport config
 
@@ -27,7 +21,7 @@ const app = express(); // Configuration for listening, communicate to handlers
 // app.use wires up "middlewares", that modify incoming requests before being passed on to handlers.
 app.use(
   cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1001, // Cookie should last for 30 days before automatic expiration
+    maxAge: 30 * 24 * 60 * 60 * 1000, // Cookie should last for 30 days before automatic expiration
     keys: [keys.cookieKey], // Specify encryption key for cookie
   })
 );

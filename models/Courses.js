@@ -15,4 +15,6 @@ const courseSchema = new Schema({
   sections: [{ type: Schema.Types.ObjectId, ref: "Component" }],
 });
 
-mongoose.model("courses", courseSchema); // Create new collection called courses, using the courseScema
+const CourseModel = mongoose.model("courses", courseSchema); // Create new collection called courses, using the courseScema
+
+module.exports = { CourseModel }

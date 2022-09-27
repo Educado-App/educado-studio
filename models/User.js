@@ -8,4 +8,6 @@ const userSchema = new Schema({
   email: String,
 });
 
-mongoose.model("users", userSchema); // Create new collection called users, using the userSchema
+const UserModel = mongoose.model("users", userSchema);
+
+module.exports = { UserModel }

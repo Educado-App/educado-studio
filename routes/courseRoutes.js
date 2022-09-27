@@ -1,9 +1,10 @@
-const passport = require("passport"); // Import passport library module
-
 const mongoose = require("mongoose");
-const Course = mongoose.model("courses");
-const Section = mongoose.model("sections");
-const Component = mongoose.model("components");
+
+// Models
+const { CourseModel } = require("../models/Courses")
+const { SectionModel } = require("../models/Sections")
+const { ComponentModel } = require("../models/Components")
+
 
 const requireLogin = require("../middlewares/requireLogin");
 
@@ -20,7 +21,7 @@ module.exports = (app) => {
   app.post("/api/course/create", requireLogin, async (req, res) => {
     const { title, description } = req.body;
 
-    const course = new Course({
+    const course = new CourseModel({
       title: title,
       description: description,
       category: "",
@@ -41,7 +42,7 @@ module.exports = (app) => {
   // Update Course
   app.post("/api/course/update", requireLogin, async (req, res) => {
     const { course } = req.body;
-    const dbCourse = await Course.findByIdAndUpdate(
+    const dbCourse = await CourseModel.findByIdAndUpdate(
       course._id,
       {
         title: course.title,
@@ -62,14 +63,14 @@ module.exports = (app) => {
 
   // Get all courses for user
   app.get("/api/course/getall", requireLogin, async (req, res) => {
-    const list = await Course.find({ _user: req.user.id });
+    const list = await CourseModel.find({ _user: req.user.id });
     res.send(list);
   });
 
-  
+
   // Get all courses for user
   app.get("/api/course/eml/getall", async (req, res) => {
-    const list = await Course.find();
+    const list = await CourseModel.find();
     res.send(list);
   });
 
@@ -78,8 +79,8 @@ module.exports = (app) => {
     const { text, course_id } = req.body;
 
     // find object in database and update title to new value
-    (await Course.findOneAndUpdate({ _id: course_id }, { title: text })).save;
-    course = await Course.findById(course_id);
+    (await CourseModel.findOneAndUpdate({ _id: course_id }, { title: text })).save;
+    course = await CourseModel.findById(course_id);
 
     // Send response
     res.send(course);
@@ -90,9 +91,9 @@ module.exports = (app) => {
     const { text, course_id } = req.body;
 
     // find object in database and update title to new value
-    (await Course.findOneAndUpdate({ _id: course_id }, { description: text }))
+    (await CourseModel.findOneAndUpdate({ _id: course_id }, { description: text }))
       .save;
-    course = await Course.findById(course_id);
+    course = await CourseModel.findById(course_id);
 
     // Send response
     res.send(course);
@@ -103,9 +104,9 @@ module.exports = (app) => {
     const { text, course_id } = req.body;
 
     // find object in database and update title to new value
-    (await Course.findOneAndUpdate({ _id: course_id }, { category: text }))
+    (await CourseModel.findOneAndUpdate({ _id: course_id }, { category: text }))
       .save;
-    course = await Course.findById(course_id);
+    course = await CourseModel.findById(course_id);
 
     // Send response
     res.send(course);
@@ -116,9 +117,9 @@ module.exports = (app) => {
     const { published, course_id } = req.body;
 
     // find object in database and update title to new value
-    (await Course.findOneAndUpdate({ _id: course_id }, { published: published }))
+    (await CourseModel.findOneAndUpdate({ _id: course_id }, { published: published }))
       .save;
-    course = await Course.findById(course_id);
+    course = await CourseModel.findById(course_id);
 
     // Send response
     res.send(course);
@@ -129,7 +130,7 @@ module.exports = (app) => {
     const { course_id } = req.body;
     let course;
     try {
-      course = await Course.findById(course_id).catch((err) => {
+      course = await CourseModel.findById(course_id).catch((err) => {
         console.log(err);
       });
     } catch (error) {
@@ -140,7 +141,7 @@ module.exports = (app) => {
     sectionIds.map(async (section_id, index) => {
       let section;
       try {
-        section = await Section.findById(section_id).catch((err) => {
+        section = await SectionModel.findById(section_id).catch((err) => {
           console.log(err);
         });
       } catch (error) {
@@ -148,16 +149,16 @@ module.exports = (app) => {
       }
       const componentIds = section.components;
       componentIds.map(async (component_id, index) => {
-        await Component.deleteOne({ _id: component_id }, (err) => {
+        await ComponentModel.deleteOne({ _id: component_id }, (err) => {
           console.log(err);
         });
       });
-      await Section.deleteOne({ _id: section_id }, (err) => {
+      await SectionModel.deleteOne({ _id: section_id }, (err) => {
         console.log(err);
       });
     });
 
-    await Course.deleteOne({ _id: course_id }, (err) => {
+    await CourseModel.deleteOne({ _id: course_id }, (err) => {
       console.log(err);
     });
 
@@ -173,7 +174,7 @@ module.exports = (app) => {
   app.post("/api/section/create", requireLogin, async (req, res) => {
     const { title, course_id } = req.body; // Or query?...
 
-    const section = new Section({
+    const section = new SectionModel({
       title: title,
       description: "",
       dateCreated: Date.now(),
@@ -183,7 +184,7 @@ module.exports = (app) => {
 
     try {
       await section.save();
-      course = await Course.findById(course_id);
+      course = await CourseModel.findById(course_id);
       await course.sections.push(section._id);
       await course.save();
       res.send(course);
@@ -197,7 +198,7 @@ module.exports = (app) => {
     const { sections } = req.body;
     let list = [];
     for (let i = 0; i < sections.length; i++) {
-      const temp = await Section.findOne({ _id: sections[i] });
+      const temp = await SectionModel.findOne({ _id: sections[i] });
       list.push(temp);
     }
     res.send(list);
@@ -210,7 +211,7 @@ module.exports = (app) => {
     const { value, sectionId } = req.body;
 
     // find object in database and update title to new value
-    (await Section.findOneAndUpdate({ _id: sectionId }, { title: value })).save;
+    (await SectionModel.findOneAndUpdate({ _id: sectionId }, { title: value })).save;
 
     // Send response
     res.send("Completed");
@@ -221,8 +222,8 @@ module.exports = (app) => {
     const { text, section_id } = req.body;
 
     // find object in database and update title to new value
-    (await Section.findOneAndUpdate({ _id: section_id }, { title: text })).save;
-    section = await Section.findById(section_id);
+    (await SectionModel.findOneAndUpdate({ _id: section_id }, { title: text })).save;
+    section = await SectionModel.findById(section_id);
 
     // Send response
     res.send(section);
@@ -233,9 +234,9 @@ module.exports = (app) => {
     const { text, section_id } = req.body;
 
     // find object in database and update title to new value
-    (await Section.findOneAndUpdate({ _id: section_id }, { description: text }))
+    (await SectionModel.findOneAndUpdate({ _id: section_id }, { description: text }))
       .save;
-    section = await Section.findById(section_id);
+    section = await SectionModel.findById(section_id);
 
     // Send response
     res.send(section);
@@ -247,10 +248,10 @@ module.exports = (app) => {
     const { sections, course_id } = req.body;
     // REPORT NOTE: Måske lav performance test, for om det giver bedst mening at wipe array og overskrive, eller tjekke 1 efter 1 om updates
     // Overwrite existing array
-    (await Course.findOneAndUpdate({ _id: course_id }, { sections: sections }))
+    (await CourseModel.findOneAndUpdate({ _id: course_id }, { sections: sections }))
       .save;
 
-    course = await Course.findById(course_id);
+    course = await CourseModel.findById(course_id);
 
     // Send response
     res.send(course);
@@ -260,7 +261,7 @@ module.exports = (app) => {
   app.post("/api/section/delete", requireLogin, async (req, res) => {
     const { section_id, course_id } = req.body;
 
-    const course = await Course.findById(course_id).catch((err) => {
+    const course = await CourseModel.findById(course_id).catch((err) => {
       console.log(err);
     });
 
@@ -272,13 +273,13 @@ module.exports = (app) => {
     }
 
     (
-      await Course.findOneAndUpdate(
+      await CourseModel.findOneAndUpdate(
         { _id: course_id },
         { sections: sectionIds }
       )
     ).save;
 
-    await Section.deleteOne({ _id: section_id }, (err) => {
+    await SectionModel.deleteOne({ _id: section_id }, (err) => {
       console.log(err);
     });
 
@@ -294,7 +295,7 @@ module.exports = (app) => {
   app.post("/api/component/create", async (req, res) => {
     const { type, section_id } = req.body; // Or query?...
 
-    const component = new Component({
+    const component = new ComponentModel({
       type: type,
       file: "",
       text: "",
@@ -304,7 +305,7 @@ module.exports = (app) => {
 
     try {
       await component.save();
-      section = await Section.findById(section_id);
+      section = await SectionModel.findById(section_id);
       await section.components.push(component._id);
       await section.save();
       res.send(section);
@@ -318,7 +319,7 @@ module.exports = (app) => {
     const { components } = req.body;
     let list = [];
     for (let i = 0; i < components.length; i++) {
-      const temp = await Component.findOne({ _id: components[i] });
+      const temp = await ComponentModel.findOne({ _id: components[i] });
       list.push(temp);
     }
     res.send(list);
@@ -329,12 +330,12 @@ module.exports = (app) => {
     // Get components from request
     const { components, section_id } = req.body;
     (
-      await Section.findOneAndUpdate(
+      await SectionModel.findOneAndUpdate(
         { _id: section_id },
         { components: components }
       )
     ).save;
-    section = await Section.findById(section_id);
+    section = await SectionModel.findById(section_id);
     // Send response
     res.send(section);
   });
@@ -344,9 +345,9 @@ module.exports = (app) => {
     const { text, component_id } = req.body;
 
     // find object in database and update title to new value
-    (await Component.findOneAndUpdate({ _id: component_id }, { text: text }))
+    (await ComponentModel.findOneAndUpdate({ _id: component_id }, { text: text }))
       .save;
-    component = await Component.findById(component_id);
+    component = await ComponentModel.findById(component_id);
 
     // Send response
     res.send(component);
@@ -356,7 +357,7 @@ module.exports = (app) => {
   app.post("/api/component/delete", requireLogin, async (req, res) => {
     const { component_id, section_id } = req.body;
 
-    const section = await Section.findById(section_id).catch((err) => {
+    const section = await SectionModel.findById(section_id).catch((err) => {
       console.log(err);
     });
 
@@ -368,13 +369,13 @@ module.exports = (app) => {
     }
 
     (
-      await Section.findOneAndUpdate(
+      await SectionModel.findOneAndUpdate(
         { _id: section_id },
         { components: componentIds }
       )
     ).save;
 
-    await Component.deleteOne({ _id: component_id }, (err) => {
+    await ComponentModel.deleteOne({ _id: component_id }, (err) => {
       console.log(err);
     });
 
@@ -385,7 +386,7 @@ module.exports = (app) => {
     const { sections } = req.body;
     let list = [];
     for (let i = 0; i < sections.length; i++) {
-      const temp = await Section.findOne({ _id: sections[i] });
+      const temp = await SectionModel.findOne({ _id: sections[i] });
       list.push(temp);
     }
     res.send(list);
@@ -398,13 +399,13 @@ module.exports = (app) => {
 
   // Delete all documents for user
   app.get("/api/course/delete_all", requireLogin, async (req, res) => {
-    await Course.deleteMany({ _user: req.user.id }, (err) => {
+    await CourseModel.deleteMany({ _user: req.user.id }, (err) => {
       console.log(err);
     });
-    await Section.deleteMany({}, (err) => {
+    await SectionModel.deleteMany({}, (err) => {
       console.log(err);
     });
-    await Component.deleteMany({}, (err) => {
+    await ComponentModel.deleteMany({}, (err) => {
       console.log(err);
     });
     res.send("Completed");
