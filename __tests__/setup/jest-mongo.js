@@ -1,4 +1,8 @@
-const NodeEnvironment = require('jest-environment-node')
+/**
+*   Sets up a custom Mongodb Test Environment to be used with Jest
+*/
+
+const NodeEnvironment = require('jest-environment-node').TestEnvironment
 
 const path = require('path')
 
@@ -7,11 +11,12 @@ const fs = require('fs')
 const globalConfigPath = path.join(__dirname, 'globalConfigMongo.json')
 
 class MongoEnvironment extends NodeEnvironment {
-  constructor (config) {
+  
+  constructor(config) {
     super(config)
   }
 
-  async setup () {
+  async setup() {
     const globalConfig = JSON.parse(fs.readFileSync(globalConfigPath, 'utf-8'))
 
     this.global.__MONGO_URI__ = globalConfig.mongoUri
@@ -20,11 +25,11 @@ class MongoEnvironment extends NodeEnvironment {
     await super.setup()
   }
 
-  async teardown () {
+  async teardown() {
     await super.teardown()
   }
 
-  runScript (script) {
+  runScript(script) {
     return super.runScript(script)
   }
 }

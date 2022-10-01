@@ -2,14 +2,12 @@ const mongoose = require('mongoose')
 
 let connection, db
 
-export default async function makeDb() {
+module.exports = async function connectDb() {
     connection =
         connection ||
-        (await mongoose.connect(
+        await mongoose.connect(
             global.__MONGO_URI__,
             { useNewUrlParser: true }
-        ))
-    db = db || (await connection.db(global.__MONGO_DB_NAME__))
-
-    return db
+        )
+    //db = db || connection.db(global.__MONGO_DB_NAME__)
 }

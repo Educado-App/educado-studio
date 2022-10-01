@@ -1,3 +1,7 @@
+/**
+*   Sets up a connection to an in-memory mongo database for fast and isolated testing
+*/
+
 const { MongoMemoryServer } = require('mongodb-memory-server')
 const path = require('path')
 const fs = require('fs')
@@ -17,7 +21,7 @@ module.exports = async () => {
 
     const mongoConfig = {
         mongoDBName: 'jest',
-        mongoUri: await mongod.getUri()
+        mongoUri: mongod.getUri()
     }
 
     // Write global config to disk because all tests run in different contexts.
