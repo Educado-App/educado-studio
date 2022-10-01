@@ -1,10 +1,12 @@
 // Constant requires
-const express = require("express"); // Import express
-const mongoose = require("mongoose"); // Import mongoose
+const express = require("express");
+const mongoose = require("mongoose");
 const keys = require("./config/keys");
 const cookieSession = require("cookie-session");
 const router = require("./routes")
 const passport = require("passport");
+
+const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku. Otherwise, by default, use port 5000
 
 // Application
 mongoose.connect(keys.mongoURI, {
@@ -28,8 +30,6 @@ app.use(express.json());
 
 app.use('', router)
 
-//require("./routes/courseRoutes")(app);
-
 // Run if running in production on Heroku
 if (process.env.NODE_ENV === "production") {
   // Make sure that express handles production correctly
@@ -44,5 +44,4 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Run server
-const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku. Otherwise, by default, use port 5000
 app.listen(PORT);

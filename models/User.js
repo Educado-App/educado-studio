@@ -1,6 +1,6 @@
 // Mongoose model class for User
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 // Class description
 const userSchema = new Schema({
