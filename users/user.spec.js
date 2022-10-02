@@ -1,5 +1,5 @@
 const makeFakeUser = require('../__tests__/fixtures/fakeUser')
-const makeUser = require('.')
+const { makeUser } = require('.')
 
 describe("User", () => {
 
@@ -13,22 +13,21 @@ describe("User", () => {
     expect(() => makeUser(goodUser)).not.toThrow()
   })
 
-  it("must NOT have an empty password", async () => {
+  it("must have a valid password", async () => {
     const fakeUser = makeFakeUser()
 
-    expect(() => makeUser({ ...fakeUser, password: "" })).toThrow("Invalid password")
+    expect(() => makeUser({ ...fakeUser, password: "" })).toThrow("User must have a password")
+    expect(() => makeUser({ ...fakeUser, password: "1234567" })).toThrow("Password should be atleast 8 characters long")
+    expect(() => makeUser({ ...fakeUser, password: "withoutcapitalletter" })).toThrow("Password must contain a capital letter")
   })
 
-  it("must have a password of length minimum 8", async () => {
+  it("must have an encrypted password", async () => {
     const fakeUser = makeFakeUser()
 
-    expect(() => makeUser({ ...fakeUser, password: "1234567" })).toThrow("Invalid password")
-  })
+    const madeUser = makeUser(fakeUser)
 
-  it("must have a password with a capital letter", async () => {
-    const fakeUser = makeFakeUser()
+    expect(madeUser.password).not.toMatch(fakeUser.password)
 
-    expect(() => makeUser({ ...fakeUser, password: "withoutcapitalletter" })).toThrow("Invalid password")
   })
 
 })

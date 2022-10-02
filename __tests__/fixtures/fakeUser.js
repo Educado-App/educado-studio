@@ -1,12 +1,11 @@
-const makeUser = require("../../users")
-
 module.exports = function makeFakeUser() {
 
-    return makeUser({
-        email: "fakeuser@gmail.com",
+    return {
+        email: "fake@gmail.com",
         password: "ABC123456!",
-        googleId: "12345678910",
-        joinedAt: "2000-1-1T12:00:00.000Z"
-    })
+        googleID: "1234567891011",
+        joinedAt: "2000-1-1T12:00:00.000Z",
+        modifiedAt: "2000-1-1T12:00:00.000Z"
+    }
 
 }
