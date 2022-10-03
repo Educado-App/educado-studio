@@ -73,8 +73,12 @@ passport.use(
 
       // If such a user exist
       if (existingUser) {
+        const date = new Date();
+
         // If that user ALREADY has a Google ID, finish with that user
         if (existingUser.googleID) {
+          existingUser.timeOfLogin = date;
+          existingUser.save();
           done(null, existingUser);
         } else {
           // Else remove user, add new with ID and email
@@ -82,6 +86,7 @@ passport.use(
           const user = await new User({
             googleID: profile.id,
             email: profile.emails[index].value,
+            timeOfLogin: date,
           }).save();
           done(null, user); // Finish with NEW user
         }
