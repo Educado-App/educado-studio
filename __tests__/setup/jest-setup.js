@@ -11,7 +11,8 @@ const globalConfigPath = path.join(__dirname, 'globalConfigMongo.json')
 const mongod =
     global.__MONGOD__ ||
     new MongoMemoryServer({
-        autoStart: false
+        autoStart: false,
+        useUnifiedTopology: true
     })
 
 module.exports = async () => {

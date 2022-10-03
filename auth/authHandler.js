@@ -12,7 +12,7 @@ module.exports = function buildMakeAuthHandler({ Password, Token }) {
 
             const isAuthenticated = Password.compare(user.password, foundUser.password)
 
-            if (!isAuthenticated) throw new Error("Authentication: Access denied")
+            if (!isAuthenticated) { throw new Error("Authentication: Access denied") }
 
             return {
                 'accessToken': Token.signAccessToken({ user: foundUser.id }),
