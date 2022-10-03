@@ -7,9 +7,11 @@ module.exports = function makeAuthEndpointHandler(authHandler) {
                 return await postUser(httpRequest)
             default:
                 return {
-                    header: 'Content-Type: application/json',
                     success: false,
-                    errors: JSON.stringify(`method ${httpRequest.method} not allowed`)
+                    status: 405,
+                    errors: [{ 
+                        message: `method ${httpRequest.method} not allowed` 
+                    }]
                 }
         }
     }
@@ -21,17 +23,19 @@ module.exports = function makeAuthEndpointHandler(authHandler) {
             const response = await authHandler.authenticate(user)
 
             return {
-                header: 'Content-Type: application/json',
                 success: true,
-                data: JSON.stringify(response)
+                status: 200,
+                data: response
             }
 
         } catch (error) {
 
             return {
-                header: 'Content-Type: application/json',
                 success: false,
-                errors: JSON.stringify(error)
+                status: 400,
+                errors: [{ 
+                    message: error.message 
+                }]
             }
         }
     }

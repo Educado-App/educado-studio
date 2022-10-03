@@ -12,6 +12,6 @@ router.get('/api', (req, res) => {
 
 router.use('/api', CourseRoutes)
 router.use('', AWSRoutes)
-router.use('', AuthRoutes)
+router.use('/api', AuthRoutes)
 
 module.exports = router

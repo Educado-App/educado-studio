@@ -3,10 +3,10 @@ const makeFakeUser = require('../__tests__/fixtures/fakeUser')
 const { userList, makeUser } = require('../users')
 const { authEndpointHandler: handle } = require('.')
 
-
 describe('Authentication Endpoint Handler', () => {
 
     beforeAll(async () => await connectDb())
+    afterAll(() => userList.remove({}))
 
     it('handles login of a user', async () => {
         await userList.add(makeUser(makeFakeUser()))
@@ -24,8 +24,8 @@ describe('Authentication Endpoint Handler', () => {
 
         expect(response.success).toBe(true)
         expect(response).toHaveProperty('data')
-        expect(JSON.parse(response.data)).toHaveProperty('accessToken')
-        expect(JSON.parse(response.data)).toHaveProperty('refreshToken')
+        expect(response.data).toHaveProperty('accessToken')
+        expect(response.data).toHaveProperty('refreshToken')
     })
     it('throws an error when http method is not implemented', async () => {
 
