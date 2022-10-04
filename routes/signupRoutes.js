@@ -2,10 +2,11 @@ const {
   ContentCreatorApplication,
 } = require("../models/ContentCreatorApplication");
 
+
 const router = require("express").Router();
 
 // Content Creator Application Route
-router.post("/signup/content-creator", async (req, res) => {
+router.post("/content-creator", async (req, res) => {
   const form = req.body;
 
   // Validate form ...
