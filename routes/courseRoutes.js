@@ -10,7 +10,7 @@ const requireLogin = require("../middlewares/requireLogin");
 
 // Course routes
 
-router.post("/course/create", async (req, res) => {
+router.post("/courses", async (req, res) => {
   const { title, description } = req.body;
 
   const course = new CourseModel({

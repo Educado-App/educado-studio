@@ -1,5 +1,7 @@
 // Constant requires
 const cors = require('./settings/cors')
+const context = require('./middlewares/context')
+
 const express = require("express");
 const { connectToDb } = require("./db");
 const keys = require("./config/keys");
@@ -28,6 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
 app.use(cors)
+app.use(context)
 app.use('', router)
 
 // Run if running in production on Heroku
