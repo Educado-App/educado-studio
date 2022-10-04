@@ -1,12 +1,35 @@
-const router = require('express').Router()
+const router = require("express").Router();
 
 // Models
-const { CourseModel } = require("../models/Courses")
-const { SectionModel } = require("../models/Sections")
-const { ComponentModel } = require("../models/Components")
-
+const { CourseModel } = require("../models/Courses");
+const { SectionModel } = require("../models/Sections");
+const { ComponentModel } = require("../models/Components");
+const {
+  ContentCreatorApplication,
+} = require("../models/ContentCreatorApplication");
 const requireLogin = require("../middlewares/requireLogin");
 
+// Content Creator Application Route
+router.post("/course/", async (req, res) => {
+  const { title, description } = req.body;
+
+  const course = new CourseModel({
+    title: title,
+    description: description,
+    category: "",
+    _user: req.user.id,
+    dateCreated: Date.now(),
+    dateUpdated: Date.now(),
+    sections: [],
+  });
+
+  try {
+    await course.save();
+    res.send(course);
+  } catch (err) {
+    res.status(422).send(err);
+  }
+});
 
 // Course routes
 
@@ -59,7 +82,6 @@ router.get("/course/getall", async (req, res) => {
   res.send(list);
 });
 
-
 // Get all courses for user
 router.get("/course/eml/getall", async (req, res) => {
   const list = await CourseModel.find();
@@ -71,7 +93,8 @@ router.post("/course/update/title", async (req, res) => {
   const { text, course_id } = req.body;
 
   // find object in database and update title to new value
-  (await CourseModel.findOneAndUpdate({ _id: course_id }, { title: text })).save;
+  (await CourseModel.findOneAndUpdate({ _id: course_id }, { title: text }))
+    .save;
   course = await CourseModel.findById(course_id);
 
   // Send response
@@ -83,8 +106,12 @@ router.post("/course/update/description", async (req, res) => {
   const { text, course_id } = req.body;
 
   // find object in database and update title to new value
-  (await CourseModel.findOneAndUpdate({ _id: course_id }, { description: text }))
-    .save;
+  (
+    await CourseModel.findOneAndUpdate(
+      { _id: course_id },
+      { description: text }
+    )
+  ).save;
   course = await CourseModel.findById(course_id);
 
   // Send response
@@ -109,8 +136,12 @@ router.post("/course/update/published", async (req, res) => {
   const { published, course_id } = req.body;
 
   // find object in database and update title to new value
-  (await CourseModel.findOneAndUpdate({ _id: course_id }, { published: published }))
-    .save;
+  (
+    await CourseModel.findOneAndUpdate(
+      { _id: course_id },
+      { published: published }
+    )
+  ).save;
   course = await CourseModel.findById(course_id);
 
   // Send response
@@ -157,8 +188,6 @@ router.post("/course/delete", requireLogin, async (req, res) => {
   res.send("Completed");
 });
 
-
-
 // Section routes
 
 router.post("/section/create", requireLogin, async (req, res) => {
@@ -201,7 +230,8 @@ router.post("/course/update/sectiontitle", async (req, res) => {
   const { value, sectionId } = req.body;
 
   // find object in database and update title to new value
-  (await SectionModel.findOneAndUpdate({ _id: sectionId }, { title: value })).save;
+  (await SectionModel.findOneAndUpdate({ _id: sectionId }, { title: value }))
+    .save;
 
   // Send response
   res.send("Completed");
@@ -212,7 +242,8 @@ router.post("/section/update/title", async (req, res) => {
   const { text, section_id } = req.body;
 
   // find object in database and update title to new value
-  (await SectionModel.findOneAndUpdate({ _id: section_id }, { title: text })).save;
+  (await SectionModel.findOneAndUpdate({ _id: section_id }, { title: text }))
+    .save;
   section = await SectionModel.findById(section_id);
 
   // Send response
@@ -224,8 +255,12 @@ router.post("/section/update/description", async (req, res) => {
   const { text, section_id } = req.body;
 
   // find object in database and update title to new value
-  (await SectionModel.findOneAndUpdate({ _id: section_id }, { description: text }))
-    .save;
+  (
+    await SectionModel.findOneAndUpdate(
+      { _id: section_id },
+      { description: text }
+    )
+  ).save;
   section = await SectionModel.findById(section_id);
 
   // Send response
@@ -238,8 +273,12 @@ router.post("/course/update/sectionsorder", async (req, res) => {
   const { sections, course_id } = req.body;
   // REPORT NOTE: Måske lav performance test, for om det giver bedst mening at wipe array og overskrive, eller tjekke 1 efter 1 om updates
   // Overwrite existing array
-  (await CourseModel.findOneAndUpdate({ _id: course_id }, { sections: sections }))
-    .save;
+  (
+    await CourseModel.findOneAndUpdate(
+      { _id: course_id },
+      { sections: sections }
+    )
+  ).save;
 
   course = await CourseModel.findById(course_id);
 
@@ -391,4 +430,4 @@ router.get("/course/delete_all", requireLogin, async (req, res) => {
   res.send("Completed");
 });
 
-module.exports = router
+module.exports = router;
