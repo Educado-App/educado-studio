@@ -4,9 +4,11 @@ const mongoose = require("mongoose"); // Import mongoose
 const keys = require("./config/keys");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
+const bcrypt = require("bcrypt");
 
 // Mongoose Model executions
 require("./models/User");
+require("./models/AppUser");
 require("./models/Courses");
 require("./models/Sections");
 require("./models/Components");
@@ -37,6 +39,7 @@ app.use(express.json());
 // ** END SECTION ** //
 
 // Setup authentication routes
+require("./routes/appAuthRoutes")(app);
 require("./routes/authRoutes")(app);
 require("./routes/courseRoutes")(app);
 require("./routes/bucketRoutes")(app);
