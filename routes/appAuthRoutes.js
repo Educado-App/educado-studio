@@ -11,13 +11,13 @@ module.exports = (app) => {
         .hash(request.body.password, 10)
         .then((hashedPassword) => {
             // create a new user instance and collect the data
+            const date = new Date();
+
             const appUser = new AppUser({
             phone: request.body.phone,
             password: hashedPassword,
+            timeOfLogin: date,
             });
-
-            // const date = new Date();
-            // appUser.timeOfLogin: date;
     
             // save the new user
             appUser

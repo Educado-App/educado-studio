@@ -7,8 +7,10 @@ const AppUserSchema = new Schema({
   phone: {
     type: String,
     require: [true, "Please provide a phone number"],
-    //unique: [true, "Phone number already exists"],
-    //match: [+[0-9]]
+    unique: [true, "Phone number already exists"],
+    minLength: 8, // For Brazil it needs to be 10
+    maxLength: 11,
+    match: +[0-9]
   },
 
   password: {
@@ -16,8 +18,10 @@ const AppUserSchema = new Schema({
     require: [true, "Please provide a password"],
     unique: false
   },
+
   timeOfLogin: {
-    type: Date},
+    type: Date
+  },
 });
 
 module.exports = mongoose.model.Users || mongoose.model("appUsers", AppUserSchema);
