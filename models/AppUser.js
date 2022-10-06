@@ -10,7 +10,7 @@ const AppUserSchema = new Schema({
     unique: [true, "Phone number already exists"],
     minLength: 8, // For Brazil it needs to be 10
     maxLength: 11,
-    match: +[0-9]
+    //match: +[0-9]
   },
 
   password: {
