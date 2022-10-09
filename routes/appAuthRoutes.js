@@ -5,7 +5,7 @@ const AppUser = require("../models/AppUser");
 module.exports = (app) => {
     
     // register endpoint
-    app.post("/register", (request, response) => {
+    app.post("/api/eml/register", (request, response) => {
         // hash the password
         bcrypt
         .hash(request.body.password, 10)
