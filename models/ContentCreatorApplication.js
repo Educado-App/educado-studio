@@ -8,9 +8,9 @@ const ContentCreatorSchema = new Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   motivationTextBox: { type: String },
-  email: { type: String, required: true },
   createdAt: { type: Date, default: new Date() },
   approved: { type: Boolean, default: false },
+  rejectionReason: {type: String, required: false}
 });
 
 const ContentCreatorApplication = mongoose.model(
