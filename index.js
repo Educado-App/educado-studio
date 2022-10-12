@@ -4,7 +4,6 @@ const mongoose = require("mongoose"); // Import mongoose
 const keys = require("./config/keys");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
-const bcrypt = require("bcrypt");
 
 // Mongoose Model executions
 require("./models/User");
