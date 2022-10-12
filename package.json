@@ -14,7 +14,8 @@
     "client-prod": "npm start --prefix client-web",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "prod": "concurrently \"npm run server\" \"npm run client-prod\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client-web && npm run build --prefix client-web"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client-web && npm run build --prefix client-web",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -33,6 +34,10 @@
     "multer-s3": "^2.10.0",
     "nodemon": "^2.0.6",
     "passport": "^0.4.1",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "supertest": "^6.3.0"
+  },
+  "devDependencies": {
+    "@shelf/jest-mongodb": "^4.1.0"
   }
 }

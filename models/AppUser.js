@@ -8,8 +8,8 @@ const AppUserSchema = new Schema({
     type: String,
     require: [true, "Please provide a phone number"],
     unique: [true, "Phone number already exists"],
-    minLength: 8, // For Brazil it needs to be 10
-    maxLength: 11,
+    minLength: [8, 'Must be at least 8, got {VALUE}'], // For Brazil it needs to be 10
+    maxLength: [11, 'Must not be longer than 11, got {VALUE}']
     //match: +[0-9]
   },
 
