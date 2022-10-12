@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const AppUser = require("../models/AppUser");
+const AppUserController = require("../controllers/AppUserController");
+
 
 module.exports = (app) => {
     
@@ -46,4 +48,6 @@ module.exports = (app) => {
         });
     });
 
+    // User deletion endpoint
+    app.delete("/api/eml/delete/:id", AppUserController.deleteUser);
 }
