@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const AppUser = require("../models/AppUser");
 const jwt = require("jsonwebtoken");
+const auth = require("../routes/appUserAuthentication");
 
 module.exports = (app) => {
     
@@ -103,5 +104,9 @@ app.post("/api/eml/login", (request, response) => {
       });
   });
 
+    // authentication endpoint
+    app.get("/auth-endpoint", auth, (request, response) => {
+        response.json({ message: "You are authorized to access me" });
+    });
 }
 
