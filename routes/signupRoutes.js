@@ -1,9 +1,5 @@
-const {
-  ContentCreatorApplication,
-} = require("../models/ContentCreatorApplication");
-
-
 const router = require("express").Router();
+const { ContentCreatorApplication } = require("../models/ContentCreatorApplication");
 
 // Content Creator Application Route
 router.post("/content-creator", async (req, res) => {

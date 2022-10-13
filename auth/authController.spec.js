@@ -6,7 +6,7 @@ const { authEndpointHandler: handle } = require('.')
 describe('Authentication Endpoint Handler', () => {
 
     beforeAll(async () => await connectDb())
-    afterAll(() => userList.remove({}))
+    afterEach(() => userList.remove({}))
 
     it('handles login of a user', async () => {
         await userList.add(makeUser(makeFakeUser()))

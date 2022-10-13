@@ -11,7 +11,7 @@ module.exports = function makeExpressCallback(endpointHandler) {
             context: req.context,
             headers: {
                 'Content-Type': req.get('Content-Type'),
-                Referer: req.get('referer'),
+                'Referer': req.get('referer'),
                 'User-Agent': req.get('User-Agent')
             }
         }
