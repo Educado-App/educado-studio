@@ -1,13 +1,13 @@
 // Constant requires
-const cors = require('./settings/cors')
-const context = require('./middlewares/context')
-
 const express = require("express");
-const { connectToDb } = require("./db");
-const keys = require("./config/keys");
-const cookieSession = require("cookie-session");
-const router = require("./routes")
 const passport = require("passport");
+const cookieSession = require("cookie-session");
+
+const keys = require("./config/keys");
+const router = require("./routes");
+const cors = require('./settings/cors');
+const context = require('./middlewares/context');
+const { connectToDb } = require("./db");
 
 const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku. Otherwise, by default, use port 5000
 

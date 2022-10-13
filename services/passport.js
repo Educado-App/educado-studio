@@ -1,16 +1,23 @@
 // Passport authentication imports
 const passport = require("passport");
+
+// Google strategy import
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+// JWT Strategy import
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
 
 // Models
 const { UserModel } = require('../models/User')
+const { JwtUserModel } = require('../models/User')
 
 // Import consts
 const keys = require("./../config/keys");
 
 // ** SERIALIZATION & DESERIALIZATION ** //
 passport.serializeUser((user, done) => {
-  // Serialize user with user.id. This is send TO the client FROM the server.
+  // Serialize user with user.id. This is sent TO the client FROM the server.
   done(null, user.id);
 });
 
@@ -92,3 +99,23 @@ passport.use(
     }
   )
 );
+
+// JWT Strategy options
+const options = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: "secret",
+  algorithms: ['HS256']
+}
+
+passport.use("JWT", new JwtStrategy(options, (payload, done) => {
+  JwtUserModel.findOne({ _id: payload.sub }, (err, user) => {
+    // return no user, if error
+    if (err) { return done(err, false) }
+    // return user if it exists
+    if (user) { return done(null, user); }
+    // return no user
+    else { return done(null, false); }
+  })
+}))
+
+
