@@ -105,7 +105,7 @@ app.post("/api/eml/login", (request, response) => {
   });
 
     // authentication endpoint
-    app.get("/auth-endpoint", auth, (request, response) => {
+    app.get("/api/eml/auth-endpoint", auth, (request, response) => {
         response.json({ message: "You are authorized to access me" });
     });
 }
