@@ -49,5 +49,5 @@ module.exports = (app) => {
     });
 
     // User deletion endpoint
-    app.delete("/api/eml/delete/:id", AppUserController.deleteUser);
+    app.delete(`/api/eml/delete/:id`, AppUserController.deleteUser);
 }

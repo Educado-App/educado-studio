@@ -4,13 +4,16 @@ const AppUser = require("../models/AppUser");
 
 // Delete user controller
 const deleteUser = async (req, res) => {
+  const { id } = req.params;
   try {
-    // Finds users id and deletes it from the collection
-    await AppUser.findOneAndDelete({ id: req.params._id});
-    res.json({ message: "Success" });
-} catch(e) {
-    res.sendStatus(500)
-}
+    const user = await AppUser.findByIdAndDelete(id);
+    if (!user) {
+      return res.status(400).json("User not found");
+    }
+    res.status(200).json("User deleted successfully");
+  } catch(e) {
+  res.sendStatus(500);
+  }
 };
 
 module.exports = { deleteUser }

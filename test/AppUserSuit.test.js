@@ -60,14 +60,14 @@ describe('User model test', () => {
 
   })
 
-  /* --- HJÆLP - Sletter alle records i appuser, ikke kun den der bliver bedt om. Sat op ud fra denne her:
+  /* --- HJÆLP - bliver ved med at fail:
   * https://www.freecodecamp.org/news/how-to-test-in-express-and-mongoose-apps/
+  * https://www.makeuseof.com/express-apis-jest-test/?fbclid=IwAR3Am55XRJ6fIBLpBsGsa1ro2pDN4exdhnNa_7xut-egAo6nNhrelMhAKEM 
   */
-//   describe('DELETE /api/eml/delete/:id', () => {
-//     it('should delete a user', async () => {
-        
-//         const res = await request(baseURL).delete(`/api/eml/delete/:${userInformation._id}`);
-//         expect(res.statusCode).toBe(200);
-//       });
+  describe('DELETE /api/eml/delete/:id', () => {
+    it('should delete a user', async () => {
+        const res = await request(baseURL).delete(`/api/eml/delete/:${userInformation._id}`);
+        expect(res.statusCode).toBe(200);
+      });
 
-//   })
+  })
