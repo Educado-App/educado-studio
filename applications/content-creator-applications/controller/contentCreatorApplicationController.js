@@ -1,5 +1,5 @@
 const { makeContentCreatorApplication } = require('../domain')
-const makeHttpError = require('../../../helpers/httpError')
+const { makeHttpError } = require('../../../helpers/error')
 
 module.exports = function makeContentCreatorApplicationController({ contentCreatorApplicationList }) {
 
@@ -8,9 +8,10 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
         switch (httpRequest.method) {
             case 'GET':
                 return await getContentCreatorApplication(httpRequest)
+                
             case 'POST':
                 if ('action' in httpRequest.queryParams) {
-                    return postContentCreatorApplicationWithActions(httpRequest)
+                    return await postContentCreatorApplicationWithActions(httpRequest)
                 }
                 else {
                     return await postContentCreatorApplication(httpRequest)
@@ -30,12 +31,12 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
         try {
             const results = id ?
                 await contentCreatorApplicationList.findById(id) :
-                await contentCreatorApplicationList.findAll()
+                await contentCreatorApplicationList.findAll(httpRequest.queryParams)
 
             return {
                 success: true,
                 status: 200,
-                data: JSON.stringify(results)
+                data: results
             }
 
         } catch (error) {
@@ -67,7 +68,7 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
             return {
                 success: true,
                 status: 201,
-                data: JSON.stringify(created)
+                data: created
             }
 
         } catch (error) {
@@ -119,7 +120,7 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
             return {
                 success: true,
                 status: 200,
-                data: JSON.stringify(updated)
+                data: updated
             }
 
         } catch (error) {

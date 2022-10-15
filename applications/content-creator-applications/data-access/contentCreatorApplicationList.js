@@ -1,4 +1,13 @@
-module.exports = function makeContentCreatorApplicationList(dbModel) {
+const findAllSchema = {
+    type: 'object',
+    properties: {
+        'approved': { type: 'boolean' },
+        'before': { type: 'string', format: "date" },
+        'after': { type: 'string', format: "date" }
+    },
+}
+
+module.exports = function makeContentCreatorApplicationList({ dbModel, Params, ParamsSchema }) {
 
     return Object.freeze({
         findAll,
@@ -8,11 +17,34 @@ module.exports = function makeContentCreatorApplicationList(dbModel) {
         update
     })
 
-    async function findAll({ approved = false } = {}) {
-        const query = !approved ? { approved: false } : {}
+    async function findAll({
+        sortBy = '-createdAt',
+        limit = 50,
+        offset = 0,
+        ...conditions
+    } = {}) {
 
-        return await dbModel.find(query)
+        const { approved, before, after } = Params.validate({
+            schema: ParamsSchema.extendFindAllSchema(findAllSchema),
+            data: { sortBy, limit, offset, ...conditions }
+        })
+
+        const query = {
+            $and: [
+                typeof approved !== 'undefined' ? { approved } : {},
+                before ? { createdAt: { $lte: new Date(before) } } : {},
+                after ? { createdAt: { $gte: new Date(after) } } : {},
+            ]
+        }
+
+        return await dbModel
+            .find(query)
+            .sort(sortBy)
+            .limit(parseInt(limit))
+            .skip(parseInt(offset))
     }
+
+
 
     async function findById(id) {
         const result = await dbModel.findById(id)

@@ -7,7 +7,7 @@ const { contentCreatorApplicationList } = require('../data-access')
 describe('Content Creator Application Controller', () => {
 
     beforeAll(() => connectDb())
-    afterEach(async () => contentCreatorApplicationList.remove({}))
+    afterEach(async () => await contentCreatorApplicationList.remove({}))
 
     it('successfully posts a content creator application', async () => {
 
@@ -68,7 +68,7 @@ describe('Content Creator Application Controller', () => {
 
         expect(response.status).toBe(200)
         expect(response.success).toBe(true)
-        expect(JSON.parse(response.data).approved).toBe(true)
+        expect(response.data.approved).toBe(true)
 
     })
     xit('declines a single content creator application', async () => { })
