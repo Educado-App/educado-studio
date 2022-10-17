@@ -1,9 +1,6 @@
-const { app } = require("cli");
-const {
-  ContentCreatorApplication,
-} = require("../models/ContentCreatorApplication");
-
 const router = require("express").Router();
+const { ContentCreatorApplication } = require("../models/ContentCreatorApplication");
+const Email = require('../helpers/email')
 
 // Content Creator Application Route
 router.post("/signup/content-creator", async (req, res) => {
@@ -13,6 +10,17 @@ router.post("/signup/content-creator", async (req, res) => {
   try {
     const doc = ContentCreatorApplication(form);
     const created = await doc.save();
+
+    Email.send({
+      to: created.email,
+      subject: "Successfully applied for content creator status!",
+      text: "Congratulations " + created.firstName + " " + created.lastName +
+        "!\n\nYou have successfully applied for " +
+        "content creator status! Please wait while our moderators review " +
+        "your application. This can take anywhere from 1-10 days. If you haven't " +
+        "heard back from us then, feel free to reach out to us! " +
+        "\n\nBest regards, the Educado team"
+    });
 
     res.status(201);
     res.send(created);
