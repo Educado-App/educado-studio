@@ -15,17 +15,17 @@ function isValid(email) {
 async function sendMail({
   subject,
   from = keys.gmailUser,
-  to, 
+  to,
   text,
   html
 }) {
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: "hotmail",
     auth: {
       type: "login",
-      user: keys.gmailUser,
-      pass: keys.gmailAppPass,
+      user: keys.outlookUser,
+      pass: keys.outlookPass,
 
     },
     tls: {
@@ -40,6 +40,8 @@ async function sendMail({
     text: text,
     html: html
   }
+  
+  if (keys.MAILS_DISABLED) return
 
   await transporter.sendMail(mailOptions)
 }

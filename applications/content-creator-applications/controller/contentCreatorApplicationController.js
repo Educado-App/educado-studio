@@ -1,14 +1,14 @@
 const { makeContentCreatorApplication } = require('../domain')
 const { makeHttpError } = require('../../../helpers/error')
 
-module.exports = function makeContentCreatorApplicationController({ contentCreatorApplicationList }) {
+module.exports = function makeContentCreatorApplicationController({ contentCreatorApplicationList, Email }) {
 
     return async function handle(httpRequest) {
 
         switch (httpRequest.method) {
             case 'GET':
                 return await getContentCreatorApplication(httpRequest)
-                
+
             case 'POST':
                 if ('action' in httpRequest.queryParams) {
                     return await postContentCreatorApplicationWithActions(httpRequest)
@@ -102,9 +102,15 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
 
         const application = makeContentCreatorApplication({ id: existing._id, ...existing })
 
-        if (action === 'approve') { application.approve() }
+        if (action === 'approve') {
+            application.approve()
+            sendApprovalMail(application)
+        }
         else {
-            if (declineReason) { application.decline({ reason: declineReason }) }
+            if (declineReason) {
+                application.decline({ reason: declineReason })
+                sendRejectMail(application)
+            }
             else { application.decline() }
 
         }
@@ -128,4 +134,27 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
         }
 
     }
+
+    function sendApprovalMail(application) {
+        Email.send({
+            to: application.getEmail(),
+            subject: "Congratulations!",
+            text: "Congratulations! " + application.getFirstName() + " " + application.getLastName() +
+                "\n\nYour content creator application has been approved! " +
+                "\n\nBest regards, the Educado team"
+        });
+    }
+
+
+    function sendRejectMail(application) {
+        Email.send({
+            to: application.getEmail(),
+            subject: "Your application has been rejected.",
+            text: "We regret to inform you that your application for the status of content creator " +
+                'has been rejected upon the following reason "' + application.getRejectionReason() +
+                '"\nIf you believe this is an error, please feel free to contact us!' +
+                '\n\nBest regards, the Educado team'
+        });
+    }
+
 }
