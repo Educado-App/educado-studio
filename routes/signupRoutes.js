@@ -3,7 +3,7 @@ const { ContentCreatorApplication } = require("../models/ContentCreatorApplicati
 const Email = require('../helpers/email')
 
 // Content Creator Application Route
-router.post("/signup/content-creator", async (req, res) => {
+router.post("/content-creator", async (req, res) => {
   const form = req.body;
 
   // Validate form ...
@@ -31,7 +31,7 @@ router.post("/signup/content-creator", async (req, res) => {
 });
 
 // Content Creator Application Route
-router.get("/signup/content-creator/GetAllApplications", async (req, res) => {
+router.get("/content-creator/GetAllApplications", async (req, res) => {
   try {
     const listOfForm = await ContentCreatorApplication.find();
     res.json(listOfForm);
