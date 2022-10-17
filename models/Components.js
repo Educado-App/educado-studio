@@ -11,6 +11,6 @@ const componentsSchema = new Schema({
   dateUpdated: Date, // If its a text component
 });
 
-const ComponentModel = mongoose.model("components", componentsSchema);
+const ComponentModel = mongoose.model("Component", componentsSchema);
 
 module.exports = { ComponentModel }
