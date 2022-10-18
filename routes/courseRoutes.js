@@ -82,17 +82,16 @@ router.get("/course/getall", async (req, res) => {
 
 // Get all courses for user
 router.get("/course/eml/getall", async (req, res) => {
-  const list = await CourseModel.find().populate({ path: 'sections', select: 'title' });
+  const list = await CourseModel.find();
   res.send(list);
 });
 
 router.get("/courses/:id", async (req, res) => {
   const { id } = req.params; // destructure params
-
   const course = await CourseModel.findById(id).populate({ path: 'sections', select: 'title' });
-
   res.send(course);
 })
+
 
 // Update course title
 router.post("/course/update/title", async (req, res) => {
