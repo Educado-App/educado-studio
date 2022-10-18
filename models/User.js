@@ -4,11 +4,11 @@ const Schema = mongoose.Schema
 
 // Class description
 const userSchema = new Schema({
-  googleID: String,
-  email: String,
-  password: String,
-  joinedAt: Date,
-  modifiedAt: Date
+  googleID: { type: String },
+  email: { type: String },
+  password: { type: String },
+  joinedAt: { type: Date },
+  modifiedAt: { type: Date }
 });
 
 const UserModel = mongoose.model("users", userSchema);

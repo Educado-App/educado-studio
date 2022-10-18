@@ -4,9 +4,7 @@ const router = require("express").Router();
 const { CourseModel } = require("../models/Courses");
 const { SectionModel } = require("../models/Sections");
 const { ComponentModel } = require("../models/Components");
-const {
-  ContentCreatorApplication,
-} = require("../models/ContentCreatorApplication");
+
 const requireLogin = require("../middlewares/requireLogin");
 
 // Content Creator Application Route
@@ -84,14 +82,15 @@ router.get("/course/getall", async (req, res) => {
 
 // Get all courses for user
 router.get("/course/eml/getall", async (req, res) => {
-  const list = await CourseModel.find();
+  const list = await CourseModel.find().populate({ path: 'sections', select: 'title' });
   res.send(list);
 });
 
-// FIXME: no error handling, just needed the endpoint - Mvh. Frederik
-router.get("/course/:id", async (req, res) => {
+router.get("/courses/:id", async (req, res) => {
   const { id } = req.params; // destructure params
-  const course = await CourseModel.findById(id);
+
+  const course = await CourseModel.findById(id).populate({ path: 'sections', select: 'title' });
+
   res.send(course);
 })
 
