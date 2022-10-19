@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const AppUser = require("../models/AppUser");
 const jwt = require("jsonwebtoken");
 const auth = require("../routes/appUserAuthentication");
+const AppUserController = require("../controllers/AppUserController");
+
 
 module.exports = (app) => {
 
@@ -109,5 +111,7 @@ app.post("/api/eml/login", (request, response) => {
     app.get("/api/eml/auth-endpoint", auth, (request, response) => {
         response.json({ message: "You are authorized to access me" });
     });
-}
 
+        // User deletion endpoint
+        app.delete(`/api/eml/delete/:id`, AppUserController.deleteUser);
+}
