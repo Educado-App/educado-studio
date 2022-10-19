@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const auth = require("../routes/appUserAuthentication");
 
 module.exports = (app) => {
-    
+
     // register endpoint
     app.post("/api/eml/register", (request, response) => {
         // hash the password
@@ -76,8 +76,7 @@ app.post("/api/eml/login", (request, response) => {
                 appUserId: appUser._id,
                 appUserphone: appUser.phone,
               },
-              "RANDOM-TOKEN",
-              { expiresIn: "24h" }
+              "RANDOM-TOKEN"
             );
   
             //   return success response
@@ -103,6 +102,8 @@ app.post("/api/eml/login", (request, response) => {
         });
       });
   });
+
+
 
     // authentication endpoint
     app.get("/api/eml/auth-endpoint", auth, (request, response) => {
