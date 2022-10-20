@@ -105,6 +105,8 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
         if (action === 'approve') {
             let password = generateRandomPassword();
             const validUser = makeUser({
+                firstName: application.getFirstName(),
+                lastName: application.getLastName(),
                 email: application.getEmail(),
                 password: password
             })
