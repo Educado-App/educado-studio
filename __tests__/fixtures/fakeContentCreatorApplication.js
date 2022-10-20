@@ -1,4 +1,4 @@
-const Id = require('../../helpers/Id')
+const Id = require('../../src/helpers/Id')
 
 module.exports = function makeFakeContentCreatorApplication(overrides = {}) {
 
