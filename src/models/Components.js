@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 
 // Class description
 const componentsSchema = new Schema({
-  type: String, // Image / Video / Audio / Text
-  file: String, // AWS URL, if video, audio or image
-  text: String, // IF component is text
-  dateCreated: Date, // For all components
-  dateUpdated: Date, // If its a text component
+  type: { type: String }, // Image / Video / Audio / Text
+  file: { type: String }, // AWS URL, if video, audio or image
+  text: { type: String }, // IF component is text
+  createdAt: { type: Date }, // For all components
+  modifiedAt: { type: Date }, // If its a text component
 });
 
 const ComponentModel = mongoose.model("Component", componentsSchema);

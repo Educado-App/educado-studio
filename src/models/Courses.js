@@ -7,14 +7,14 @@ const { Schema } = mongoose;
 
 // Class description
 const courseSchema = new Schema({
-  title: String,
-  description: String,
+  title: { type: String, required: true },
+  description: { type: String, required: true },
   _user: { type: Schema.Types.ObjectId, ref: "User" },
-  dateCreated: Date,
-  dateUpdated: Date,
-  coverImg: String,
-  category: String,
-  published: Boolean,
+  createdAt: { type: Date },
+  modifiedAt: { type: Date },
+  coverImg: { type: String },
+  category: { type: String },
+  published: { type: Boolean },
   sections: [{ type: Schema.Types.ObjectId, ref: "Section" }],
 });
 
