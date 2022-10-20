@@ -60,7 +60,7 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
                 email: validCCApplication.getEmail(),
                 motivation: validCCApplication.getMotivation(),
                 approved: validCCApplication.isApproved(),
-                rejectionReason: validCCApplication.getRejectReason(),
+                rejectReason: validCCApplication.getRejectReason(),
                 createdAt: validCCApplication.getCreatedAt(),
                 modifiedAt: validCCApplication.getModifiedAt(),
             })
@@ -79,14 +79,17 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
     async function postContentCreatorApplicationWithActions(httpRequest) {
         const allowedActionsSchema = {
             type: 'object',
-            properties: { 'action': { enum: ['approve', 'decline'] } },
+            properties: { 'action': { enum: ['approve', 'reject'] } },
             required: ['action']
         }
 
         const id = httpRequest.params.id
-        const declineReason = httpRequest.body.reason
+        const rejectionReason = httpRequest.body.reason
         const { action, errors } = Params.validate({ schema: allowedActionsSchema, data: httpRequest.queryParams })
-
+        console.log(action);
+        console.log(rejectionReason);
+        console.log(id);
+        
         if (errors) { return makeHttpError({ status: 400, message: errors }) }
 
         if (!Id.isValid(id)) {
@@ -106,11 +109,11 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
             sendApprovalMail(application)
         }
         else {
-            if (declineReason) {
-                application.decline({ reason: declineReason })
+            if (rejectionReason) {
+                application.reject({ reason: rejectionReason })
                 sendRejectMail(application)
             }
-            else { application.decline() }
+            else { application.reject() }
 
         }
 
