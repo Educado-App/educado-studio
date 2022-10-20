@@ -1,7 +1,9 @@
 const { makeHttpError } = require('../../../helpers/error')
 const { makeContentCreatorApplication } = require('../domain')
+const { makeUser } = require('../../../users')
+const { generateRandomPassword } = require('../../../helpers/password')
 
-module.exports = function makeContentCreatorApplicationController({ contentCreatorApplicationList, userList, Email, Params, Id }) {
+module.exports = function makeContentCreatorApplicationController({ contentCreatorApplicationList, UserList, Email, Params, Id }) {
 
     return async function handle(httpRequest) {
 
@@ -48,7 +50,6 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
     async function postContentCreatorApplication(httpRequest) {
 
         const applicationInfo = httpRequest.body
-
         try {
 
             const validCCApplication = makeContentCreatorApplication(applicationInfo)
@@ -86,10 +87,7 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
         const id = httpRequest.params.id
         const rejectionReason = httpRequest.body.reason
         const { action, errors } = Params.validate({ schema: allowedActionsSchema, data: httpRequest.queryParams })
-        console.log(action);
-        console.log(rejectionReason);
-        console.log(id);
-        
+
         if (errors) { return makeHttpError({ status: 400, message: errors }) }
 
         if (!Id.isValid(id)) {
@@ -105,8 +103,15 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
         const application = makeContentCreatorApplication({ id: existing._id, ...existing })
 
         if (action === 'approve') {
-            application.approve()
-            sendApprovalMail(application)
+            let password = generateRandomPassword();
+            const validUser = makeUser({
+                email: application.getEmail(),
+                password: password
+            })
+
+            await UserList.add(validUser);
+            application.approve() 
+            sendApprovalMail(application,password)
         }
         else {
             if (rejectionReason) {
@@ -137,12 +142,14 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
 
     }
 
-    async function sendApprovalMail(application) {
+    async function sendApprovalMail(application,password) {
         Email.send({
             to: application.getEmail(),
             subject: "Congratulations!",
             text: "Congratulations! " + application.getFirstName() + " " + application.getLastName() +
                 "\n\nYour content creator application has been approved! " +
+                "\nTo login use your email and this temporary password: "+password +
+                "\nMake sure to change your password as soon as possible." + 
                 "\n\nBest regards, the Educado team"
         });
     }
