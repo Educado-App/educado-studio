@@ -14,7 +14,7 @@ function isValid(email) {
 
 async function sendMail({
   subject,
-  from = keys.gmailUser,
+  from = keys.outlookUser,
   to,
   text,
   html
