@@ -1,5 +1,6 @@
-const keys = require("../../env/config/dev")
 const nodemailer = require("nodemailer")
+const config = require("../../env/config/keys")
+
 
 module.exports = Object.freeze({
   isValid,
@@ -14,7 +15,7 @@ function isValid(email) {
 
 async function sendMail({
   subject,
-  from = keys.outlookUser,
+  from = config.outlookUser,
   to,
   text,
   html
@@ -24,8 +25,8 @@ async function sendMail({
     service: "hotmail",
     auth: {
       type: "login",
-      user: keys.outlookUser,
-      pass: keys.outlookPass,
+      user: config.outlookUser,
+      pass: config.outlookPass,
 
     },
     tls: {
@@ -41,7 +42,7 @@ async function sendMail({
     html: html
   }
   
-  if (keys.MAILS_DISABLED) return
+  if (config.MAILS_DISABLED) return
 
   await transporter.sendMail(mailOptions)
 }

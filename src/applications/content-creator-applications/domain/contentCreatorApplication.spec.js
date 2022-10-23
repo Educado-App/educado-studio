@@ -14,12 +14,12 @@ describe('Content Creator Application', () => {
 
     })
 
-    it('can get declined', async () => {
+    it('can get rejected', async () => {
 
         const fakeApplication = makeFakeContentCreatorApplication()
         const application = makeContentCreatorApplication(fakeApplication)
 
-        application.decline({ reason: 'test decline' })
+        application.reject({ reason: 'test decline' })
 
         expect(application.isApproved()).toBe(false)
         expect(application.getRejectReason()).toBe('test decline')

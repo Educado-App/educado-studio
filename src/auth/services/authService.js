@@ -8,7 +8,7 @@ module.exports = function buildMakeAuthService({ Password, JWT }) {
 
         async function authenticate(user) {
 
-            const foundUser = await userList.findOneByEmail(user.email)
+            const foundUser = await userList.findByEmail(user.email)
             if (!foundUser) { throw new Error("Authentication: Access denied") }
 
             const isAuthenticated = Password.isValid({

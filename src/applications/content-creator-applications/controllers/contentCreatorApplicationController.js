@@ -1,9 +1,7 @@
 const { makeHttpError } = require('../../../helpers/error')
-const { makeContentCreatorApplication } = require('../domain')
-const { makeUser } = require('../../../users')
-const { generateRandomPassword } = require('../../../helpers/password')
+const { approveCCApplication, rejectCCApplication, addCCApplication } = require('../use-cases')
 
-module.exports = function makeContentCreatorApplicationController({ contentCreatorApplicationList, UserList, Email, Params, Id }) {
+module.exports = function makeContentCreatorApplicationController({ contentCreatorApplicationList, Params, Id }) {
 
     return async function handle(httpRequest) {
 
@@ -12,12 +10,11 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
                 return await getContentCreatorApplication(httpRequest)
 
             case 'POST':
-                if ('action' in httpRequest.queryParams) {
-                    return await postContentCreatorApplicationWithActions(httpRequest)
-                }
-                else {
-                    return await postContentCreatorApplication(httpRequest)
-                }
+                return await postContentCreatorApplication(httpRequest)
+
+            case 'PUT':
+                return await putContentCreatorApplication(httpRequest)
+
             default:
                 return makeHttpError({
                     status: 405,
@@ -52,19 +49,7 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
         const applicationInfo = httpRequest.body
         try {
 
-            const validCCApplication = makeContentCreatorApplication(applicationInfo)
-
-            const created = await contentCreatorApplicationList.add({
-                id: validCCApplication.getId(),
-                firstName: validCCApplication.getFirstName(),
-                lastName: validCCApplication.getLastName(),
-                email: validCCApplication.getEmail(),
-                motivation: validCCApplication.getMotivation(),
-                approved: validCCApplication.isApproved(),
-                rejectReason: validCCApplication.getRejectReason(),
-                createdAt: validCCApplication.getCreatedAt(),
-                modifiedAt: validCCApplication.getModifiedAt(),
-            })
+            const created = await addCCApplication(applicationInfo)
 
             return {
                 success: true,
@@ -77,15 +62,16 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
         }
     }
 
-    async function postContentCreatorApplicationWithActions(httpRequest) {
+    async function putContentCreatorApplication(httpRequest) {
+        const id = httpRequest.params.id
+        const rejectionReason = httpRequest.body.reason
+
         const allowedActionsSchema = {
             type: 'object',
             properties: { 'action': { enum: ['approve', 'reject'] } },
             required: ['action']
         }
 
-        const id = httpRequest.params.id
-        const rejectionReason = httpRequest.body.reason
         const { action, errors } = Params.validate({ schema: allowedActionsSchema, data: httpRequest.queryParams })
 
         if (errors) { return makeHttpError({ status: 400, message: errors }) }
@@ -95,42 +81,21 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
         }
 
         const existing = await contentCreatorApplicationList.findById(id)
-
         if (!existing) {
             return makeHttpError({ status: 400, message: `No content creator application with id '${id}' was found` })
         }
 
-        const application = makeContentCreatorApplication({ id: existing._id, ...existing })
-
-        if (action === 'approve') {
-            let password = generateRandomPassword();
-            const validUser = makeUser({
-                firstName: application.getFirstName(),
-                lastName: application.getLastName(),
-                email: application.getEmail(),
-                password: password
-            })
-
-            await UserList.add(validUser);
-            application.approve() 
-            sendApprovalMail(application,password)
-        }
-        else {
-            if (rejectionReason) {
-                application.reject({ reason: rejectionReason })
-                sendRejectMail(application)
-            }
-            else { application.reject() }
-
-        }
-
+        let updated
         try {
-            const updated = await contentCreatorApplicationList.update({
-                id: application.getId(),
-                approved: application.isApproved(),
-                rejectReason: application.getRejectReason(),
-                modifiedAt: new Date()
-            })
+            if (action === 'approve') {
+                updated = await approveCCApplication(existing)
+            }
+            else {
+                updated = await rejectCCApplication({
+                    applicationInfo: existing,
+                    reason: rejectionReason
+                })
+            }
 
             return {
                 success: true,
@@ -142,30 +107,6 @@ module.exports = function makeContentCreatorApplicationController({ contentCreat
             return makeHttpError({ status: 400, message: error.message })
         }
 
-    }
-
-    async function sendApprovalMail(application,password) {
-        Email.send({
-            to: application.getEmail(),
-            subject: "Congratulations!",
-            text: "Congratulations! " + application.getFirstName() + " " + application.getLastName() +
-                "\n\nYour content creator application has been approved! " +
-                "\nTo login use your email and this temporary password: "+password +
-                "\nMake sure to change your password as soon as possible." + 
-                "\n\nBest regards, the Educado team"
-        });
-    }
-
-
-    async function sendRejectMail(application) {
-        Email.send({
-            to: application.getEmail(),
-            subject: "Your application has been rejected.",
-            text: "We regret to inform you that your application for the status of content creator " +
-                'has been rejected upon the following reason "' + application.getRejectReason() +
-                '"\nIf you believe this is an error, please feel free to contact us!' +
-                '\n\nBest regards, the Educado team'
-        });
     }
 
 }

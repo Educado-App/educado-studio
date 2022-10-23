@@ -3,7 +3,7 @@ module.exports = function makeUserList(db_model) {
     return Object.freeze({
         add,
         remove,
-        findOneByEmail,
+        findByEmail,
         findById,
         findByGoogleId
     })
@@ -18,7 +18,7 @@ module.exports = function makeUserList(db_model) {
         return results.deletedCount
     }
 
-    async function findOneByEmail(email) {
+    async function findByEmail(email) {
         return await db_model.findOne({ email: email })
     }
 

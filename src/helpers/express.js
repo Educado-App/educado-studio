@@ -1,4 +1,4 @@
-function makeExpressCallback(endpointHandler) {
+function makeExpressCallback(requestHandler) {
 
     return async function callback(req, res) {
 
@@ -16,7 +16,7 @@ function makeExpressCallback(endpointHandler) {
             }
         }
 
-        const response = await endpointHandler(httpRequest)
+        const response = await requestHandler(httpRequest)
 
         res.status(response.status)
         res.send(response)
