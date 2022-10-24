@@ -3,9 +3,9 @@ const router = require("express").Router();
 const { makeExpressCallback } = require('../../../helpers/express')
 const { contentCreatorApplicationController } = require('../controllers')
 
-router.get("", makeExpressCallback(contentCreatorApplicationController))
-router.get("/:id", makeExpressCallback(contentCreatorApplicationController))
-router.post("", makeExpressCallback(contentCreatorApplicationController))
-router.post("/:id", makeExpressCallback(contentCreatorApplicationController))
+router.get("/applications", makeExpressCallback(contentCreatorApplicationController))
+router.get("/applications/:id", makeExpressCallback(contentCreatorApplicationController))
+router.post("/applications", makeExpressCallback(contentCreatorApplicationController))
+router.put("/applications/:id", makeExpressCallback(contentCreatorApplicationController))
 
 module.exports = router;

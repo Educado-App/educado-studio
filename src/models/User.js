@@ -5,6 +5,8 @@ const Schema = mongoose.Schema
 // Class description
 const userSchema = new Schema({
   googleID: String,
+  firstName: String,
+  lastName: String,
   email: String,
   salt: String,
   hash: String,

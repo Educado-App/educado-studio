@@ -31,7 +31,7 @@ describe("User List", () => {
         
         await userList.add(fakeUser)
         
-        const found = await userList.findOneByEmail(fakeUser.email)
+        const found = await userList.findByEmail(fakeUser.email)
 
         expect(found).not.toBeNull()
         expect(found.email).toBe(fakeUser.email)

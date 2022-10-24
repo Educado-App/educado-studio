@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const requireLogin = require("../middlewares/requireLogin");
 const aws = require("aws-sdk");
-const keys = require("../../env/config/keys");
+const config = require("../../env/config/keys");
 const multer = require("multer");
 let mulreq = multer();
 
@@ -24,7 +24,7 @@ router.get("/download-s3", requireLogin, async (req, res) => {
     return;
   } else {
     const download = {
-      Bucket: keys.s3Bucket,
+      Bucket: config.s3Bucket,
       Key: s3link,
     };
 
@@ -54,7 +54,7 @@ router.get("/api/download-s3-image", requireLogin, async (req, res) => {
     return;
   } else {
     const download = {
-      Bucket: keys.s3Bucket,
+      Bucket: config.s3Bucket,
       Key: link,
     };
 
@@ -87,7 +87,7 @@ router.post(
     const s3 = new aws.S3();
 
     const params = {
-      Bucket: keys.s3Bucket,
+      Bucket: config.s3Bucket,
       limit: 100000000,
       Key: Date.now() + "-" + req.file.originalname,
       Body: myFile.buffer,
@@ -124,7 +124,7 @@ router.post(
     const { course_id } = req.query;
     const s3 = new aws.S3();
     const params = {
-      Bucket: keys.s3Bucket,
+      Bucket: config.s3Bucket,
       limit: 100000000,
       Key: Date.now() + "-" + req.file.originalname,
       Body: myFile.buffer,
@@ -155,7 +155,7 @@ router.post("/api/get-presigned-url", async (req, res) => {
   let link = component.file;
   const s3 = new aws.S3();
   const params = {
-    Bucket: keys.s3Bucket,
+    Bucket: config.s3Bucket,
     Key: link,
     Expires: 600,
   };
@@ -176,7 +176,7 @@ router.get("/delete-s3", async () => {
   const s3 = new aws.S3();
 
   const params = {
-    Bucket: keys.s3Bucket,
+    Bucket: config.s3Bucket,
     Key: "s/test.txt",
   };
 
@@ -203,7 +203,7 @@ router.get("/api/eml/download-s3", async (req, res) => {
     return;
   } else {
     const download = {
-      Bucket: keys.s3Bucket,
+      Bucket: config.s3Bucket,
       Key: s3link,
     };
 
@@ -230,7 +230,7 @@ router.post("/api/eml/get-presigned-url", async (req, res) => {
   let link = course.coverImg;
   const s3 = new aws.S3();
   const params = {
-    Bucket: keys.s3Bucket,
+    Bucket: config.s3Bucket,
     Key: link,
     Expires: 600,
   };
@@ -252,7 +252,7 @@ router.post("/api/eml/get-presigned-url-file", async (req, res) => {
   const { link } = req.body;
   const s3 = new aws.S3();
   const params = {
-    Bucket: keys.s3Bucket,
+    Bucket: config.s3Bucket,
     Key: link,
     Expires: 600,
   };

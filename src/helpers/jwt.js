@@ -1,5 +1,6 @@
-const config = require('../../env/config/keys')
 const jwt = require('jsonwebtoken')
+const config = require('../../env/config/keys')
+
 
 module.exports = Object.freeze({
     signAccessToken,

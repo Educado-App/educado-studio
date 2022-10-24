@@ -55,14 +55,14 @@ describe('Content Creator Application Controller', () => {
 
     })
 
-    it('approves a single content creator application', async () => {
+    it('handles approving a single content creator application', async () => {
         const fakeApplication = makeFakeContentCreatorApplication()
 
         await contentCreatorApplicationList.add(fakeApplication)
 
         const request = {
             header: { 'Content-Type': 'application/json' },
-            method: 'POST',
+            method: 'PUT',
             params: { id: fakeApplication.id },
             queryParams: { action: 'approve' },
             body: {}
@@ -70,30 +70,37 @@ describe('Content Creator Application Controller', () => {
 
         const response = await handle(request)
 
+        const found = await userList.findByEmail(fakeApplication.email)
+        expect(found).not.toBeNull()
         expect(response.status).toBe(200)
         expect(response.success).toBe(true)
+
+
+        
         expect(response.data.approved).toBe(true)
 
     })
 
-    xit('successfully creates a user upon approval', async () => {
+    it('rejects a single content creator application', async () => {
         const fakeApplication = makeFakeContentCreatorApplication()
         await contentCreatorApplicationList.add(fakeApplication)
 
         const request = {
             header: { 'Content-Type': 'application/json' },
-            method: 'POST',
+            method: 'PUT',
             params: { id: fakeApplication.id },
-            queryParams: { action: 'approve' },
-            body: {}
+            queryParams: { action: 'reject' },
+            body: {
+                reason: "I don't like test users being approved"
+            }
         }
 
-        await handle(request)
+        const response = await handle(request)
 
-        const found = await userList.findOneByEmail(fakeApplication.email)
+        expect(response.success).toBe(true)
+        expect(response.data.approved).toBe(false)
+        expect(response.data.rejectReason).toBe("I don't like test users being approved")
 
-        expect(found).not.toBeNull()
     })
-    xit('declines a single content creator application', async () => { })
 
 })

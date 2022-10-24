@@ -29,7 +29,7 @@ module.exports = function buildMakeContentCreatorApplication({ Id }) {
             getModifiedAt: () => modifiedAt,
             fullname: () => `${firstName} ${lastName}`,
             approve: () => approved = true,
-            decline: ({ reason = 'No reason given' } = {}) => {
+            reject: ({ reason = 'No reason given' } = {}) => {
                 approved = false
                 rejectReason = reason
             }

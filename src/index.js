@@ -1,4 +1,3 @@
-// Constant requires
 const express = require("express");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
@@ -10,7 +9,7 @@ const context = require('./middlewares/context');
 const { connectToDb } = require("../db");
 const errorHandler = require("./helpers/errorHandler");
 
-const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku. Otherwise, by default, use port 5000
+const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku
 
 // Setup connection to database
 connectToDb(keys.mongoURI, {
