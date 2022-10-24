@@ -13,10 +13,9 @@ const options = {
 }
 
 const jwtStrategy = new JwtStrategy(options, (payload, done) => {
-    userList.findById(payload.sub)
+    userList.findById(payload.user)
         .then(user => done(null, user))
         .catch(err => done(err, false))
-        .finally(() => done(null, false))
 })
 
 module.exports = {

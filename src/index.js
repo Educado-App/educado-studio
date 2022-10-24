@@ -8,6 +8,7 @@ const router = require("./routes");
 const cors = require('../env/settings/cors');
 const context = require('./middlewares/context');
 const { connectToDb } = require("../db");
+const errorHandler = require("./helpers/errorHandler");
 
 const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku. Otherwise, by default, use port 5000
 
@@ -26,9 +27,13 @@ app.use(
     keys: [keys.cookieKey], // Specify encryption key for cookie
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(express.json());
+
+app.use(errorHandler)
 app.use(cors)
 app.use(context)
 app.use('', router)

@@ -5,11 +5,14 @@ const { makeExpressCallback } = require('../../helpers/express')
 const { authAuthController } = require('../controllers')
 
 // Services
-require("../../helpers/auth/passport");
-const { requireAuth } = require('../../helpers/auth')
+require("../helpers");
 
 router.post('/auth/jwt', makeExpressCallback(authAuthController))
-router.get('/auth/jwt/login', passport.authenticate('JWT'))
+
+router.get('/auth/jwt/test', passport.authenticate('JWT', { session: false }), (req, res, next) => {
+  res.status(200)
+  res.send("Successfully logged into an authenticated route!!")
+})
 
 // Route handler for login simulation
 router.get("/auth/google",
