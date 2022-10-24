@@ -6,7 +6,7 @@ module.exports = function makeFakeCourse(overrides = {}) {
     const fakeCourse = {
         id: Id.makeId(),
         category: 'Testing',
-        author: makeFakeUser,
+        author: makeFakeUser(),
         title: 'Basic testing',
         description: 'A course about testing',
     }

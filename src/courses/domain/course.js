@@ -1,4 +1,4 @@
-module.exports = function buildMakeCourse({ Id, makeSection }) {
+module.exports = function buildMakeCourse({ Id }) {
 
     return function makeCourse({
         id = Id.makeId(),
@@ -21,15 +21,14 @@ module.exports = function buildMakeCourse({ Id, makeSection }) {
             getId: () => id,
             getTitle: () => title,
             getDescription: () => description,
-            getAuthors: () => author,
+            getAuthor: () => author,
             getCoverImg: () => coverImg,
             getCategory: () => category,
             isPublished: () => published,
-            sections,
             getCreatedAt: () => createdAt,
             getModifiedAt: () => modifiedAt,
-            addSection: (sectionInfo) => {
-                const section = makeSection(sectionInfo)
+            getSections: () => sections,
+            addSection: (section) => {
                 sections.push(section) 
             },
             publish : () => published = true,
