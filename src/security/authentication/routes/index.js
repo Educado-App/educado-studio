@@ -1,15 +1,16 @@
 const router = require('express').Router()
 const passport = require("passport"); // Import passport library module
 
-const { makeExpressCallback } = require('../../helpers/express')
-const { authAuthController } = require('../controllers')
+const { makeExpressCallback } = require('../../../helpers/express')
+const { authAuthController } = require('../controllers');
+const requiresAuth = require('../helpers/requireAuth');
 
 // Services
 require("../helpers");
 
 router.post('/auth/jwt', makeExpressCallback(authAuthController))
 
-router.get('/auth/jwt/test', passport.authenticate('JWT', { session: false }), (req, res, next) => {
+router.get('/auth/jwt/test', requiresAuth, (req, res, next) => {
   res.status(200)
   res.send("Successfully logged into an authenticated route!!")
 })

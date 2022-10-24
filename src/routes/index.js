@@ -3,8 +3,7 @@ const router = require('express').Router()
 // Routes
 const CourseRoutes = require('./courseRoutes')
 const AWSRoutes = require('./bucketRoutes')
-const AuthRoutes = require('../auth/routes')
-const SignupRoutes = require('./signupRoutes')
+const AuthRoutes = require('../security/authentication/routes')
 const ApplicationRoutes = require('../applications/content-creator-applications/routes')
 
 
@@ -16,7 +15,6 @@ router.get('/api', (req, res) => {
 router.use('/api', CourseRoutes)
 router.use('', AWSRoutes)
 router.use('/api', AuthRoutes)
-router.use('/api/signup', SignupRoutes)
 router.use('/api', ApplicationRoutes)
 
 

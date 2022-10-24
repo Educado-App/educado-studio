@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const requireLogin = require("../middlewares/requireLogin");
+const requireLogin = require("../security/authentication/helpers/requireAuth");
 const aws = require("aws-sdk");
 const config = require("../../env/config/keys");
 const multer = require("multer");

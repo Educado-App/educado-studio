@@ -4,7 +4,7 @@ const router = require("express").Router();
 const { CourseModel } = require("../models/Courses");
 const { SectionModel } = require("../models/Sections");
 const { ComponentModel } = require("../models/Components");
-const requireLogin = require("../middlewares/requireLogin");
+const requireLogin = require("../security/authentication/helpers/requireAuth");
 
 // Content Creator Application Route
 router.post("/course/", async (req, res) => {

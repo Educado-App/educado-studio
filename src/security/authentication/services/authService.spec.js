@@ -1,7 +1,7 @@
-const connectDb = require('../../../__tests__/fixtures/db')
+const connectDb = require('../../../../__tests__/fixtures/db')
 
-const makeFakeUser = require('../../../__tests__/fixtures/fakeUser')
-const { userList, makeUser } = require('../../users')
+const makeFakeUser = require('../../../../__tests__/fixtures/fakeUser')
+const { userList, makeUser } = require('../../../users')
 const { authService } = require('.')
 
 describe('Authentication Handler', () => {

@@ -1,5 +1,5 @@
 const passport = require("passport");
-const { userList } = require('../../users')
+const { userList } = require('../../../users')
 
 // ** SERIALIZATION & DESERIALIZATION ** //
 

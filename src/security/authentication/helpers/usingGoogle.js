@@ -1,7 +1,7 @@
 const GoogleStrategy = require('passport').Strategy
-const config = require("../../../env/config/keys");
+const config = require("../../../../env/config/keys");
 
-const { userList } = require('../../users')
+const { userList } = require('../../../users')
 
 // Google OAuth Strategy 1: Login
 const googleStrategy =

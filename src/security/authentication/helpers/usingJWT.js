@@ -1,15 +1,18 @@
-const config = require('../../../env/config/keys')
+const config = require('../../../../env/config/keys')
 
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 
-const { userList } = require('../../users')
+const { userList } = require('../../../users')
 
 // JWT Strategy options
 const options = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.TOKEN_SECRET,
-    algorithms: ['HS256']
+    algorithms: ['HS256'],
+    ignoreExpiration: false,
+    jwtFromRequest: ExtractJwt.fromExtractors([
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+    ])
 }
 
 const jwtStrategy = new JwtStrategy(options, (payload, done) => {
