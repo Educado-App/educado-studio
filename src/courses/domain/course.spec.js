@@ -21,10 +21,22 @@ describe('Course', () => {
 
         const course = makeCourse(fakeCourse)
         const section1 = makeFakeSection({ sequenceNumber: 1 })
-        const section2 = makeFakeSection({ sequenceNumber: 1 })
+        const section2 = makeFakeSection({ sequenceNumber: 2 })
         course.addSection(section1)
         
         
         expect(() => course.addSection(section2)).toThrow()
+    })
+
+    it('can be marked as published for a course', () => {
+        const fakeCourse = makeFakeCourse()
+
+        const course = makeCourse(fakeCourse)
+        
+        expect(course.isPublished()).toBe(false)
+
+        course.publish();
+
+        expect(course.isPublished()).toBe(true)
     })
 })

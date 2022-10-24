@@ -1,7 +1,7 @@
-const Id = require('../../helpers/Id')
+const Id = require("../src/helpers/Id");
 
 const buildMakeCourse = require('./course')
-const buildMakeSection = require('./section')
+const buildMakeSection = require('../src/courses/domain/section')
 
 const makeSection = buildMakeSection({ Id })
 const makeCourse = buildMakeCourse({ Id, makeSection })

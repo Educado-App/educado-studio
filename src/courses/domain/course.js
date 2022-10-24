@@ -3,25 +3,31 @@ module.exports = function buildMakeCourse({ Id, makeSection }) {
     return function makeCourse({
         id = Id.makeId(),
         title,
-        author,
-        category,
         description = "",
-        published,
+        author,
+        coverImg,
+        category,
+        published = false,
         sections = [],
         createdAt = new Date(),
         modifiedAt = new Date()
     }) {
 
+        if (!title) throw new Error('A title must be provided for making a course')
+        if (!author) throw new Error('Course must have an author')
+        if (!description) throw new Error('A description must be provided for making a course')
+
         return Object.freeze({
-            id,
-            title,
-            author,
-            category,
-            description,
-            published,
+            getId: () => id,
+            getTitle: () => title,
+            getDescription: () => description,
+            getAuthors: () => author,
+            getCoverImg: () => coverImg,
+            getCategory: () => category,
+            isPublished: () => published,
             sections,
-            createdAt,
-            modifiedAt,
+            getCreatedAt: () => createdAt,
+            getModifiedAt: () => modifiedAt,
             addSection: (sectionInfo) => {
                 const section = makeSection(sectionInfo)
                 sections.push(section) 
@@ -29,6 +35,5 @@ module.exports = function buildMakeCourse({ Id, makeSection }) {
             publish : () => published = true,
             unpublish : () => published = false
         })
-
     }
 }
