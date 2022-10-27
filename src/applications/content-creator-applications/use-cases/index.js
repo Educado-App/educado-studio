@@ -1,7 +1,7 @@
 const Email = require('../../../helpers/email')
 const Password = require('../../../helpers/password')
 
-const { userList } = require('../../../users')
+const { userList } = require('../../../users/gateways')
 const { contentCreatorApplicationList } = require('../gateways')
 
 const makeApproveCCApplication = require('./approveCCApplication')
@@ -12,4 +12,8 @@ const approveCCApplication = makeApproveCCApplication({ userList, contentCreator
 const rejectCCApplication = makeRejectCCApplication({ contentCreatorApplicationList, Email })
 const addCCApplication = makeAddCCApplication({ contentCreatorApplicationList })
 
-module.exports = { approveCCApplication, rejectCCApplication, addCCApplication }
+module.exports = { 
+    approveCCApplication, 
+    rejectCCApplication, 
+    addCCApplication 
+}

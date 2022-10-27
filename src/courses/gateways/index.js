@@ -1,4 +1,4 @@
-const { CourseModel } = require('../db-models/courses')
+const { CourseModel } = require('../db-models/Course')
 const Params = require('../../helpers/ajv/params')
 const ParamsSchema = require('../../helpers/ajv/paramsSchema')
 

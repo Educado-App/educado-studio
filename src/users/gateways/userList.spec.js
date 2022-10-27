@@ -1,6 +1,6 @@
-const connectDb = require('../../__tests__/fixtures/db')
+const connectDb = require('../../../__tests__/fixtures/db')
 
-const makeFakeUser = require("../../__tests__/fixtures/fakeUser")
+const makeFakeUser = require("../../../__tests__/fixtures/fakeUser")
 
 const { userList } = require(".")
 

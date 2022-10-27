@@ -2,7 +2,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Class description
 const ContentCreatorSchema = new Schema({
   firstName: { type: String },
   lastName: { type: String },
@@ -14,9 +13,6 @@ const ContentCreatorSchema = new Schema({
   modifiedAt: { type: Date },
 });
 
-const ContentCreatorApplication = mongoose.model(
-  "Content-Creator-Application",
-  ContentCreatorSchema
-);
+const ContentCreatorApplication = mongoose.model("ContentCreatorApplication", ContentCreatorSchema);
 
 module.exports = { ContentCreatorApplication };

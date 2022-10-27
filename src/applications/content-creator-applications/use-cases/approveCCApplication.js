@@ -1,4 +1,4 @@
-const { makeUser } = require('../../../users')
+const { makeUser } = require('../../../users/domain')
 const { makeContentCreatorApplication } = require('../domain')
 
 module.exports = function makeApproveCCApplication({ userList, contentCreatorApplicationList, Email, Password }) {

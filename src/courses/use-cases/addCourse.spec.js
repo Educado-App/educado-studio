@@ -8,11 +8,12 @@ describe('Add Empty Course', () => {
     beforeAll(() => connectDb())
     afterEach(async () => await courseList.remove({}))
 
-    it('adds course to db', async () => {
+    it('adds a course to the db', async () => {
         const fakeCourse = makeFakeCourse()
 
-        await addCourse(fakeCourse)
+        const added = await addCourse(fakeCourse)
 
-        expect(courseList.findAll().length).toBe(1)
+        expect(added).not.toBe(null)
+        expect(added.title).toMatch(fakeCourse.title)
     })
 })

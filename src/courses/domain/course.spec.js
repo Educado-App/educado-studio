@@ -5,7 +5,7 @@ const makeFakeSection = require('../../../__tests__/fixtures/fakeSection')
 describe('Course', () => {
 
 
-    it('can add sections to itself', () => {
+    xit('can add sections to itself', () => {
         const fakeCourse = makeFakeCourse()
 
         const course = makeCourse(fakeCourse)

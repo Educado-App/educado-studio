@@ -2,8 +2,8 @@ const router = require("express").Router();
 
 // Models
 const { CourseModel } = require("../models/Courses");
-const { SectionModel } = require("../models/Sections");
-const { ComponentModel } = require("../models/Components");
+const { SectionModel } = require("../courses/db-models/Section");
+const { ComponentModel } = require("../courses/db-models/Answer");
 const requireLogin = require("../middlewares/requireLogin");
 
 // Content Creator Application Route

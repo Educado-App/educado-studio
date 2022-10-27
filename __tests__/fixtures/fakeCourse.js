@@ -1,18 +1,24 @@
 const Id = require("../../src/helpers/Id")
-const makeFakeUser = require('./fakeUser')
+const makeFakeProfile = require('./fakeProfile')
+const makeFakeCategory = require('./fakeCategory')
 
 module.exports = function makeFakeCourse(overrides = {}) {
 
-    const fakeCourse = {
+    const course = {
         id: Id.makeId(),
-        category: 'Testing',
-        author: makeFakeUser(),
         title: 'Basic testing',
+        category: makeFakeCategory(),
         description: 'A course about testing',
+        coverImg: "https://dummyjson.com/",
+        author: makeFakeProfile(),
+        sections: [],
+        published: false,
+        createdAt: new Date(),
+        modifiedAt: new Date(),
     }
 
     return {
-        ...fakeCourse,
+        ...course,
         ...overrides
     }
 }

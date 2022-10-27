@@ -13,9 +13,9 @@ module.exports = function buildMakeCourse({ Id }) {
         modifiedAt = new Date()
     }) {
 
-        if (!title) throw new Error('A title must be provided for making a course')
+        if (!title) throw new Error('Course must have a title')
         if (!author) throw new Error('Course must have an author')
-        if (!description) throw new Error('A description must be provided for making a course')
+        if (!description) throw new Error('Course must have a description')
 
         return Object.freeze({
             getId: () => id,
@@ -28,9 +28,6 @@ module.exports = function buildMakeCourse({ Id }) {
             getCreatedAt: () => createdAt,
             getModifiedAt: () => modifiedAt,
             getSections: () => sections,
-            addSection: (section) => {
-                sections.push(section) 
-            },
             publish : () => published = true,
             unpublish : () => published = false
         })

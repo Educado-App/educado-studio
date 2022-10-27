@@ -3,7 +3,7 @@ const makeFakeContentCreatorApplication = require('../../../../__tests__/fixture
 
 const { contentCreatorApplicationController: handle } = require('.')
 const { contentCreatorApplicationList } = require('../gateways')
-const { userList } = require('../../../users')
+const { userList } = require('../../../users/gateways')
 
 describe('Content Creator Application Controller', () => {
 
@@ -71,6 +71,7 @@ describe('Content Creator Application Controller', () => {
         const response = await handle(request)
 
         const found = await userList.findByEmail(fakeApplication.email)
+
         expect(found).not.toBeNull()
         expect(response.status).toBe(200)
         expect(response.success).toBe(true)

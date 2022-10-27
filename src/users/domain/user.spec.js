@@ -1,4 +1,4 @@
-const makeFakeUser = require('../../__tests__/fixtures/fakeUser')
+const makeFakeUser = require('../../../__tests__/fixtures/fakeUser')
 const { makeUser } = require('.')
 
 describe("User", () => {
@@ -25,6 +25,17 @@ describe("User", () => {
     const fakeUser = makeFakeUser()
 
     const madeUser = makeUser(fakeUser)
+
+    expect(madeUser).toHaveProperty('salt')
+    expect(madeUser).toHaveProperty('hash')
+
+  })
+
+  it("test", async () => {
+    const fakeUser = makeFakeUser({email: "demo@gmail.com", password: "Demo1234"})
+
+    const madeUser = makeUser(fakeUser)
+    console.log(madeUser);
 
     expect(madeUser).toHaveProperty('salt')
     expect(madeUser).toHaveProperty('hash')

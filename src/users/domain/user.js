@@ -1,8 +1,7 @@
 module.exports = function buildMakeUser({ Email, Password }) {
 
     return function makeUser({
-        firstName,
-        lastName,
+        googleId,
         email,
         password,
         joinedAt = new Date(),
@@ -18,8 +17,7 @@ module.exports = function buildMakeUser({ Email, Password }) {
         const { salt, hash } = Password.encrypt(password)
 
         return Object.freeze({
-            firstName: firstName,
-            lastName: lastName,
+            googleId: googleId,
             email: email,
             salt: salt,
             hash: hash,

@@ -13,6 +13,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
     return Object.freeze({
         findAll,
         findById,
+        findAllByAuthor,
         add,
         remove,
         update
@@ -55,10 +56,29 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
         return { id: foundId, ...courseInfo }
     }
 
+    async function findAllByAuthor({
+        name: authorName,
+        id: authorId
+    }) {
+
+
+        const results = dbModel.find({
+            $and: [
+                authorId ? { 'author':  authorId } : {}
+            ]
+        })
+
+        return results
+    }
+
     async function add(course) {
+
         const result = await dbModel.create({
+            ...course,
             _id: course.id,
-            ...course
+            category: course.category.id,
+            author: course.author.id,
+            sections: course.sections.map(section => section.id)
         })
 
         const { _id: id, ...courseInfo } = result._doc
@@ -72,6 +92,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
     }
 
     async function update({ id: _id, ...changes }) {
+
         const result = await dbModel.findOneAndUpdate({ _id }, { ...changes }, { new: true })
         return result
     }
