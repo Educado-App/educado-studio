@@ -9,6 +9,13 @@ const context = require('./middlewares/context');
 const { connectToDb } = require("../db");
 const errorHandler = require("./helpers/errorHandler");
 
+// Mongoose Model executions
+require("./models/User");
+require("./models/AppUser");
+require("./models/Courses");
+require("./models/Sections");
+require("./models/Components");
+
 const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku
 
 // Setup connection to database
@@ -36,6 +43,12 @@ app.use(errorHandler)
 app.use(cors)
 app.use(context)
 app.use('', router)
+
+// Setup authentication routes
+require("./routes/appAuthRoutes")(app);
+require("./routes/authRoutes")(app);
+require("./routes/courseRoutes")(app);
+require("./routes/bucketRoutes")(app);
 
 // Run if running in production on Heroku
 if (process.env.NODE_ENV === "production") {
