@@ -45,10 +45,10 @@ app.use(context)
 app.use('', router)
 
 // Setup authentication routes
-require("./routes/appAuthRoutes")(app);
-require("./routes/authRoutes")(app);
-require("./routes/courseRoutes")(app);
-require("./routes/bucketRoutes")(app);
+//require("./routes/appAuthRoutes")(app);
+//require("./routes/authRoutes")(app);
+//require("./routes/courseRoutes")(app);
+//require("./routes/bucketRoutes")(app);
 
 // Run if running in production on Heroku
 if (process.env.NODE_ENV === "production") {
