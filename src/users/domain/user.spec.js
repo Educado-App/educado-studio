@@ -18,7 +18,7 @@ describe("User", () => {
 
     expect(() => makeUser({ ...fakeUser, password: "" })).toThrow("User must have a password")
     expect(() => makeUser({ ...fakeUser, password: "1234567" })).toThrow("Password should be atleast 8 characters long")
-    expect(() => makeUser({ ...fakeUser, password: "withoutcapitalletter" })).toThrow("Password must contain a capital letter")
+    expect(() => makeUser({ ...fakeUser, password: "withoutcapitalletter" })).toThrow("Password must contain one capital letter")
   })
 
   it("must have an encrypted password", async () => {
