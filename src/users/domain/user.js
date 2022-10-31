@@ -1,6 +1,7 @@
-module.exports = function buildMakeUser({ Email, Password }) {
+module.exports = function buildMakeUser({ Id, Email, Password }) {
 
     return function makeUser({
+        id = Id.makeId(),
         googleId,
         email,
         password,

@@ -10,7 +10,7 @@ const makeExercise = buildMakeExercise({ Id, makeAnswer })
 const makeSection = buildMakeSection({ Id, makeExercise })
 const makeCourse = buildMakeCourse({ Id, makeSection })
 
-module.exports = { 
+module.exports = {
     makeCourse,
     makeExercise,
     makeSection,

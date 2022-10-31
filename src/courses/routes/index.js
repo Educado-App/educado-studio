@@ -7,9 +7,9 @@ const { courseController } = require('../controllers')
 
 /* Courses */
 router.get('/courses', protected, makeExpressCallback(courseController))
-router.get('/courses/:id', makeExpressCallback(courseController))
+router.get('/courses/:id', protected, makeExpressCallback(courseController))
 router.post('/courses', protected, makeExpressCallback(courseController))
-router.delete('/courses/:id', makeExpressCallback(courseController))
+router.delete('/courses/:id', protected, makeExpressCallback(courseController))
 
 /* Sections */
 router.get('/courses/:id/sections')

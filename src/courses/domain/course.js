@@ -7,7 +7,7 @@ module.exports = function buildMakeCourse({ Id, makeSection }) {
         author,
         coverImg,
         category,
-        published = false,
+        published = true,
         sections = [],
         createdAt = new Date(),
         modifiedAt = new Date()

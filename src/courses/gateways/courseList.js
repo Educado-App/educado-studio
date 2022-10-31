@@ -43,6 +43,15 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
         return await dbModel
             .find(query)
             .sort(sortBy)
+            .populate({
+                path: 'author',
+                select: '-user'
+            })
+            .populate({
+                path: 'sections',
+                select: '-description -exercises'
+            })
+            //.populate('category')
             .limit(parseInt(limit))
             .skip(parseInt(offset))
     }
@@ -72,8 +81,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
 
         const result = await dbModel.create({
             ...course,
-            _id: course.id,
-            category: course.category.id,
+            category: "635f9ae2991d8c6da796a1cc",   //@TODO: Implement Category
             author: course.author.id,
             sections: course.sections.map(section => section.id)
         })
