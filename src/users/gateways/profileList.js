@@ -4,6 +4,7 @@ module.exports = function makeProfileList(db_model) {
         add,
         remove,
         findById,
+        findByUserId
     })
 
     async function add(profile) {
@@ -23,6 +24,10 @@ module.exports = function makeProfileList(db_model) {
 
     async function findById(id) {
         return await db_model.findById(id)
+    }
+
+    async function findByUserId(user_id) {
+        return await db_model.findOne({ user: user_id })
     }
 
 }

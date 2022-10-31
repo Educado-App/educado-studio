@@ -1,12 +1,12 @@
 const express = require("express");
 const passport = require("passport");
-const cookieSession = require("cookie-session");
 
+const session = require('express-session')
 const keys = require("../env/config/keys");
 const router = require("./routes");
 const cors = require('../env/settings/cors');
-const context = require('./middlewares/context');
 const { connectToDb } = require("../db");
+const errorHandler = require("./helpers/errorHandler");
 
 const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku
 
@@ -17,20 +17,23 @@ connectToDb(keys.mongoURI, {
   useFindAndModify: false,
 });
 
-const app = express(); // Configuration for listening, communicate to handlers
+const app = express();
 
-app.use(
-  cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1000, // Cookie should last for 30 days before automatic expiration
-    keys: [keys.cookieKey], // Specify encryption key for cookie
-  })
-);
+app.use(session({
+  secret: keys.cookieKey,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { 
+    secure: false,
+    maxAge: 600000 // miliseconds
+  }
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
 app.use(cors)
-app.use(context)
 app.use('', router)
+app.use(errorHandler)
 
 // Run if running in production on Heroku
 if (process.env.NODE_ENV === "production") {

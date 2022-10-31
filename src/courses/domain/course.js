@@ -1,4 +1,4 @@
-module.exports = function buildMakeCourse({ Id }) {
+module.exports = function buildMakeCourse({ Id, makeSection }) {
 
     return function makeCourse({
         id = Id.makeId(),
@@ -12,6 +12,8 @@ module.exports = function buildMakeCourse({ Id }) {
         createdAt = new Date(),
         modifiedAt = new Date()
     }) {
+
+        const validSections = sections.map(section => makeSection(section))
 
         if (!title) throw new Error('Course must have a title')
         if (!author) throw new Error('Course must have an author')
@@ -27,9 +29,9 @@ module.exports = function buildMakeCourse({ Id }) {
             isPublished: () => published,
             getCreatedAt: () => createdAt,
             getModifiedAt: () => modifiedAt,
-            getSections: () => sections,
-            publish : () => published = true,
-            unpublish : () => published = false
+            getSections: () => validSections,
+            publish: () => published = true,
+            unpublish: () => published = false
         })
     }
 }

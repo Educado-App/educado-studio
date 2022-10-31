@@ -1,3 +1,7 @@
+/**
+ * Adapter for express request / response callbacks
+ * to work with controllers representation of http requests (mostly similar)
+ */
 function makeExpressCallback(requestHandler) {
 
     return async function callback(req, res) {

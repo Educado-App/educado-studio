@@ -35,9 +35,9 @@ async function sendMail({
   })
 
   const mailOptions = {
-    subject: subject,
     from: from,
     to: to,
+    subject: subject,
     text: text,
     html: html
   }

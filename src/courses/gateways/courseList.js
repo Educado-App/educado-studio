@@ -47,8 +47,6 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
             .skip(parseInt(offset))
     }
 
-
-
     async function findById(id) {
         const result = await dbModel.findById(id)
         const { _id: foundId, ...courseInfo } = result._doc
@@ -60,7 +58,6 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
         name: authorName,
         id: authorId
     }) {
-
 
         const results = dbModel.find({
             $and: [

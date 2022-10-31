@@ -1,4 +1,4 @@
-const { courseList } = require('../data-access')
+const { courseList } = require('../gateways')
 
 const makeCourseController = require('./courseController')
 const courseController = makeCourseController({ courseList })

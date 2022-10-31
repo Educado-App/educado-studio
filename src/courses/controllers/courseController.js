@@ -1,7 +1,10 @@
 const { makeCourse } = require('../domain')
-const { makeHttpError } = require('../../../helpers/error')
+const { makeHttpError } = require('../../helpers/error')
 
-module.exports = function makeCourseController({ courseList, coursePublish }) {
+const { addCourse, editCourse } = require('../use-cases')
+
+
+module.exports = function makeCourseController({ courseList }) {
 
     return async function handle(httpRequest) {
 
@@ -10,16 +13,15 @@ module.exports = function makeCourseController({ courseList, coursePublish }) {
                 return await getCourse(httpRequest)
 
             case 'POST':
-                if ('course' in httpRequest.queryParams) {
-                    return await postCourseWithActions(httpRequest)
-                }
-                else {
-                    return await postCourse(httpRequest)
-                }
+                return await postCourse(httpRequest)
+
+            case 'PUT':
+                return await putCourse(httpRequest)
+
             default:
                 return makeHttpError({
                     status: 405,
-                    message: `The requested '${httpRequest.method}' could not be found`
+                    message: `Method '${httpRequest.method}' is not allowed`
                 })
         }
 
@@ -48,28 +50,38 @@ module.exports = function makeCourseController({ courseList, coursePublish }) {
     async function postCourse(httpRequest) {
 
         const courseInfo = httpRequest.body
+        const author = httpRequest.context.profile
 
         try {
-
-            const validCourse = makeCourse(courseInfo)
-
-            const created = await courseList.add({
-                id: validCourse.getId(),
-                title: validCourse.getTitle(),
-                description: validCourse.getDescription(),
-                author: validCourse.getUsers(),
-                coverImg: validCourse.getCoverImg(),
-                category: validCourse.getCategory(),
-                published: validCourse.isPublished(),
-                createdAt: validCourse.getCreatedAt(),
-                modifiedAt: validCourse.getModifiedAt(),
-                sections: validCourse.getSections()
+            const posted = await addCourse({
+                author,
+                title: courseInfo.title,
+                description: courseInfo.description,
+                coverImg: courseInfo.coverImg
             })
 
             return {
                 success: true,
                 status: 201,
-                data: created
+                data: posted
+            }
+
+        } catch (error) {
+            return makeHttpError({ status: 400, message: error.message })
+        }
+    }
+
+    async function putCourse(httpRequest) {
+
+        const courseChanges = httpRequest.body
+
+        try {
+            const updated = await editCourse(courseChanges)
+
+            return {
+                success: true,
+                status: 201,
+                data: updated
             }
 
         } catch (error) {
@@ -89,7 +101,7 @@ module.exports = function makeCourseController({ courseList, coursePublish }) {
             data: httpRequest.body.action
         })
 
-        
+
         const id = httpRequest.params.id
 
 

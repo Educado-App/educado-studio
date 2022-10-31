@@ -4,7 +4,7 @@ const router = require("express").Router();
 const { CourseModel } = require("../models/Courses");
 const { SectionModel } = require("../courses/db-models/Section");
 const { ComponentModel } = require("../courses/db-models/Answer");
-const requireLogin = require("../middlewares/requireLogin");
+const { protected } = require("../security/authentication");
 
 // Content Creator Application Route
 router.post("/course/", async (req, res) => {
@@ -52,7 +52,7 @@ router.post("/courses", async (req, res) => {
 });
 
 // Update Course
-router.post("/course/update", requireLogin, async (req, res) => {
+router.post("/course/update", protected, async (req, res) => {
   const { course } = req.body;
   const dbCourse = await CourseModel.findByIdAndUpdate(
     course._id,
@@ -153,7 +153,7 @@ router.post("/course/update/published", async (req, res) => {
 });
 
 // Delete all documents for user - the Nueclear option.
-router.post("/course/delete", requireLogin, async (req, res) => {
+router.post("/course/delete", protected, async (req, res) => {
   const { course_id } = req.body;
   let course;
   try {
@@ -194,7 +194,7 @@ router.post("/course/delete", requireLogin, async (req, res) => {
 
 // Section routes
 
-router.post("/section/create", requireLogin, async (req, res) => {
+router.post("/section/create", protected, async (req, res) => {
   const { title, course_id } = req.body; // Or query?...
 
   const section = new SectionModel({
@@ -217,7 +217,7 @@ router.post("/section/create", requireLogin, async (req, res) => {
 });
 
 // Get all sections
-router.post("/course/getallsections", requireLogin, async (req, res) => {
+router.post("/course/getallsections", protected, async (req, res) => {
   const { sections } = req.body;
   let list = [];
   for (let i = 0; i < sections.length; i++) {
@@ -291,7 +291,7 @@ router.post("/course/update/sectionsorder", async (req, res) => {
 });
 
 // Delete component for user
-router.post("/section/delete", requireLogin, async (req, res) => {
+router.post("/section/delete", protected, async (req, res) => {
   const { section_id, course_id } = req.body;
 
   const course = await CourseModel.findById(course_id).catch((err) => {
@@ -382,7 +382,7 @@ router.post("/component/text/update", async (req, res) => {
 });
 
 // Delete all documents for user
-router.post("/component/delete", requireLogin, async (req, res) => {
+router.post("/component/delete", protected, async (req, res) => {
   const { component_id, section_id } = req.body;
 
   const section = await SectionModel.findById(section_id).catch((err) => {
@@ -421,7 +421,7 @@ router.post("/eml/course/getallsections", async (req, res) => {
 });
 
 // Delete all documents for user
-router.get("/course/delete_all", requireLogin, async (req, res) => {
+router.get("/course/delete_all", protected, async (req, res) => {
   await CourseModel.deleteMany({ _user: req.user.id }, (err) => {
     console.log(err);
   });

@@ -1,20 +1,33 @@
-module.exports = function buildMakeSection({ Id }) {
+module.exports = function buildMakeSection({ Id, makeExercise }) {
 
     return function makeSection({
         id = Id.makeId(),
         title,
-        sequenceNumber,
+        sectionNumber,
+        exercises = [],
         createdAt = new Date(),
-        modifiedAt = new Date()
+        modifiedAt = new Date(),
     }) {
+
+        const validExercises = exercises.map(exercises => makeAnswer(exercises))
 
         return Object.freeze({
             id,
             title,
-            sequenceNumber,
+            sectionNumber,
             createdAt,
             modifiedAt,
+            getExercises: () => validExercises,
+            addExercise: (exercise) => {
+                const validExercise = makeExercise({ exerciseNumber: getNextExerciseNumber(validExercises), ...exercise })
+                exercises.push(validExercise)
+            }
         })
 
+    }
+
+    function getNextExerciseNumber(exercises) {
+        const max = Math.max(...exercises.map(exercise => exercise.exerciseNumber))
+        return max + 1
     }
 }
