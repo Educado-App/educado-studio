@@ -1,6 +1,9 @@
 const { courseList } = require('../gateways')
 
 const makeCourseController = require('./courseController')
-const courseController = makeCourseController({ courseList })
+const makePublicCourseController = require('./publicCourseController')
 
-module.exports = { courseController }
+const courseController = makeCourseController({ courseList })
+const publicCourseController = makePublicCourseController({ courseList })
+
+module.exports = { courseController, publicCourseController }

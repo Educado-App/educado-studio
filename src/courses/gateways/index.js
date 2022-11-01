@@ -1,9 +1,16 @@
 const Params = require('../../helpers/validation/params')
 const ParamsSchema = require('../../helpers/validation/paramsSchema')
 
-const { CourseModel } = require('../db-models')
+const { CourseModel, SectionModel } = require('../db-models')
+require('../../users/db-models')
 
 const makeCourseList = require('./courseList')
-const courseList = makeCourseList({ dbModel: CourseModel, Params, ParamsSchema })
+const makeSectionList = require('./sectionList')
 
-module.exports = { courseList }
+const courseList = makeCourseList({ dbModel: CourseModel, Params, ParamsSchema })
+const sectionList = makeSectionList({ dbModel: SectionModel })
+
+module.exports = { 
+    courseList,
+    sectionList
+}

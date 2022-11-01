@@ -30,12 +30,10 @@ module.exports = function makeCourseController({ courseList }) {
     async function getCourse(httpRequest) {
 
         const id = httpRequest.params.id ?? null
-        const author = httpRequest.context.profile
-
         try {
             const results = id ?
                 await courseList.findById(id) :
-                await courseList.findAllByAuthor({ authorId: author.id })
+                await courseList.findAll(httpRequest.queryParams)
 
             return {
                 success: true,

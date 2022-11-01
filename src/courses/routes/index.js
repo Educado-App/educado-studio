@@ -3,9 +3,11 @@ const router = require('express').Router()
 const { protected } = require('../../security/authentication')
 const { makeExpressCallback } = require('../../helpers/express')
 
-const { courseController } = require('../controllers')
+const { courseController, publicCourseController } = require('../controllers')
 
 /* Courses */
+router.get('/public/courses', makeExpressCallback(publicCourseController))
+
 router.get('/courses', protected, makeExpressCallback(courseController))
 router.get('/courses/:id', protected, makeExpressCallback(courseController))
 router.post('/courses', protected, makeExpressCallback(courseController))

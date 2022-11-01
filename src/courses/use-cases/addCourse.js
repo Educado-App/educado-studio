@@ -7,7 +7,7 @@ module.exports = function makeAddCourse({ courseList }) {
         const course = makeCourse(courseInfo)
 
         return await courseList.add({
-            _id: course.getId(),
+            id: course.getId(),
             title: course.getTitle(),
             category: course.getCategory(),
             coverImg: course.getCoverImg(),

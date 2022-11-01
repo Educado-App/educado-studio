@@ -1,5 +1,4 @@
-const Id = require("../../src/helpers/Id")
-const makeFakeUser = require('./fakeUser')
+const Id = require("../../../src/helpers/Id")
 
 module.exports = function makeFakeProfile(overides = {}) {
 

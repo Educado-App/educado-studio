@@ -1,5 +1,5 @@
-const Id = require("../../src/helpers/Id")
-const makeFakeProfile = require('./fakeProfile')
+const Id = require("../../../src/helpers/Id")
+const makeFakeProfile = require('../fakeProfile')
 const makeFakeCategory = require('./fakeCategory')
 
 module.exports = function makeFakeCourse(overrides = {}) {

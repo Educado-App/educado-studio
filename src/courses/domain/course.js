@@ -3,7 +3,7 @@ module.exports = function buildMakeCourse({ Id, makeSection }) {
     return function makeCourse({
         id = Id.makeId(),
         title,
-        description = "",
+        description,
         author,
         coverImg,
         category,
@@ -29,9 +29,22 @@ module.exports = function buildMakeCourse({ Id, makeSection }) {
             isPublished: () => published,
             getCreatedAt: () => createdAt,
             getModifiedAt: () => modifiedAt,
-            getSections: () => validSections,
             publish: () => published = true,
-            unpublish: () => published = false
+            unpublish: () => published = false,
+            getSections: () => validSections,
+            addSection: (section) => {
+                const validSection = makeSection(section)
+                validSection.setSectionNumber(getNextSectionNumber())
+                validSections.push(validSection)
+            },
         })
+
+        function getNextSectionNumber() {
+            if (validSections.length > 0) {
+                const max = Math.max(...validSections.map(section => section.getSectionNumber()))
+                return max + 1
+            }
+            return 1
+        }
     }
 }

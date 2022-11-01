@@ -57,7 +57,17 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
     }
 
     async function findById(id) {
-        const result = await dbModel.findById(id)
+        const result = await dbModel
+            .findById(id)
+            .populate({
+                path: 'author',
+                select: '-user'
+            })
+            .populate({
+                path: 'sections',
+                select: '-exercises'
+            })
+
         const { _id: foundId, ...courseInfo } = result._doc
 
         return { id: foundId, ...courseInfo }
@@ -70,8 +80,16 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
 
         const results = dbModel.find({
             $and: [
-                authorId ? { 'author':  authorId } : {}
+                authorId ? { 'author': authorId } : {}
             ]
+        })
+        .populate({
+            path: 'author',
+            select: '-user'
+        })
+        .populate({
+            path: 'sections',
+            select: '-description -exercises'
         })
 
         return results
@@ -81,6 +99,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
 
         const result = await dbModel.create({
             ...course,
+            _id: course.id,
             category: "635f9ae2991d8c6da796a1cc",   //@TODO: Implement Category
             author: course.author.id,
             sections: course.sections.map(section => section.id)
@@ -91,14 +110,17 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
     }
 
     async function remove(course) {
-        const result = await dbModel.deleteMany(course)
+        const result = await dbModel.deleteMany({ _id: course.id })
 
         return result.deletedCount
     }
 
     async function update({ id: _id, ...changes }) {
 
-        const result = await dbModel.findOneAndUpdate({ _id }, { ...changes }, { new: true })
+        const result = await dbModel.findOneAndUpdate({ _id }, {
+            $set: { ...changes }
+        }, { new: true })
+
         return result
     }
 }

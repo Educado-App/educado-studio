@@ -1,18 +1,21 @@
 const { makeCourse } = require('.')
-const makeFakeCourse = require('../../../__tests__/fixtures/fakeCourse')
-const makeFakeSection = require('../../../__tests__/fixtures/fakeSection')
+const makeFakeCourse = require('../../../__tests__/fixtures/courses/fakeCourse')
+const makeFakeSection = require('../../../__tests__/fixtures/courses/fakeSection')
 
 describe('Course', () => {
 
-    xit('can be marked as published for a course', () => {
+    it('gives sections a sequential section number', async () => {
         const fakeCourse = makeFakeCourse()
 
         const course = makeCourse(fakeCourse)
+        const section1 = makeFakeSection()
+        const section2 = makeFakeSection()
+
+        course.addSection(section1)
+        course.addSection(section2)
+
+        expect(course.getSections()[0].getSectionNumber()).toBe(1)
+        expect(course.getSections()[1].getSectionNumber()).toBe(2)
         
-        expect(course.isPublished()).toBe(false)
-
-        course.publish();
-
-        expect(course.isPublished()).toBe(true)
     })
 })

@@ -12,7 +12,6 @@ const exerciseSchema = new Schema({
         url: { type: String }
     },
     answers: [{
-        answerNumber: { type: Number },
         text: { type: String },
         correct: { type: Boolean },
         modifiedAt: { type: Date },

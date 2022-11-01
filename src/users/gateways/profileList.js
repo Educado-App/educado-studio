@@ -17,7 +17,7 @@ module.exports = function makeProfileList(db_model) {
     }
 
     async function remove(profile = {}) {
-        const results = await db_model.deleteMany(profile)
+        const results = await db_model.deleteMany({ _id: profile.id })
 
         return results.deletedCount
     }

@@ -1,5 +1,3 @@
-const Id = require("../../src/helpers/Id")
-
 module.exports = function makeFakeExercise(overrides = {}) {
 
     const exercise = {

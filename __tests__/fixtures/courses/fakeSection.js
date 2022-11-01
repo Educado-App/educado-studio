@@ -1,11 +1,12 @@
-const Id = require("../../src/helpers/Id")
+const Id = require("../../../src/helpers/Id")
 
 module.exports = function makeFakeSection(overides = {}) {
 
     const section = {
         id: Id.makeId(),
         title: 'Basic testing',
-        sequenceNumber: 1
+        description: "Introduction to testing",
+        exercises: []
     }
 
     return {

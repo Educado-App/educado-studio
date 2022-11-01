@@ -4,6 +4,7 @@ const passport = require("passport");
 const session = require('express-session')
 const keys = require("../env/config/keys");
 const router = require("./routes");
+const morgan = require('morgan')
 const cors = require('../env/settings/cors');
 const { connectToDb } = require("../db");
 const errorHandler = require("./helpers/errorHandler");
@@ -28,6 +29,7 @@ app.use(session({
     maxAge: 600000 // miliseconds
   }
 }))
+app.use(morgan('combined'))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());

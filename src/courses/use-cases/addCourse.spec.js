@@ -1,5 +1,5 @@
 const connectDb = require('../../../__tests__/fixtures/db')
-const makeFakeCourse = require("../../../__tests__/fixtures/fakeCourse")
+const makeFakeCourse = require("../../../__tests__/fixtures/courses/fakeCourse")
 const { courseList } = require('../gateways')
 const { addCourse } = require('.')
 
