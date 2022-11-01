@@ -19,7 +19,8 @@ module.exports = function makePublicCourseController({ courseList }) {
 
     async function getCourse(httpRequest) {
 
-        const id = httpRequest.params.id ?? null
+        const id = httpRequest.params.id
+        
         try {
             const results = id ?
                 await courseList.findById(id) :

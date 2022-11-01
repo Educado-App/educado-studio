@@ -9,7 +9,7 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
         modifiedAt = new Date()
     }) {
 
-        const validAnswers = answers.forEach(answer => makeAnswer(answer))
+        const validAnswers = validateAnswers(answers)
 
         return Object.freeze({
             id,
@@ -25,6 +25,27 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
             totalAnswers: () => answers.length
         })
 
+    }
+
+    function validateAnswers(answers) {
+        if (answers.length === 0) return
+
+        containsCorrectAnswers(answers)
+
+        return answers.forEach(answer => makeAnswer(answer))
+        
+    }
+
+    function containsCorrectAnswers(answers) {
+        
+        let containsCorrect
+        for (let answer of answers) {
+            if (answer.correct) containsCorrect = true
+        }
+        
+        if (!containsCorrect) {
+            throw new Error("Atleast one answer should be the correct one")
+        }
     }
 
 }

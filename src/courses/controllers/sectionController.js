@@ -4,19 +4,19 @@ const { makeHttpError } = require('../../helpers/error')
 const { addCourse, editCourse } = require('../use-cases')
 
 
-module.exports = function makeCourseController({ courseList }) {
+module.exports = function makeSectionController({ courseList: sectionList }) {
 
     return async function handle(httpRequest) {
 
         switch (httpRequest.method) {
             case 'GET':
-                return await getCourse(httpRequest)
+                return await getSection(httpRequest)
 
             case 'POST':
-                return await postCourse(httpRequest)
+                return await postSection(httpRequest)
 
             case 'PUT':
-                return await putCourse(httpRequest)
+                return await putSection(httpRequest)
 
             default:
                 return makeHttpError({
@@ -27,13 +27,14 @@ module.exports = function makeCourseController({ courseList }) {
 
     }
 
-    async function getCourse(httpRequest) {
+    async function getSection(httpRequest) {
 
-        const id = httpRequest.params.id ?? null
+        const id = httpRequest.params.id
+
         try {
             const results = id ?
-                await courseList.findById(id) :
-                await courseList.findAll(httpRequest.queryParams)
+                await sectionList.findById(id) :
+                await sectionList.findAll(httpRequest.queryParams)
 
             return {
                 success: true,
@@ -47,7 +48,7 @@ module.exports = function makeCourseController({ courseList }) {
 
     }
 
-    async function postCourse(httpRequest) {
+    async function postSection(httpRequest) {
 
         const courseInfo = httpRequest.body
         const author = httpRequest.context.profile
@@ -71,7 +72,7 @@ module.exports = function makeCourseController({ courseList }) {
         }
     }
 
-    async function putCourse(httpRequest) {
+    async function putSection(httpRequest) {
 
         const courseChanges = httpRequest.body
 
@@ -89,57 +90,4 @@ module.exports = function makeCourseController({ courseList }) {
         }
     }
 
-    async function postCourseWithActions(httpRequest) {
-        const allowedActions = {
-            type: 'object',
-            properties: { 'action': { enum: ['publish', 'unpublish'] } },
-            required: ['action']
-        }
-
-        const { action } = Params.validate({
-            schema: allowedActions,
-            data: httpRequest.body.action
-        })
-
-
-        const id = httpRequest.params.id
-
-
-        if (!id) {
-            return makeHttpError({ status: 405, message: `An id of a course must be provided as a request parameter` })
-        }
-
-        const existing = await courseList.findById(id)
-
-        if (!existing) {
-            return makeHttpError({ status: 404, message: `No course with id '${id}' was found` })
-        }
-
-        const course = makeCourse({ id: existing._id, ...existing })
-
-        if (action == 'publish') {
-            course.publish()
-        }
-        else {
-            course.unPublish()
-        }
-
-        try {
-            const updated = await courseList.update({
-                id: course.getId(),
-                published: course.isPublished(),
-                modifiedAt: new Date()
-            })
-
-            return {
-                success: true,
-                status: 200,
-                data: updated
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
-        }
-
-    }
 }
