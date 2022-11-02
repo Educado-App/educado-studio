@@ -19,7 +19,7 @@ const AppUserSchema = new Schema({
     unique: false
   },
 
-  timeOfLogin: {
+  loggedInAt: {
     type: Date
   },
 });
