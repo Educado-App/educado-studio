@@ -73,7 +73,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
     }
 
     async function findAllByAuthor({
-        name: authorName,
+        //name: authorName,
         id: authorId
     }) {
 

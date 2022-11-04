@@ -1,3 +1,5 @@
+const section = require("../domain/section")
+
 module.exports = function makeSectionList({ dbModel }) {
 
     return Object.freeze({
@@ -8,10 +10,11 @@ module.exports = function makeSectionList({ dbModel }) {
     })
 
     async function findById(id) {
-        const result = await dbModel.findById(id)
-        const { _id: foundId, ...courseInfo } = result._doc
+        const result = await dbModel.findById(id)//.populate({ path: 'section', select: 'sectionNumber',  options : { sort: { 'sectionNumber': 'asc' } }})
+            
+        const { _id: foundId, ...sectionInfo } = result._doc
 
-        return { id: foundId, ...courseInfo }
+        return { id: foundId, ...sectionInfo }
     }
 
     async function add(section) {

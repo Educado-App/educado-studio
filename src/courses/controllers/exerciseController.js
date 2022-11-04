@@ -1,21 +1,21 @@
 const { makeHttpError } = require('../../helpers/error')
 
-const { addSection, editSection } = require('../use-cases')
+const { addExercise, editExercise } = require('../use-cases')
 
 
-module.exports = function makeSectionController({ sectionList }) {
+module.exports = function makeExerciseController({ exerciseList }) {
 
     return async function handle(httpRequest) {
 
         switch (httpRequest.method) {
             case 'GET':
-                return await getSection(httpRequest)
+                return await getExercise(httpRequest)
 
             case 'POST':
-                return await postSection(httpRequest)
+                return await postExercise(httpRequest)
 
             case 'PUT':
-                return await putSection(httpRequest)
+                return await putExercise(httpRequest)
 
             default:
                 return makeHttpError({
@@ -26,13 +26,13 @@ module.exports = function makeSectionController({ sectionList }) {
 
     }
 
-    async function getSection(httpRequest) {
+    async function getExercise(httpRequest) {
 
         const id = httpRequest.params.id ?? null
         try {
             const results = id ?
-                await sectionList.findById(id) :
-                await sectionList.findAll(httpRequest.queryParams)
+                await exerciseList.findById(id) :
+                await exerciseList.findAll(httpRequest.queryParams)
 
             return {
                 success: true,
@@ -43,15 +43,15 @@ module.exports = function makeSectionController({ sectionList }) {
         } catch (error) {
             return makeHttpError({ status: 400, message: error.message })
         }
-
     }
 
-    async function postSection(httpRequest) {
+    async function postExercise(httpRequest) {
 
-        const sectionInfo = httpRequest.body
+        const exerciseInfo = httpRequest.body
+        const sectionId = httpRequest.params.sid
 
         try {
-            const posted = await addSection({title: sectionInfo.title})
+            const posted = await addExercise({exerciseInfo, sectionId})
 
             return {
                 success: true,
@@ -64,12 +64,12 @@ module.exports = function makeSectionController({ sectionList }) {
         }
     }
 
-    async function putSection(httpRequest) {
+    async function putExercise(httpRequest) {
 
-        const sectionChanges = httpRequest.body
+        const exerciseChanges = httpRequest.body
 
         try {
-            const updated = await editSection(sectionChanges)
+            const updated = await editExercise(exerciseChanges)
 
             return {
                 success: true,

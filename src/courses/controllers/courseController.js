@@ -1,4 +1,3 @@
-const { makeCourse } = require('../domain')
 const { makeHttpError } = require('../../helpers/error')
 
 const { addCourse, editCourse } = require('../use-cases')

@@ -12,7 +12,7 @@ const makeCourse = buildMakeCourse({ Id, makeSection })
 
 module.exports = {
     makeCourse,
-    makeExercise,
     makeSection,
-    makeCourse
+    makeExercise,
+    makeAnswer
 }

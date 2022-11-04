@@ -1,5 +1,4 @@
-const { makeSection } = require('../domain')
-const { makeCourse } = require('../domain')
+const { makeCourse, makeSection } = require('../domain')
 
 module.exports = function makeAddSection({ sectionList, courseList }) {
 
