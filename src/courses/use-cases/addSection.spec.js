@@ -16,8 +16,8 @@ describe('Add section', () => {
         const section1 = makeFakeSection({ title: "Section 1" })
         const section2 = makeFakeSection({ title: "Section 2" })
 
-        await addSection({ sectionInfo: section1, courseId: fakeCourse.id })
-        await addSection({ sectionInfo: section2, courseId: fakeCourse.id })
+        await addSection({ info: section1, toCourse: fakeCourse.id })
+        await addSection({ info: section2, toCourse: fakeCourse.id })
 
         const course = await courseList.findById(fakeCourse.id)
 

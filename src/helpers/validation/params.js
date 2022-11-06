@@ -1,4 +1,5 @@
 const Ajv = require('ajv')
+const { MultipleError } = require('../error')
 const ajv = new Ajv({ coerceTypes: true })
 require("ajv-formats")(ajv, { mode: "fast", formats: ["date", "time"], keywords: true })
 
@@ -12,13 +13,14 @@ module.exports = Object.freeze({
  * @see https://ajv.js.org/guide/getting-started.html
  * @returns Validated data, coerced into respective types
  */
-function validate({ schema, data }) {
+function validate({ schema, data, throwOnFail = false }) {
 
     const _validate = ajv.compile(schema)
     const valid = _validate(data)
     if (!valid) {
         const errors = formatAjvErrors(_validate.errors)
-        data['errors'] = errors
+        if (throwOnFail) throw new MultipleError(errors)
+        else data['errors'] = errors
     }
 
     return data

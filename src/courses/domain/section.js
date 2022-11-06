@@ -9,7 +9,9 @@ module.exports = function buildMakeSection({ Id, makeExercise }) {
         createdAt = new Date(),
         modifiedAt = new Date(),
     }) {
-
+        
+        if (!sectionNumber) throw new Error('Sections must have a section number')
+        
         const validExercises = exercises.map(exercises => makeExercise(exercises))
 
         return Object.freeze({
@@ -18,8 +20,7 @@ module.exports = function buildMakeSection({ Id, makeExercise }) {
             description,
             createdAt,
             modifiedAt,
-            getSectionNumber : () => sectionNumber,
-            setSectionNumber : (n) => sectionNumber = n,
+            sectionNumber,
             getExercises: () => validExercises,
             addExercise: (exercise) => {
                 const validExercise = makeExercise({ 

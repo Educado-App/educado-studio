@@ -1,6 +1,6 @@
 const { makeHttpError } = require('../../helpers/error')
 
-const { addSection, editSection } = require('../use-cases')
+const { addSection, editSection, removeSection } = require('../use-cases')
 
 
 module.exports = function makeSectionController({ sectionList }) {
@@ -17,6 +17,9 @@ module.exports = function makeSectionController({ sectionList }) {
             case 'PUT':
                 return await putSection(httpRequest)
 
+            case 'DELETE':
+                return await deleteSection(httpRequest)
+
             default:
                 return makeHttpError({
                     status: 405,
@@ -28,11 +31,13 @@ module.exports = function makeSectionController({ sectionList }) {
 
     async function getSection(httpRequest) {
 
-        const id = httpRequest.params.id ?? null
+        const sectionId = httpRequest.params.sid
+        const courseId = httpRequest.params.cid
+
         try {
-            const results = id ?
-                await sectionList.findById(id) :
-                await sectionList.findAll(httpRequest.queryParams)
+            const results = sectionId ?
+                await sectionList.findById(sectionId) :
+                await sectionList.findAllByCourseId(courseId)
 
             return {
                 success: true,
@@ -49,9 +54,13 @@ module.exports = function makeSectionController({ sectionList }) {
     async function postSection(httpRequest) {
 
         const sectionInfo = httpRequest.body
+        const courseId = httpRequest.params.cid
 
         try {
-            const posted = await addSection({title: sectionInfo.title})
+            const posted = await addSection({
+                info: sectionInfo,
+                toCourse: courseId
+            })
 
             return {
                 success: true,
@@ -75,6 +84,28 @@ module.exports = function makeSectionController({ sectionList }) {
                 success: true,
                 status: 201,
                 data: updated
+            }
+
+        } catch (error) {
+            return makeHttpError({ status: 400, message: error.message })
+        }
+    }
+
+    async function deleteSection(httpRequest) {
+
+        const sectionId = httpRequest.params.sid
+        const courseId = httpRequest.params.cid
+
+        try {
+            await removeSection({
+                fromCourse: courseId,
+                toRemove: sectionId,
+            })
+
+            return {
+                success: true,
+                status: 204,
+                data: {}
             }
 
         } catch (error) {

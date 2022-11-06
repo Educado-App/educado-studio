@@ -8,7 +8,7 @@ const findAllSchema = {
     },
 }
 
-module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
+module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) {
 
     return Object.freeze({
         findAll,
@@ -21,6 +21,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
 
     async function findAll({
         sortBy = '-createdAt',
+        published: _published,
         limit = 50,
         offset = 0,
         ...conditions
@@ -28,7 +29,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
 
         const { title, published, before, after } = Params.validate({
             schema: ParamsSchema.extendFindAllSchema(findAllSchema),
-            data: { sortBy, limit, offset, ...conditions }
+            data: { sortBy, published: _published, limit, offset, ...conditions }
         })
 
         const query = {
@@ -47,16 +48,16 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
                 path: 'author',
                 select: '-user'
             })
-            .populate({
-                path: 'sections',
-                select: '-description -exercises'
-            })
+            .select('-sections')
             //.populate('category')
             .limit(parseInt(limit))
             .skip(parseInt(offset))
     }
 
     async function findById(id) {
+
+        if (!Id.isValid(id)) throw new Error(`Invalid course id '${id}'`)
+
         const result = await dbModel
             .findById(id)
             .populate({
@@ -82,14 +83,14 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema }) {
                 authorId ? { 'author': authorId } : {}
             ]
         })
-        .populate({
-            path: 'author',
-            select: '-user'
-        })
-        .populate({
-            path: 'sections',
-            select: '-description -exercises'
-        })
+            .populate({
+                path: 'author',
+                select: '-user'
+            })
+            .populate({
+                path: 'sections',
+                select: '-description -exercises'
+            })
 
         return results
     }

@@ -20,11 +20,11 @@ module.exports = function makePublicCourseController({ courseList }) {
     async function getCourse(httpRequest) {
 
         const id = httpRequest.params.id
-        
+
         try {
             const results = id ?
                 await courseList.findById(id) :
-                await courseList.findAll(httpRequest.queryParams)
+                await courseList.findAll({ ...httpRequest.queryParams, published: true })
 
             return {
                 success: true,

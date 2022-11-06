@@ -1,15 +1,14 @@
-const { makeCourse, makeSection } = require('../domain')
+const { makeCourse } = require('../domain')
 
 module.exports = function makeAddSection({ sectionList, courseList }) {
 
-    return async function addSection({ sectionInfo, courseId }) {
+    return async function addSection({ info: sectionInfo, toCourse: courseId }) {
 
         const courseDoc = await courseList.findById(courseId)
-        
-        const course = makeCourse({ id: courseDoc.id, ...courseDoc })
-        const section = makeSection(sectionInfo)
 
-        course.addSection(section)
+        const course = makeCourse({ id: courseDoc.id, ...courseDoc })
+
+        const addedSection = course.addSection(sectionInfo)
 
         await courseList.update({
             id: course.getId(),
@@ -18,11 +17,12 @@ module.exports = function makeAddSection({ sectionList, courseList }) {
         })
 
         return await sectionList.add({
-            id: section.id,
-            title: section.title,
-            sectionNumber: section.getSectionNumber(),
-            description: section.description,
-            exercises: section.getExercises(),
+            id: addedSection.id,
+            parentCourse: course.getId(),
+            title: addedSection.title,
+            sectionNumber: addedSection.sectionNumber,
+            description: addedSection.description,
+            exercises: addedSection.getExercises(),
             createdAt: new Date(),
             modifiedAt: new Date(),
         })
