@@ -2,9 +2,11 @@ const findAllSchema = {
     type: 'object',
     properties: {
         'title': { type: 'string' },
+        'category': { type: 'string', format: 'objectId' },
+        'author': { type: 'string', format: 'objectId' },
         'published': { type: 'boolean' },
-        'before': { type: 'string', format: "date" },
-        'after': { type: 'string', format: "date" },
+        'before': { type: 'string', format: 'date' },
+        'after': { type: 'string', format: 'date' },
     },
 }
 
@@ -27,7 +29,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
         ...conditions
     } = {}) {
 
-        const { title, published, before, after } = Params.validate({
+        const { title, category, author, published, before, after } = Params.validate({
             schema: ParamsSchema.extendFindAllSchema(findAllSchema),
             data: { sortBy, published: _published, limit, offset, ...conditions }
         })
@@ -35,6 +37,8 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
         const query = {
             $and: [
                 title ? { title: new RegExp(title, 'i') } : {},
+                category ? { category: category } : {},
+                author ? { author: author } : {},
                 typeof published !== 'undefined' ? { published } : {},
                 before ? { createdAt: { $lte: new Date(before) } } : {},
                 after ? { createdAt: { $gte: new Date(after) } } : {},
@@ -45,11 +49,10 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             .find(query)
             .sort(sortBy)
             .populate({
-                path: 'author',
+                path: 'author category',
                 select: '-user'
             })
             .select('-sections')
-            //.populate('category')
             .limit(parseInt(limit))
             .skip(parseInt(offset))
     }

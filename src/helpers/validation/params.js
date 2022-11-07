@@ -1,7 +1,12 @@
-const Ajv = require('ajv')
 const { MultipleError } = require('../error')
-const ajv = new Ajv({ coerceTypes: true })
-require("ajv-formats")(ajv, { mode: "fast", formats: ["date", "time"], keywords: true })
+const Id = require('../Id')
+const Ajv = require('ajv')
+const ajv = new Ajv({ coerceTypes: true, allErrors: true })
+const AjvErrors = require('ajv-errors')
+const AjvFormats = require('ajv-formats')
+
+AjvErrors(ajv)
+AjvFormats(ajv, { mode: "fast", formats: ["date", "time"], keywords: true })
 
 module.exports = Object.freeze({
     validate
@@ -26,6 +31,7 @@ function validate({ schema, data, throwOnFail = false }) {
     return data
 }
 
+
 function formatAjvErrors(errors) {
     const formatted = errors.map((error) => {
 
@@ -48,3 +54,11 @@ function formatAjvErrors(errors) {
 
     return formatted
 }
+
+
+/*    Additional AJV formats    */
+
+ajv.addFormat('objectId', {
+    type: 'string',
+    validate: (id) => Id.isValid(id)
+})

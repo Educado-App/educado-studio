@@ -40,20 +40,20 @@ module.exports = function makeReorderSectionController({ Params }) {
     }
 
     function validateMoveTable(moveTable) {
-        const validationSchema = {
+        const validMoveTable = {
             type: 'array',
             items: {
                 type: 'object',
+                required: ['section', 'moveTo'],
                 properties: {
-                    'section': { type: 'string' },
+                    'section': { type: 'string', format: 'objectId', errorMessage: "invalid identifier" },
                     'moveTo': { type: 'number' }
-                },
-                required: ['section', 'moveTo']
+                }
             }
         }
 
         Params.validate({
-            schema: validationSchema,
+            schema: validMoveTable,
             data: moveTable,
             throwOnFail: true
         })

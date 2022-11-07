@@ -22,8 +22,19 @@ function makeExpressCallback(requestHandler) {
 
         const response = await requestHandler(httpRequest)
 
+        let extras = {
+            success: response.success
+        }
+
+        if (response.data instanceof Array) {
+            extras['count'] = response.data.length
+        }
+
         res.status(response.status)
-        res.send(response)
+        res.send({
+            ...extras,
+            data: response.data
+        })
     }
 }
 
