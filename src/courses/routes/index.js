@@ -34,5 +34,4 @@ router.get('/courses/:cid/sections/:sid/exercises/:eid', protected, makeExpressC
 router.post('/courses/:cid/sections/:sid/exercises', protected, makeExpressCallback(exerciseController))
 router.delete('/courses/:cid/sections/:sid/exercises/:eid', protected, makeExpressCallback(exerciseController))
 
-
 module.exports = router

@@ -55,19 +55,19 @@ module.exports = function makeExerciseList({ dbModel, Params, ParamsSchema }) {
         return { id: foundId, ...exerciseInfo }
     }
 
-    async function add(exercise) {
+    async function add({ id: _id, ...exercise }) {
 
         const result = await dbModel.create({
+            _id,
             ...exercise,
-            exercises: exercise.exercises.map(exercise => exercise.id)
         })
 
         const { _id: id, ...exerciseInfo } = result._doc
         return { id, ...exerciseInfo }
     }
 
-    async function remove(exercise) {
-        const result = await dbModel.deleteMany(exercise)
+    async function remove({ id: _id, ...exercise }) {
+        const result = await dbModel.deleteMany({ _id, ...exercise })
 
         return result.deletedCount
     }

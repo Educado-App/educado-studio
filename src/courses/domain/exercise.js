@@ -4,7 +4,7 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
         id = Id.makeId(),
         exerciseNumber,
         content = {},
-        OnWrongFeedback = {},
+        onWrongFeedback = {},
         answers = [],
         modifiedAt = new Date()
     }) {
@@ -12,17 +12,17 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
         const validAnswers = validateAnswers(answers)
 
         return Object.freeze({
-            getId: () => id,
-            getExerciseNumber: () => exerciseNumber,
-            getContent: () => content,
-            getOnWrongFeedback: () => OnWrongFeedback,
+            id,
+            exerciseNumber,
+            content,
+            onWrongFeedback,
             modifiedAt,
             getAnswers: () => validAnswers,
             addAnswer: (answ) => {
                 const validAnswer = makeAnswer(answ)
                 answers.push(validAnswer)
             },
-            totalAnswers: () => answers.length
+            totalAnswers: () => validAnswers.length
         })
     }
 
@@ -31,7 +31,7 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
 
         containsCorrectAnswers(answers)
 
-        return answers.forEach(answer => makeAnswer(answer))
+        return answers.map(answer => makeAnswer(answer))
         
     }
 

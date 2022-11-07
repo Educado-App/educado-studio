@@ -26,7 +26,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { 
     secure: false,
-    maxAge: 600000 // miliseconds
+    maxAge: 6000000000 // miliseconds
   }
 }))
 app.use(morgan('combined'))
