@@ -1,7 +1,7 @@
-const { makeUser } = require('../../users/domain')
+const { makeUser, makeProfile } = require('../../users/domain')
 const { makeContentCreatorApplication } = require('../domain')
 
-module.exports = function makeApproveCCApplication({ userList, contentCreatorApplicationList, Email, Password }) {
+module.exports = function makeApproveCCApplication({ userList, contentCreatorApplicationList, profileList, Email, Password }) {
 
     return async function approveApplication(applicationInfo) {
 
@@ -14,15 +14,22 @@ module.exports = function makeApproveCCApplication({ userList, contentCreatorApp
             modifiedAt: new Date()
         })
 
+        /* Create user account and profile for this user */
         const oneTimePassword = Password.generateRandomPassword()
         const validUser = makeUser({
-            firstName: application.getFirstName(),
-            lastName: application.getLastName(),
             email: application.getEmail(),
             password: oneTimePassword
         })
 
+        const profile = makeProfile({
+            firstName: application.getFirstName(),
+            lastName: application.getLastName(),
+            user: validUser
+        })
+
         await userList.add(validUser)
+        await profileList.add(profile)
+
 
         sendApprovalMail(application, oneTimePassword)
 

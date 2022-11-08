@@ -17,6 +17,7 @@ module.exports = function buildMakeUser({ Id, Email, Password }) {
         const { salt, hash } = Password.encrypt(password)
 
         return Object.freeze({
+            id: id,
             googleId: googleId,
             email: email,
             salt: salt,
