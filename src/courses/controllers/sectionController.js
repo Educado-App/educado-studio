@@ -76,13 +76,17 @@ module.exports = function makeSectionController({ sectionList }) {
     async function putSection(httpRequest) {
 
         const sectionChanges = httpRequest.body
+        const sectionId = httpRequest.params.sid
 
         try {
-            const updated = await editSection(sectionChanges)
+            const updated = await editSection({
+                id: sectionId,
+                changes: sectionChanges
+            })
 
             return {
                 success: true,
-                status: 201,
+                status: 202,
                 data: updated
             }
 

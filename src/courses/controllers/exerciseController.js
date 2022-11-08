@@ -53,7 +53,7 @@ module.exports = function makeExerciseController({ exerciseList }) {
         const sectionId = httpRequest.params.sid
 
         try {
-            const posted = await addExercise({exerciseInfo, sectionId})
+            const posted = await addExercise({ exerciseInfo, sectionId })
 
             return {
                 success: true,
@@ -69,13 +69,17 @@ module.exports = function makeExerciseController({ exerciseList }) {
     async function putExercise(httpRequest) {
 
         const exerciseChanges = httpRequest.body
+        const exerciseId = httpRequest.params.eid
 
         try {
-            const updated = await editExercise(exerciseChanges)
+            const updated = await editExercise({ 
+                id: exerciseId, 
+                changes: exerciseChanges 
+            })
 
             return {
                 success: true,
-                status: 201,
+                status: 202,
                 data: updated
             }
 
@@ -85,7 +89,7 @@ module.exports = function makeExerciseController({ exerciseList }) {
     }
 
     async function deleteExercise(httpRequest) {
-        
+
         const exerciseId = httpRequest.params.eid
         const sectionId = httpRequest.params.sid
 

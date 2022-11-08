@@ -74,13 +74,17 @@ module.exports = function makeCourseController({ courseList }) {
     async function putCourse(httpRequest) {
 
         const courseChanges = httpRequest.body
+        const courseId = httpRequest.params.id
 
         try {
-            const updated = await editCourse(courseChanges)
+            const updated = await editCourse({
+                id: courseId,
+                ...courseChanges
+            })
 
             return {
                 success: true,
-                status: 201,
+                status: 202,
                 data: updated
             }
 
