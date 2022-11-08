@@ -87,13 +87,10 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             ]
         })
             .populate({
-                path: 'author',
+                path: 'author category',
                 select: '-user'
             })
-            .populate({
-                path: 'sections',
-                select: '-description -exercises'
-            })
+            .select('-sections')
 
         return results
     }
