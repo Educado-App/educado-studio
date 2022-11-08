@@ -1,6 +1,9 @@
 const express = require("express");
 const passport = require("passport");
 
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./docs/swagger')
 const session = require('express-session')
 const keys = require("../env/config/keys");
 const router = require("./routes");
@@ -36,6 +39,11 @@ app.use(express.json());
 app.use(cors)
 app.use('', router)
 app.use(errorHandler)
+
+if (process.env.NODE_ENV !== "production"){
+  // Ensure that the docs is only shown in development mode
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+}
 
 // Run if running in production on Heroku
 if (process.env.NODE_ENV === "production") {
