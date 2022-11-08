@@ -1,6 +1,6 @@
-const JWT = require('../../../helpers/jwt')
+const JWT = require('../utils/jwt')
 const Password = require('../../../helpers/password')
-const { userList } = require('../../../users')
+const { userList } = require('../../../users/gateways')
 
 const buildMakeAuthService = require('./authService')
 const makeAuthService = buildMakeAuthService({ Password, JWT })

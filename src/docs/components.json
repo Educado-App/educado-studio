@@ -1,0 +1,35 @@
+{
+    "components": {
+        "parameters": {
+            "sortBy": {
+                "in" : "query",
+                "name" : "sortBy",
+                "schema" : {
+                    "type": "string",
+                    "enum": "[-createdAt, createdAt]"
+                },
+                "description": "Sorts the list by given parameter. '-' specifies descending order, no minus specifies ascending order"
+            },
+            "limit": {
+                "in" : "query",
+                "name" : "limit",
+                "schema" : {
+                    "type": "number",
+                    "minimum": 0,
+                    "default": 50
+                },
+                "description": "Limits the amount of results in the response"
+            },
+            "offset": {
+                "in" : "query",
+                "name" : "offset",
+                "schema" : {
+                    "type": "number",
+                    "minimum": 0,
+                    "default": 50
+                },
+                "description": "Offsets the results by the specified number"
+            }
+        }
+    }
+}

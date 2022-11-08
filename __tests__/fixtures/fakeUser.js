@@ -1,11 +1,19 @@
-module.exports = function makeFakeUser() {
+const Id = require("../../src/helpers/Id")
 
-    return {
+module.exports = function makeFakeUser(overrides = {}) {
+
+    const user = {
+        id: Id.makeId(),
         email: "fake@gmail.com",
         password: "ABC123456!",
         googleID: "1234567891011",
         joinedAt: new Date(),
         modifiedAt: new Date()
+    }
+
+    return {
+        ...user,
+        ...overrides
     }
 
 }
