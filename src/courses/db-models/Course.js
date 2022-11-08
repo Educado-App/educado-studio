@@ -7,6 +7,7 @@ const CourseSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: "Profile" },
   coverImg: { type: String },
   published: { type: Boolean },
+  //category: { type: Number },
   category: { type: Schema.Types.ObjectId, ref: "Category" },
   sections: [{ type: Schema.Types.ObjectId, ref: "Section" }],
   createdAt: { type: Date },

@@ -1,6 +1,6 @@
 const { makeHttpError } = require('../../helpers/error')
 
-const { addExercise, editExercise } = require('../use-cases')
+const { addExercise, editExercise, removeExercise } = require('../use-cases')
 
 
 module.exports = function makeExerciseController({ exerciseList }) {
@@ -16,6 +16,9 @@ module.exports = function makeExerciseController({ exerciseList }) {
 
             case 'PUT':
                 return await putExercise(httpRequest)
+
+            case 'DELETE':
+                return await deleteExercise(httpRequest)
 
             default:
                 return makeHttpError({
@@ -46,12 +49,11 @@ module.exports = function makeExerciseController({ exerciseList }) {
     }
 
     async function postExercise(httpRequest) {
-
         const exerciseInfo = httpRequest.body
         const sectionId = httpRequest.params.sid
 
         try {
-            const posted = await addExercise({exerciseInfo, sectionId})
+            const posted = await addExercise({ exerciseInfo, sectionId })
 
             return {
                 success: true,
@@ -67,14 +69,40 @@ module.exports = function makeExerciseController({ exerciseList }) {
     async function putExercise(httpRequest) {
 
         const exerciseChanges = httpRequest.body
+        const exerciseId = httpRequest.params.eid
 
         try {
-            const updated = await editExercise(exerciseChanges)
+            const updated = await editExercise({ 
+                id: exerciseId, 
+                changes: exerciseChanges 
+            })
 
             return {
                 success: true,
-                status: 201,
+                status: 202,
                 data: updated
+            }
+
+        } catch (error) {
+            return makeHttpError({ status: 400, message: error.message })
+        }
+    }
+
+    async function deleteExercise(httpRequest) {
+
+        const exerciseId = httpRequest.params.eid
+        const sectionId = httpRequest.params.sid
+
+        try {
+            await removeExercise({
+                fromSection: sectionId,
+                toRemove: exerciseId,
+            })
+
+            return {
+                success: true,
+                status: 204,
+                data: {}
             }
 
         } catch (error) {

@@ -49,7 +49,10 @@ module.exports = function makeSectionList({ dbModel, Id }) {
 
     async function update({ id: _id, ...changes }) {
 
-        const result = await dbModel.findOneAndUpdate({ _id }, { ...changes }, { new: true })
+        const result = await dbModel.findOneAndUpdate({ _id }, {
+            $set: { ...changes }
+        }, { new: true })
+        
         return result
     }
 }

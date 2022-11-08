@@ -7,7 +7,7 @@ const exerciseSchema = new Schema({
         type: { enum: ['audio', 'video'] },
         url: { type: String }
     },
-    on_wrong_feedback: {
+    onWrongFeedback: {
         type: { enum: ['audio', 'video'] },
         url: { type: String }
     },

@@ -2,9 +2,11 @@ const { makeCourse } = require('../domain')
 
 module.exports = function makeEditCourse({ courseList }) {
 
-    return async function editCourse({ ...changes }) {
+    return async function editCourse({ id, ...changes }) {
 
-        const course = makeCourse({ id: changes._id, ...changes })
+        const current = await courseList.findById(id)
+
+        const course = makeCourse({ ...current, ...changes })
 
         return await courseList.update({
             id: course.getId(),

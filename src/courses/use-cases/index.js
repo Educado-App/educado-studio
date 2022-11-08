@@ -10,6 +10,7 @@ const makeReorderSections = require('./reOrderSections')
 
 const makeAddExercise = require('./addExercise')
 const makeEditExercise = require('./editExercise')
+const makeRemoveExercise = require('./removeExercise')
 
 
 
@@ -23,6 +24,7 @@ const editSection = makeEditSection({ sectionList })
 
 const addExercise = makeAddExercise({ exerciseList, sectionList })
 const editExercise = makeEditExercise({ exerciseList })
+const removeExercise = makeRemoveExercise({ exerciseList, sectionList })
 
 
 module.exports = {
@@ -33,5 +35,6 @@ module.exports = {
     editSection,
     reorderSections,
     addExercise,
-    editExercise
+    editExercise,
+    removeExercise,
 }

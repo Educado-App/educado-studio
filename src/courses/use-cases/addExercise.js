@@ -12,20 +12,19 @@ module.exports = function makeAddExercise({ exerciseList, sectionList }) {
         section.addExercise(exercise)
 
         await sectionList.update({
-            id: section.getId(),
+            id: section.id,
             exercises: section.getExercises().map(exercise => exercise.id),
             modifiedAt: new Date()
         })
 
 
         return await exerciseList.add({
-            id: exercise.getId(),
-            exerciseNumber: exercise.getExerciseNumber(),
-            content: exercise.getContent(),
-            onWrongFeedback: exercise.getOnWrongFeedback(),
-            modifiedAt: exercise.modifiedAt(),
-            answers: exercise.getAnswers(),
-            totalAnswers: exercise.totalAnswers()
+            id: exercise.id,
+            exerciseNumber: exercise.exerciseNumber,
+            content: exercise.content,
+            onWrongFeedback: exercise.onWrongFeedback,
+            modifiedAt: exercise.modifiedAt,
+            answers: exercise.getAnswers()
         })
     }
 }

@@ -54,12 +54,14 @@ router.get('/courses/:id', protected, makeExpressCallback(courseController))
 router.post('/courses', protected, makeExpressCallback(courseController))
 router.put('/courses', protected, makeExpressCallback(courseController))
 router.delete('/courses/:id', protected, makeExpressCallback(courseController))
+router.put('/courses/:id', protected, makeExpressCallback(courseController))
 
 /* Sections */
 router.get('/courses/:cid/sections', protected, makeExpressCallback(sectionController))
 router.get('/courses/:cid/sections/:sid', protected, makeExpressCallback(sectionController))
 router.post('/courses/:cid/sections', protected, makeExpressCallback(sectionController))
 router.delete('/courses/:cid/sections/:sid', protected, makeExpressCallback(sectionController))
+router.put('/courses/:cid/sections/:sid', protected, makeExpressCallback(sectionController))
 router.put('/courses/:cid/sections/reorder', protected, makeExpressCallback(reorderSectionsController))
 
 /* Exercises */
@@ -67,6 +69,6 @@ router.get('/courses/:cid/sections/:sid/exercises', protected, makeExpressCallba
 router.get('/courses/:cid/sections/:sid/exercises/:eid', protected, makeExpressCallback(exerciseController))
 router.post('/courses/:cid/sections/:sid/exercises', protected, makeExpressCallback(exerciseController))
 router.delete('/courses/:cid/sections/:sid/exercises/:eid', protected, makeExpressCallback(exerciseController))
-
+router.put('/courses/:cid/sections/:sid/exercises/:eid', protected, makeExpressCallback(exerciseController))
 
 module.exports = router

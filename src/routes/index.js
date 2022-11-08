@@ -7,10 +7,7 @@ const OnBoardingRoutes = require('../onboarding/routes')
 const AuthRoutes = require('../security/authentication/routes')
 
 
-// Print all routes defined in app
-router.get('/api', (req, res) => {
-    res.send(router.stack)
-})
+
 
 router.use('/api', CourseRoutes)
 //router.use('', AWSRoutes)
