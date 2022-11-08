@@ -1,4 +1,4 @@
-const {AppUser} = require("../models/AppUser")
+// const {AppUser} = require("../models/AppUser")
 
 const Phone = require("../helpers/phone")
 const Password = require('../helpers/password')
