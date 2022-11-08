@@ -1,14 +1,7 @@
-<<<<<<<< HEAD:src/security/authentication/helpers/usingGoogle.js
-const GoogleStrategy = require('passport').Strategy
-const config = require("../../../../env/config/keys");
-
-const { userList } = require('../../../users')
-========
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const config = require("../../../../../env/config/keys");
 
 const { userList } = require('../../../../users/gateways')
->>>>>>>> Feature-courses:src/security/authentication/utils/passport/usingGoogle.js
 
 // Google OAuth Strategy 1: Login
 const googleStrategy =

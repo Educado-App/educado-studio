@@ -3,7 +3,7 @@ const { makeHttpError, MultipleError } = require('../../../helpers/error')
 module.exports = function makeProtectedRoute({ passport, profileList }) {
 
     /* Protects a route, requiring authentication on request */
-    return function protected(req, res, next) {
+    return function restricted(req, res, next) {
 
         passport.authenticate('JWT', { session: false }, (err, user, info) => {
             if (info instanceof Error) {

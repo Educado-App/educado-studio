@@ -3,20 +3,20 @@ const passport = require("../utils/passport")
 
 const JWT = require('../utils/jwt')
 
-const { protected } = require('..');
+const { restricted } = require('..');
 const { makeExpressCallback } = require('../../../helpers/express')
 const { authAuthController } = require('../controllers')
 
 
 router.post('/auth/jwt', makeExpressCallback(authAuthController))
 
-router.get('/auth/jwt/test', protected, (req, res) => {
+router.get('/auth/jwt/test', restricted, (req, res) => {
   res.status(200)
   res.send("Successfully authenticated using accessToken")
 })
 
 
-router.get('/auth/google/test', protected, (req, res) => {
+router.get('/auth/google/test', restricted, (req, res) => {
   res.status(200)
   res.send("Successfully authenticated using google")
 })

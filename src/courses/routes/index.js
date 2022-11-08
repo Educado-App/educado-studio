@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { protected } = require('../../security/authentication')
+const { restricted } = require('../../security/authentication')
 const { makeExpressCallback } = require('../../helpers/express')
 
 const {
@@ -49,26 +49,26 @@ router.get('/public/courses', makeExpressCallback(publicCourseController))
 */
 router.get('/public/courses/:id', makeExpressCallback(publicCourseController))
 
-router.get('/courses', protected, makeExpressCallback(courseController))
-router.get('/courses/:id', protected, makeExpressCallback(courseController))
-router.post('/courses', protected, makeExpressCallback(courseController))
-router.put('/courses', protected, makeExpressCallback(courseController))
-router.delete('/courses/:id', protected, makeExpressCallback(courseController))
-router.put('/courses/:id', protected, makeExpressCallback(courseController))
+router.get('/courses', restricted, makeExpressCallback(courseController))
+router.get('/courses/:id', restricted, makeExpressCallback(courseController))
+router.post('/courses', restricted, makeExpressCallback(courseController))
+router.put('/courses', restricted, makeExpressCallback(courseController))
+router.delete('/courses/:id', restricted, makeExpressCallback(courseController))
+router.put('/courses/:id', restricted, makeExpressCallback(courseController))
 
 /* Sections */
-router.get('/courses/:cid/sections', protected, makeExpressCallback(sectionController))
-router.get('/courses/:cid/sections/:sid', protected, makeExpressCallback(sectionController))
-router.post('/courses/:cid/sections', protected, makeExpressCallback(sectionController))
-router.delete('/courses/:cid/sections/:sid', protected, makeExpressCallback(sectionController))
-router.put('/courses/:cid/sections/:sid', protected, makeExpressCallback(sectionController))
-router.put('/courses/:cid/sections/reorder', protected, makeExpressCallback(reorderSectionsController))
+router.get('/courses/:cid/sections', restricted, makeExpressCallback(sectionController))
+router.get('/courses/:cid/sections/:sid', restricted, makeExpressCallback(sectionController))
+router.post('/courses/:cid/sections', restricted, makeExpressCallback(sectionController))
+router.delete('/courses/:cid/sections/:sid', restricted, makeExpressCallback(sectionController))
+router.put('/courses/:cid/sections/:sid', restricted, makeExpressCallback(sectionController))
+router.put('/courses/:cid/sections/reorder', restricted, makeExpressCallback(reorderSectionsController))
 
 /* Exercises */
-router.get('/courses/:cid/sections/:sid/exercises', protected, makeExpressCallback(exerciseController))
-router.get('/courses/:cid/sections/:sid/exercises/:eid', protected, makeExpressCallback(exerciseController))
-router.post('/courses/:cid/sections/:sid/exercises', protected, makeExpressCallback(exerciseController))
-router.delete('/courses/:cid/sections/:sid/exercises/:eid', protected, makeExpressCallback(exerciseController))
-router.put('/courses/:cid/sections/:sid/exercises/:eid', protected, makeExpressCallback(exerciseController))
+router.get('/courses/:cid/sections/:sid/exercises', restricted, makeExpressCallback(exerciseController))
+router.get('/courses/:cid/sections/:sid/exercises/:eid', restricted, makeExpressCallback(exerciseController))
+router.post('/courses/:cid/sections/:sid/exercises', restricted, makeExpressCallback(exerciseController))
+router.delete('/courses/:cid/sections/:sid/exercises/:eid', restricted, makeExpressCallback(exerciseController))
+router.put('/courses/:cid/sections/:sid/exercises/:eid', restricted, makeExpressCallback(exerciseController))
 
 module.exports = router

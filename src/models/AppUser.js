@@ -24,4 +24,4 @@ const AppUserSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model.Users || mongoose.model("appUsers", AppUserSchema);
+module.exports = mongoose.model("appUsers", AppUserSchema);

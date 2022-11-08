@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 function connectToDb(uri, options = {}) {
+
   mongoose.connect(uri, options);
 
   const db = mongoose.connection;

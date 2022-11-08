@@ -65,3 +65,5 @@ if (process.env.NODE_ENV === "production") {
 app.listen(PORT, () => {
   console.log(`⚡ Running app at ${keys.WEB_HOST || 'http://localhost'}:${PORT}`);
 })
+
+module.exports = app

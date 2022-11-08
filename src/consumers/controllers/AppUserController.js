@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 const AppUser = require("../models/AppUser");
 
 // Delete user controller

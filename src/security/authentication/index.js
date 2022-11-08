@@ -3,9 +3,9 @@ const { profileList } = require('../../users/gateways')
 
 const makeProtectedRoute = require('./utils/protectedRoute')
 
-const protected = makeProtectedRoute({ passport, profileList })
+const restricted = makeProtectedRoute({ passport, profileList })
 
 module.exports = {
-    protected
+    restricted
 }
 
