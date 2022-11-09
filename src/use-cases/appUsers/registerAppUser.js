@@ -10,9 +10,7 @@ export default function makeRegisterAppUser ({appUserDb}) {
     return async function makeRegisteruser (appUserInfo) {
         const appUser = makeAppUser(appUserInfo)
 
-        // findByHash is not something we are experts on:
-        const exists = await appUserDb.findByHash({hash: appUser.getHash()})
-        // This is nice:
+        const exists = await appUserDb.findByPhone({phone: appUser.phone})
         if (exists) {
             return exists
         }

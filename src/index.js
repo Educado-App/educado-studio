@@ -45,7 +45,8 @@ app.use(context)
 app.use('', router)
 
 // Setup authentication routes
-require("./routes/appAuthRoutes")(app);
+require("./routes/appUser")(app);
+//require("./routes/appAuthRoutes")(app);
 //require("./routes/authRoutes")(app);
 //require("./routes/courseRoutes")(app);
 //require("./routes/bucketRoutes")(app);
