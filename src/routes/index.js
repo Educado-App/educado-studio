@@ -3,6 +3,7 @@ const router = require('express').Router()
 // Routes
 const CourseRoutes = require('./courseRoutes')
 const AWSRoutes = require('./bucketRoutes')
+const appUserRoutes = require('./appUser')
 const AuthRoutes = require('../security/authentication/routes')
 const ApplicationRoutes = require('../applications/content-creator-applications/routes')
 
@@ -16,6 +17,7 @@ router.use('/api', CourseRoutes)
 router.use('', AWSRoutes)
 router.use('/api', AuthRoutes)
 router.use('/api', ApplicationRoutes)
+router.use('/api/eml', appUserRoutes)
 
 
 module.exports = router

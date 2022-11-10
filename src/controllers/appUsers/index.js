@@ -1,12 +1,12 @@
-import { registerAppUser } from '../../use-cases/appUsers'
-import makeRegisterAppUser from './registerAppUser'
+const { registerAppUser } = require('../../use-cases/appUsers')
+const makeRegisterAppUser = require('./registerAppUser')
 
 const registerNewAppUser = makeRegisterAppUser({registerAppUser})
 
-const AppUserController = Object.freeze({
-    registerNewAppUser
-})
+// const AppUserController = Object.freeze({
+//     registerNewAppUser
+// })
 
-export default AppUserController
+//export default AppUserController
 
-export { registerNewAppUser }
+module.exports = { registerNewAppUser } 

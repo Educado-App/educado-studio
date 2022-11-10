@@ -5,8 +5,8 @@
   * By: Anton + Charlotte
   **/
 
-import makeAppUser from '../appUsers'
-export default function makeRegisterAppUser ({appUserDb}) {
+const { makeAppUser } = require('../../appUsers')
+module.exports = function makeRegisterAppUser ({appUserDb}) {
     return async function makeRegisteruser (appUserInfo) {
         const appUser = makeAppUser(appUserInfo)
 
@@ -16,7 +16,7 @@ export default function makeRegisterAppUser ({appUserDb}) {
         }
         
         // think about handle moderation in use-cases
-        return appUserDb.insert({
+        return await appUserDb.insert({
             phone: makeAppUser.phone,
             password: makeAppUser.password,
             timeOfLogin: makeAppUser.timeOfLogin

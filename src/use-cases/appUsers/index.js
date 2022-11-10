@@ -1,11 +1,16 @@
-import makeRegisterAppUser from './registerAppUser'
-import appUserDb from '../data-access'
+//import { makeRegisterAppUser } from './registerAppUser'
+//import { appUserDb } from '../data-access'
+const phone = require('../../helpers/phone')
+const password = require('../../helpers/password')
 
-const registerAppUser = makeRegisterAppUser(appUserDb)
+const makeRegisterAppUser = require('./registerAppUser')
+const appUserDb = require('../../data-access/appUser')
 
-const appUserService = Object.freeze({
-    registerAppUser,
-})
+const registerAppUser = makeRegisterAppUser( {appUserDb, phone, password} )
 
-export default appUserService
-export { registerAppUser }
+// const appUserService = Object.freeze({
+//     registerAppUser
+// })
+
+//export default appUserService
+module.exports = { registerAppUser } 

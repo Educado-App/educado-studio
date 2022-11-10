@@ -5,11 +5,18 @@
   * By: Anton + Charlotte
   **/
 
-import makeAppUserDb from './appUserDb'
-import appUserModel from '../appUsers'
-//const mongoose = require('mongoose') -- Where is it?
-
+const mongodb = require('mongodb')
+const makeAppUserDb = require('./appUserDb')
+const appUserModel = require('../../models/AppUser')
+//const buildMakeAppUser = require('../../appUsers/appUser')
 const makeAppUser = makeAppUserDb(appUserModel)
 
-module.exports = { makeAppUser }
 
+
+//const { makeDb } = require('../../../db')
+
+//const mongoose = require('mongoose') -- Where is it?
+
+//const makeAppUser = makeAppUserDb({mongodb})
+
+module.exports = { makeAppUser }

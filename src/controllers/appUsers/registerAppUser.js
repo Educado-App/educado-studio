@@ -1,31 +1,17 @@
 const {makeHttpError} = require('../../helpers/error')
 
-export default function makeRegisterAppUser({ addAppUser }) {
+module.exports = function makeRegisterAppUser({ registerAppUser }) {
 
     return async function registerAppUser (httpRequest) {
-        try {
-        
-            const { source = {}, } = httpRequest.body
-            source.ip = httpRequest.ip
-            source.browser = httpRequest.headers['User-Agent']
+        const { ...appUserInfo} = httpRequest.body
+        try {   
             
-            if (httpRequest.headers['Referer']) {
-                source.referrer = httpRequest.headers['Referer']
-            }
-        
-            
-            const registered = await registerAppUser({
-                phone,
-                password,
-                date,
-                source
+            const registered =  await registerAppUser ({
+                ...appUserInfo
             })
 
             return {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Last-Modified': new Date(posted.modifiedOn).toUTCString()
-                },
+                success: true,
                 statusCode: 201,
                 body: { registered }
             }

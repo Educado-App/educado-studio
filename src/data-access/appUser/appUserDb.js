@@ -1,26 +1,26 @@
 /**
   * data-access for an app user
   * 
-  * Last Modified: 09-11-2022
+  * Last Modified: 10-11-2022
   * By: Anton + Charlotte
   **/
 
-export default function makeAppUserDb ({ makeDb }) {
+module.exports = function makeAppUserDb ({ makeDb }) {
     return Object.freeze({
         create,
         findById,
         findByPhone,
         remove,
-        update
+        //update
     })
 
-    async function create ({ phone: _phone, password: _password }) {
+    async function create ({ ...appUserInfo }) {
         const db = await makeDb()
         const result = await db
             .collection('appuser')
-            .insertOne({_phone, _password})
-        const { _phone: phone, _password: password} = result.insertedId
-        return {phone, password}
+            .insertOne({...appUserInfo})
+        //const { ...appUserInfo } = result.insertedId
+        return {result}
         // -What happens to the date tho?
     }
 
@@ -53,6 +53,7 @@ export default function makeAppUserDb ({ makeDb }) {
       * 
       * Dermed er update() herunder ikke testet eller implementeret endnu.
       */
+    /*
     async function update ({id: _id, phone: _phone }) {
         const db = await makeDb()
         return await db
@@ -60,6 +61,7 @@ export default function makeAppUserDb ({ makeDb }) {
             .findById(_id)
             .update(_phone)
     }
+    */
 
     
 }

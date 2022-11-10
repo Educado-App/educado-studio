@@ -3,10 +3,67 @@ const router = require("express").Router();
 const { makeExpressCallback } = require('../helpers/express')
 const { registerNewAppUser } = require('../controllers/appUsers')
 
-module.exports = (app) => {
+console.log("to here")
 
-    app.post('/api/eml/register', makeExpressCallback(registerNewAppUser))
+router.post('/register', makeExpressCallback(registerNewAppUser))
 
-}
 
-//module.exports = router;
+console.log("Or here?")
+
+// router.post("/api/eml/register", async (req, res) => {
+//     const { phone, password } = req.body;
+//     const appUser = new appUserModel({
+//         phone: phone,
+//         password: password,
+//         date: "today"
+//     })
+//     try {
+//         await appUser.save();
+//         res.send(appUser);
+//       } catch (err) {
+//         res.status(422).send(err);
+//       }
+// })
+
+ module.exports = router;
+
+
+/*
+// Content Creator Application Route
+router.post("/course/", async (req, res) => {
+    const { title, description } = req.body;
+  
+    const course = new CourseModel({
+      title: title,
+      description: description,
+      category: "",
+      _user: req.user.id,
+      dateCreated: Date.now(),
+      dateUpdated: Date.now(),
+      sections: [],
+    });
+  
+    try {
+      await course.save();
+      res.send(course);
+    } catch (err) {
+      res.status(422).send(err);
+    }
+  });
+  
+  // Course routes
+  
+  router.post("/courses", async (req, res) => {
+    const { title, description } = req.body;
+  
+    const course = new CourseModel({
+      title: title,
+      description: description,
+      category: "",
+      _user: req.user.id,
+      dateCreated: Date.now(),
+      dateUpdated: Date.now(),
+      sections: [],
+    });
+
+    */
