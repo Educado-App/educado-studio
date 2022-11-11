@@ -6,17 +6,18 @@
   **/
 
 const { makeAppUser } = require('../../appUsers')
+
 module.exports = function makeRegisterAppUser ({appUserDb}) {
     return async function makeRegisteruser (appUserInfo) {
-        const appUser = makeAppUser(appUserInfo)
+        const appUser = makeAppUser({...appUserInfo})
 
         const exists = await appUserDb.findByPhone({phone: appUser.phone})
         if (exists) {
             return exists
         }
-        
+
         // think about handle moderation in use-cases
-        return await appUserDb.insert({
+        return await appUserDb.create({
             phone: makeAppUser.phone,
             password: makeAppUser.password,
             timeOfLogin: makeAppUser.timeOfLogin

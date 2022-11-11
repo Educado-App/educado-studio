@@ -2,14 +2,22 @@ const {makeHttpError} = require('../../helpers/error')
 
 module.exports = function makeRegisterAppUser({ registerAppUser }) {
 
-    return async function registerAppUser (httpRequest) {
-        const { ...appUserInfo} = httpRequest.body
+    return async function AddAppUser (httpRequest) {
+        
         try {   
-            
-            const registered =  await registerAppUser ({
+            const { source = {}, ...appUserInfo} = httpRequest.body
+
+            // source.browser = httpRequest.headers['User-Agent']
+            // if (httpRequest.headers['Referer']) {
+            //   source.referrer = httpRequest.headers['Referer']
+            // }
+            console.log(appUserInfo)
+
+            const registered =  await registerAppUser({
                 ...appUserInfo
             })
 
+            
             return {
                 success: true,
                 statusCode: 201,
@@ -19,17 +27,6 @@ module.exports = function makeRegisterAppUser({ registerAppUser }) {
         } catch (error) {
             console.log(error)
             return makeHttpError({ status: 400, message: error.message })
-            
-
-            // return {
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     statusCode: 400,
-            //     body: {
-            //         error: e.message
-            //     }
-            // }
         }
     }
 }

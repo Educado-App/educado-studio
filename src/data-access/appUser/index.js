@@ -5,11 +5,12 @@
   * By: Anton + Charlotte
   **/
 
-const mongodb = require('mongodb')
 const makeAppUserDb = require('./appUserDb')
-const appUserModel = require('../../models/AppUser')
+//const appUserModel = require('../../models/AppUser')
 //const buildMakeAppUser = require('../../appUsers/appUser')
-const makeAppUser = makeAppUserDb(appUserModel)
+const {makeDb} = require("../../../db")
+
+const makeAppUser = makeAppUserDb({makeDb})
 
 
 
