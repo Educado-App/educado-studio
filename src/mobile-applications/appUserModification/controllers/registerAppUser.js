@@ -1,11 +1,12 @@
-const {makeHttpError} = require('../../helpers/error')
+const { makeHttpError } = require('../../../helpers/error')
+const { registerAppUser } = require('../use-cases')
 
-module.exports = function makeRegisterAppUser({ registerAppUser }) {
+module.exports = function makeRegisterAppUser({ registerAppUserList }) {
 
     return async function AddAppUser (httpRequest) {
         
         try {   
-            const { source = {}, ...appUserInfo} = httpRequest.body
+            const appUserInfo = httpRequest.body
 
             // source.browser = httpRequest.headers['User-Agent']
             // if (httpRequest.headers['Referer']) {
@@ -17,11 +18,12 @@ module.exports = function makeRegisterAppUser({ registerAppUser }) {
                 ...appUserInfo
             })
 
+            //console.log(appUserInfo)
             
             return {
                 success: true,
                 statusCode: 201,
-                body: { registered }
+                body: registered
             }
 
         } catch (error) {

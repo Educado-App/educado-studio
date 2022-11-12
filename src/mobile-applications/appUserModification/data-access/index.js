@@ -6,10 +6,12 @@
   **/
 
 const makeAppUserDb = require('./appUserDb')
-const appUserModel = require('../../models/AppUser')
+const { appUserModel } = require('../../../models/AppUser')
+const Phone = require('../../../helpers/phone')
+const Password = require('../../../helpers/password')
 //const buildMakeAppUser = require('../../appUsers/appUser')
 
-const makeAppUser = makeAppUserDb({makeDb: appUserModel})
+const makeAppUser = makeAppUserDb({appUserModel})
 
 
 

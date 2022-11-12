@@ -3,7 +3,7 @@ const router = require('express').Router()
 // Routes
 const CourseRoutes = require('./courseRoutes')
 const AWSRoutes = require('./bucketRoutes')
-const appUserRoutes = require('./appUser')
+const appUserRoutes = require('../mobile-applications/appUserModification/routes')
 const AuthRoutes = require('../security/authentication/routes')
 const ApplicationRoutes = require('../applications/content-creator-applications/routes')
 

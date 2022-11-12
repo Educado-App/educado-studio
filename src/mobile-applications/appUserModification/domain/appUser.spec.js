@@ -1,4 +1,4 @@
-const makeFakeAppUser = require('../../__tests__/fixtures/fakeAppUser')
+const makeFakeAppUser = require('../../../../__tests__/fixtures/fakeAppUser')
 const { makeAppUser } = require('.')
 
 describe("AppUser", () => {

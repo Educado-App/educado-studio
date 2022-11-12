@@ -1,12 +1,12 @@
-const { registerAppUser } = require('../../use-cases/appUsers')
+const { registerAppUser } = require('../use-cases')
 const makeRegisterAppUser = require('./registerAppUser')
+const { makeAppUser } = require('../data-access')
 
-const registerNewAppUser = makeRegisterAppUser({ registerAppUser })
+const registerNewAppUser = makeRegisterAppUser({ makeAppUser })
 
 // const AppUserController = Object.freeze({
 //     registerNewAppUser
 // })
 
-//export default AppUserController
 
 module.exports = { registerNewAppUser } 

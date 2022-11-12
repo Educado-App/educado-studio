@@ -18,10 +18,11 @@ module.exports = function buildMakeAppUser({ Phone, Password }) {
         const { salt, hash } = Password.encrypt(password)
 
         return Object.freeze({
-            phone: phone,
-            salt: salt,
-            hash: hash,
-            loggedInAt: loggedInAt
+            getPhone: () => phone,
+            getPassword: () => password,
+            // salt: salt,
+            // hash: hash,
+            getLoggedInAt: () => loggedInAt
         })
 
     }
