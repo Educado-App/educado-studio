@@ -11,6 +11,8 @@ const {
     exerciseController,
 } = require('../controllers')
 
+
+
 /**
  * @swagger
  * /public/courses:
@@ -29,8 +31,7 @@ const {
  *         description: Finds courses of this category. Provide id of category
  *         example: 6368c4ed71e079ae8d537eb9
  * 
- *         $ref: '../../docs/components.json#/parameters/sortBy'
- *       
+ *         $ref: '#/components/parameters/sortBy'
 */
 router.get('/public/courses', makeExpressCallback(publicCourseController))
 
