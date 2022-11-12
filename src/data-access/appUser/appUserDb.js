@@ -14,13 +14,21 @@ module.exports = function makeAppUserDb ({ makeDb }) {
         //update
     })
 
-    async function create ({ ...appUserInfo }) {
-        const db = await makeDb()
-        const result = await db
-            .collection('appuser')
-            .insertOne({...appUserInfo})
+
+    async function create (appUserInfo) {
+        // const result = await makeDb.in({
+        //     ...appUserInfo
+        // })
+
+        return await makeDb.collection('appuser').create(appUserInfo)
+
+
+        // const result = await db
+        //     .collection('appuser')
+        //     .insertOne({...appUserInfo})
+        //const { ...appUserInfo } = result._doc
         //const { ...appUserInfo } = result.insertedId
-        return {result}
+        //return { result }
         // -What happens to the date tho?
     }
 

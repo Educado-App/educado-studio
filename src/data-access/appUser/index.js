@@ -6,11 +6,10 @@
   **/
 
 const makeAppUserDb = require('./appUserDb')
-//const appUserModel = require('../../models/AppUser')
+const appUserModel = require('../../models/AppUser')
 //const buildMakeAppUser = require('../../appUsers/appUser')
-const {makeDb} = require("../../../db")
 
-const makeAppUser = makeAppUserDb({makeDb})
+const makeAppUser = makeAppUserDb({makeDb: appUserModel})
 
 
 
@@ -18,6 +17,6 @@ const makeAppUser = makeAppUserDb({makeDb})
 
 //const mongoose = require('mongoose') -- Where is it?
 
-//const makeAppUser = makeAppUserDb({mongodb})
+//const makeAppUser = makeAppUserDb({makeDb})
 
 module.exports = { makeAppUser }

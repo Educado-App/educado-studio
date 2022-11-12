@@ -1,23 +1,16 @@
 // Mongoose model class for AppUser
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const Schema = mongoose.Schema;
 
 // Class description
 const AppUserSchema = new Schema({
-  phone: {
-    type: String,
-    require: [true, "Please provide a phone number"],
-  },
+  phone: { type: String },
 
-  password: {
-    type: String,
-    require: [true, "Please provide a password"],
-    unique: false
-  },
+  password: { type: String },
 
-  loggedInAt: {
-    type: Date
-  },
+  loggedInAt: { type: Date },
 });
 
-module.exports = mongoose.model.Users || mongoose.model("appUsers", AppUserSchema);
+const appUserModel = mongoose.model("appUsers", AppUserSchema);
+
+module.exports = { appUserModel };
