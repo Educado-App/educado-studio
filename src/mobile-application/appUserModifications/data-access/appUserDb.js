@@ -15,22 +15,23 @@ module.exports = function makeAppUserDb ({ makeDb }) {
     })
 
 
-    async function add ({...appUser}) {
+    async function add (appUser) {
         // const result = await makeDb.in({
         //     ...appUserInfo
         // })
 
-        //return await makeDb.collection('appuser').create(appUserInfo)
-        const db = await makeDb()
+        return await makeDb.collection('appuser').create(appUser)
+       
+         // const db = await makeDb()
 
-        const result = await db
-            .collection('appusers')
-            .insertOne({
-                ...appUser
-            })
+        // const result = await db
+        //     .collection('appusers')
+        //     .insertOne({
+        //         ...appUser
+        //     })
 
-        const { ...appUserInfo } = result._doc
-        return { ...appUserInfo }
+        // const { ...appUserInfo } = result._doc
+        // return { ...appUserInfo }
 
         // const result = await db
         //     .collection('appuser')
