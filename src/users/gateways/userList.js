@@ -9,8 +9,11 @@ module.exports = function makeUserList(db_model) {
         findByGoogleId
     })
 
-    async function add(user) {
-        return await db_model.create(user)
+    async function add({id: _id, ...user}) {
+        return await db_model.create({
+            _id,
+            ...user
+        })
     }
 
     async function remove(user = {}) {

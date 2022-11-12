@@ -6,6 +6,6 @@ const buildMakeUser = require('./user')
 const buildMakeProfile = require('./profile')
 
 const makeUser = buildMakeUser({ Id, Email, Password })
-const makeProfile = buildMakeProfile({ Id, makeUser })
+const makeProfile = buildMakeProfile({ Id })
 
 module.exports = { makeUser, makeProfile }
