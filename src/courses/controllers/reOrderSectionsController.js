@@ -44,11 +44,11 @@ module.exports = function makeReorderSectionController({ Params }) {
             type: 'array',
             items: {
                 type: 'object',
-                required: ['section', 'moveTo'],
                 properties: {
                     'section': { type: 'string', format: 'objectId', errorMessage: "invalid identifier" },
                     'moveTo': { type: 'number' }
-                }
+                },
+                required: ['section', 'moveTo'],
             }
         }
 

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node src/index.js",
-    "server": "nodemon src/index.js",
+    "server": "nodemon src/index.js --ext js,json,yml ",
     "test": "jest --runInBand",
     "dev": "npm run server",
     "prod": "npm run server"
@@ -39,7 +39,8 @@
     "nodemailer": "^6.8.0",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
