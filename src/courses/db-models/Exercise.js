@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const exerciseSchema = new Schema({
+    parentSection: { type: Schema.Types.ObjectId, ref: "Section" },
     exerciseNumber: { type: Number },
     content: {
         type: { enum: ['audio', 'video'] },

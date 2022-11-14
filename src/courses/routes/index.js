@@ -12,6 +12,8 @@ const {
 } = require('../controllers')
 
 
+
+/* Courses */
 router.get('/public/courses', makeExpressCallback(publicCourseController))
 router.get('/public/courses/:id', makeExpressCallback(publicCourseController))
 
@@ -23,18 +25,20 @@ router.delete('/courses/:id', restricted, makeExpressCallback(courseController))
 router.put('/courses/:id', restricted, makeExpressCallback(courseController))
 
 /* Sections */
+router.get('/sections/:sid', restricted, makeExpressCallback(sectionController))
 router.get('/courses/:cid/sections', restricted, makeExpressCallback(sectionController))
 router.get('/courses/:cid/sections/:sid', restricted, makeExpressCallback(sectionController))
 router.post('/courses/:cid/sections', restricted, makeExpressCallback(sectionController))
-router.delete('/courses/:cid/sections/:sid', restricted, makeExpressCallback(sectionController))
-router.put('/courses/:cid/sections/:sid', restricted, makeExpressCallback(sectionController))
-router.put('/courses/:cid/sections/reorder', restricted, makeExpressCallback(reorderSectionsController))
+router.delete('/sections/:sid', restricted, makeExpressCallback(sectionController))
+router.put('/sections/:sid', restricted, makeExpressCallback(sectionController))
+router.put('/sections/reorder', restricted, makeExpressCallback(reorderSectionsController))
 
 /* Exercises */
+router.get('/exercises/:eid', restricted, makeExpressCallback(exerciseController))
 router.get('/courses/:cid/sections/:sid/exercises', restricted, makeExpressCallback(exerciseController))
 router.get('/courses/:cid/sections/:sid/exercises/:eid', restricted, makeExpressCallback(exerciseController))
-router.post('/courses/:cid/sections/:sid/exercises', restricted, makeExpressCallback(exerciseController))
-router.delete('/courses/:cid/sections/:sid/exercises/:eid', restricted, makeExpressCallback(exerciseController))
-router.put('/courses/:cid/sections/:sid/exercises/:eid', restricted, makeExpressCallback(exerciseController))
+router.post('/sections/:sid/exercises', restricted, makeExpressCallback(exerciseController))
+router.delete('/exercises/:eid', restricted, makeExpressCallback(exerciseController))
+router.put('/exercises/:eid', restricted, makeExpressCallback(exerciseController))
 
 module.exports = router

@@ -20,6 +20,7 @@ module.exports = function makeAddExercise({ exerciseList, sectionList }) {
 
         return await exerciseList.add({
             id: exercise.id,
+            parentSection: section.id,
             exerciseNumber: exercise.exerciseNumber,
             content: exercise.content,
             onWrongFeedback: exercise.onWrongFeedback,

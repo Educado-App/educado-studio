@@ -31,11 +31,13 @@ module.exports = function makeExerciseController({ exerciseList }) {
 
     async function getExercise(httpRequest) {
 
-        const id = httpRequest.params.id ?? null
+        const exerciseId = httpRequest.params.eid
+        const sectionId = httpRequest.params.sid
+
         try {
-            const results = id ?
-                await exerciseList.findById(id) :
-                await exerciseList.findAll(httpRequest.queryParams)
+            const results = exerciseId ?
+                await exerciseList.findById(exerciseId) :
+                await exerciseList.findAllBySectionId(sectionId)
 
             return {
                 success: true,

@@ -1,9 +1,8 @@
 const express = require("express");
 const passport = require("passport");
 
-const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./docs/swagger')
+const swaggerSpec = require('../docs/swagger')
 const session = require('express-session')
 const keys = require("../env/config/keys");
 const router = require("./routes");

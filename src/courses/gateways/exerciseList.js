@@ -11,6 +11,7 @@ module.exports = function makeExerciseList({ dbModel, Params, ParamsSchema }) {
 
     return Object.freeze({
         findAll,
+        findAllBySectionId,
         findById,
         add,
         remove,
@@ -46,6 +47,10 @@ module.exports = function makeExerciseList({ dbModel, Params, ParamsSchema }) {
             })
             .limit(parseInt(limit))
             .skip(parseInt(offset))
+    }
+    
+    async function findAllBySectionId(sid) {
+        return await dbModel.find({ parentSection: sid })
     }
 
     async function findById(id) {
