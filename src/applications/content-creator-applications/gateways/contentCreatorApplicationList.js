@@ -63,6 +63,9 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
             ...contentCreatorApplication
         })
 
+        console.log(result)
+        console.log(result._doc)
+
         const { _id: id, ...contentCreatorApplicationInfo } = result._doc
         return { id, ...contentCreatorApplicationInfo }
     }

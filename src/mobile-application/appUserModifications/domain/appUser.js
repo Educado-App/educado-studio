@@ -2,14 +2,14 @@ module.exports = function buildMakeAppUser({ Phone, Password }) {
 
     return function makeAppUser({
         phone,
-        password,
-        loggedInAt = new Date()
+        password
+        //loggedInAt = new Date()
     } = {}) {
 
         if (!Phone.isValid(phone)) throw new Error("User must have a valid phone number")
         // This should be changed to 10 before production
-        if (!(Phone.length >= 8)) throw new Error("Phone Number must be at least 8 characters")
-        if(!(Phone.length) <= 11) throw new Error("Phone number can at most be 11 characters")
+        if (!(phone.length > 8)) throw new Error("Phone Number must be at least 8 characters")
+        if(!(phone.length < 11)) throw new Error("Phone number can at most be 11 characters")
         
         if (!password) throw new Error("User must have a password")
         if (!(password.length >= 8)) throw new Error("Password should be at least 8 characters long")
@@ -19,10 +19,10 @@ module.exports = function buildMakeAppUser({ Phone, Password }) {
 
         return Object.freeze({
             getPhone: () => phone,
-            getPassword: () => password,
-            // salt: salt,
-            // hash: hash,
-            getLoggedInAt: () => loggedInAt
+            getPassword: () => password
+            //salt: salt,
+            //hash: hash,
+            //getLoggedInAt: () => loggedInAt
         })
 
     }

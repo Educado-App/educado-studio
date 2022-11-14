@@ -5,23 +5,23 @@
   * By: Anton + Charlotte
   **/
 
-const { makeAppUser } = require('../domain')
+const { makeUser } = require('../domain')
 
-module.exports = function makeRegisterAppUser ({ appUserDb }) {
+module.exports = function makeRegisterAppUser ({ appUserList }) {
 
     return async function makeRegisteruser (appUserInfo) {
 
-        const appUser = makeAppUser(appUserInfo)
+        const appUser = makeUser({...appUserInfo})
 
-        // const exists = await appUserDb.findByPhone({phone: appUser.phone})
-        // if (exists) {
-        //     return exists
-        // }
+        //  const exists = await appUserList.findByPhone({phone: appUser.phone})
+        //  if (exists) {
+        //      return exists
+        //  }
 
-        return await appUserDb.add({
+        return await appUserList.add({
             phone: appUser.getPhone(),
             password: appUser.getPassword(),
-            timeOfLogin: appUser.getTimeOfLogin()
+            //timeOfLogin: appUser.getTimeOfLogin()
         })
     }
 }

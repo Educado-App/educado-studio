@@ -1,10 +1,12 @@
 const router = require("express").Router();
 
 const { makeExpressCallback } = require('../../../helpers/express')
-const { registerNewAppUser } = require('../controllers')
+const { appUserController } = require('../controllers')
 
 
-router.post('/register', makeExpressCallback(registerNewAppUser))
+router.post("/register", makeExpressCallback(appUserController))
+
+module.exports = router;
 
 
 // router.post("/api/eml/register", async (req, res) => {

@@ -8,15 +8,11 @@ module.exports = function makeRegisterAppUser({ registerAppUserList }) {
         try {   
             const appUserInfo = httpRequest.body
 
-            // source.browser = httpRequest.headers['User-Agent']
-            // if (httpRequest.headers['Referer']) {
-            //   source.referrer = httpRequest.headers['Referer']
-            // }
             console.log(appUserInfo)
 
-            const registered =  await registerAppUser({
-                ...appUserInfo
-            })
+            const registered = await registerAppUser(appUserInfo)
+
+            console.log(typeof registered)
 
             //console.log(appUserInfo)
             
@@ -27,9 +23,19 @@ module.exports = function makeRegisterAppUser({ registerAppUserList }) {
             }
 
         } catch (error) {
+            
             console.log(error)
-            return makeHttpError({ status: 400, message: error.message })
-        }
+            // return makeHttpError({ status: 400, message: error.message })
+            return {
+                statusCode: 400,
+                body: {
+                    error: e.message
+                }
+            }
+            
+            
+        } 
+
     }
 }
 

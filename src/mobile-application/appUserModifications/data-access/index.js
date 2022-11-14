@@ -1,24 +1,34 @@
-/**
-  * data-access for an app user
-  * 
-  * Last Modified: 09-11-2022
-  * By: Anton + Charlotte
-  **/
-
-const makeAppUserDb = require('./appUserDb')
-const { appUserModel } = require('../../../models/AppUser')
-const Phone = require('../../../helpers/phone')
-const Password = require('../../../helpers/password')
-//const buildMakeAppUser = require('../../appUsers/appUser')
-
-const makeAppUser = makeAppUserDb({appUserModel})
+// /**
+//   * data-access for an app user
+//   * 
+//   * Last Modified: 09-11-2022
+//   * By: Anton + Charlotte
+//   **/
 
 
+// const mongoose = require('mongoose');
+// const schema = require('./schema');
 
-//const { makeDb } = require('../../../db')
+// module.exports = class MakeAppUserRegistration {
+//   constructor() {
+//     return mongoose.model("students", schema);
+//   }
+// }
 
-//const mongoose = require('mongoose') -- Where is it?
+// const makeAppUserDb = require('./appUserDb')
+// const { appUserModel } = require('../../../models/AppUser')
+// const Phone = require('../../../helpers/phone')
+// const Password = require('../../../helpers/password')
+// //const buildMakeAppUser = require('../../appUsers/appUser')
 
-//const makeAppUser = makeAppUserDb({makeDb})
+// const makeAppUser = makeAppUserDb({appUserModel})
 
-module.exports = { makeAppUser }
+
+
+// //const { makeDb } = require('../../../db')
+
+// //const mongoose = require('mongoose') -- Where is it?
+
+// //const makeAppUser = makeAppUserDb({makeDb})
+
+// module.exports = { makeAppUser }

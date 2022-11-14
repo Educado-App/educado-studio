@@ -4,11 +4,11 @@ const phone = require('../../../helpers/phone')
 const password = require('../../../helpers/password')
 
 const {userList} = require('../../../users')
-const { makeAppUser } = require('../data-access')
+const { appUserList } = require('../gateways')
 
 const makeRegisterAppUser = require('./registerAppUser')
 
-const registerAppUser = makeRegisterAppUser( {userList, makeAppUser, phone, password} )
+const registerAppUser = makeRegisterAppUser( {userList, appUserList, phone, password} )
 
 const appUserService = Object.freeze({
     registerAppUser
