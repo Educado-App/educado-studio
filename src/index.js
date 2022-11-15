@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 
+const attachAdminJS = require('./admin/setup')
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('../docs/swagger')
 const session = require('express-session')
@@ -13,6 +14,8 @@ const errorHandler = require("./helpers/errorHandler");
 
 const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku
 
+const app = express();
+
 // Setup connection to database
 connectToDb(keys.mongoURI, {
   useNewUrlParser: true,
@@ -20,7 +23,7 @@ connectToDb(keys.mongoURI, {
   useFindAndModify: false,
 });
 
-const app = express();
+attachAdminJS(app, '/admin')
 
 app.use(session({
   secret: keys.cookieKey,
