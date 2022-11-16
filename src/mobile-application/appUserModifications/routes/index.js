@@ -2,10 +2,12 @@ const router = require("express").Router();
 
 const { makeExpressCallback } = require('../../../helpers/express')
 const { appUserController } = require('../controllers')
+//const { appAuthController } = require('../../../security/authentication/controllers')
 
 
 router.post("/register", makeExpressCallback(appUserController))
 router.post("/login", makeExpressCallback(appUserController))
+//router.post('/auth/jwt', makeExpressCallback(appAuthController))
 
 module.exports = router;
 

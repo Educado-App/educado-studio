@@ -25,13 +25,13 @@ module.exports = function makeRegisterAppUser({ registerAppUserList }) {
         } catch (error) {
             
             console.log(error)
-            return makeHttpError({ status: 400, message: error.message })
-            // return {
-            //     statusCode: 400,
-            //     body: {
-            //         error: e.message
-            //     }
-            // }
+            //return makeHttpError({ status: 500, message: error.message })
+            return {
+                statusCode: 400,
+                body: {
+                    error: error.message
+                }
+            }
             
             
         } 

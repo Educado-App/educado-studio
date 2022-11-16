@@ -8,11 +8,19 @@ module.exports = function buildMakeAuthService({ Password, JWT }) {
 
         async function authenticate(user) {
 
-            const foundUser = await userList.findByEmail(user.email)
-            if (!foundUser) { throw new Error("Authentication: Access denied") }
+            const foundUserEmail = await userList.findByEmail(user.email)
+
+            if (foundUserEmail == null) {
+
+                const foundUserPhone = await userList.findByPhone(user.phone)
+
+                if (!foundUserPhone) { throw new Error("Authentication: Invalid Phone Number") }
+            }
+
+            if (!foundUserEmail) { throw new Error("Authentication: Invalid Email") }
 
             const isAuthenticated = Password.isValid({
-                password: user.password, 
+                password: user.password,
                 salt: foundUser.salt,
                 hash: foundUser.hash
             })
@@ -25,5 +33,4 @@ module.exports = function buildMakeAuthService({ Password, JWT }) {
             }
         }
     }
-
 }

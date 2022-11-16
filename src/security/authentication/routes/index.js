@@ -5,10 +5,12 @@ const JWT = require('../utils/jwt')
 
 const { restricted } = require('..');
 const { makeExpressCallback } = require('../../../helpers/express')
-const { authAuthController } = require('../controllers')
+const { authAuthController, appAuthController } = require('../controllers')
 
 
 router.post('/auth/jwt', makeExpressCallback(authAuthController))
+
+router.post('/api/eml/auth/jwt', makeExpressCallback(appAuthController))
 
 router.get('/auth/jwt/test', restricted, (req, res) => {
   res.status(200)

@@ -23,7 +23,7 @@ connectToDb(keys.mongoURI, {
   useFindAndModify: false,
 });
 
-attachAdminJS(app, '/admin')
+attachAdminJS(app, './admin')
 
 app.use(session({
   secret: keys.cookieKey,

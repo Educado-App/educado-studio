@@ -15,9 +15,9 @@
 
 const { appUserList } = require('../gateways')
 const phone = require('../../../helpers/phone')
-const { userList } = require('../../../users')
+//const { userList } = require('../../../users')
 
 const makeRegisterAppUser = require('./registerAppUser')
-const appUserController = makeRegisterAppUser({ appUserList, UserList: userList, phone })
+const appUserController = makeRegisterAppUser({ appUserList, phone })
 
 module.exports = { appUserController }
