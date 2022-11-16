@@ -1,5 +1,5 @@
 const Params = require('../../helpers/validation/params')
-const Id = require('../../helpers/Id')
+const Id = require('../../helpers/id')
 
 const { contentCreatorApplicationList } = require('../gateways')
 
