@@ -6,19 +6,22 @@ module.exports = function makeAppUserList({ dbModel }) {
     })
 
 
-    async function add(appUserModel) {
-        const result = await dbModel.create({
+    async function add({ ...appUserModel }) {
+        return await dbModel.create({
             ...appUserModel
         })
-
-        const { ...appUserModelInfo } = result._doc
-        return { ...appUserModelInfo }
     }
 
+        // const result = await dbModel.create({
+        //     ...appUserModel
+        // })
+
+        // const { ...appUserModelInfo } = result._doc
+        // return { ...appUserModelInfo }
+
     async function findByPhone ({phone: _phone}) {
-        const db = await dbModel()
-        return await db
-            .collection('appuser')
-            .findOne(_phone)
+        //const db = await dbModel()
+        return await dbModel
+            .findOne({_phone})
     }
 }

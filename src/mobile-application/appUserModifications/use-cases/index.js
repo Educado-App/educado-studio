@@ -7,12 +7,14 @@ const {userList} = require('../../../users')
 const { appUserList } = require('../gateways')
 
 const makeRegisterAppUser = require('./registerAppUser')
+const makeLoginAppUser = require("./loginAppUser")
 
 const registerAppUser = makeRegisterAppUser( {userList, appUserList, phone, password} )
+const loginAppUser = makeLoginAppUser({password})
 
 const appUserService = Object.freeze({
     registerAppUser
 })
 
 //export default appUserService
-module.exports = { registerAppUser }
+module.exports = { registerAppUser, loginAppUser }

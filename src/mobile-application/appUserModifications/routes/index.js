@@ -5,6 +5,7 @@ const { appUserController } = require('../controllers')
 
 
 router.post("/register", makeExpressCallback(appUserController))
+router.post("/login", makeExpressCallback(appUserController))
 
 module.exports = router;
 

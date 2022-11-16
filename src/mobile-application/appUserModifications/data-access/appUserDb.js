@@ -11,17 +11,16 @@ const Schema = mongoose.Schema;
 
 // Class description
 const AppUserSchema = new Schema({
-  phone: { type: String },
-
-  password: { type: String },
-
-  //loggedInAt: { type: Date },
-});
+    phone: { type: String },
+    salt: { type: String },
+    hash: { type: String },
+    loggedInAt: { type: String },
+})
 
 const appUserModel = mongoose.model(
   "appUser",
   AppUserSchema
-);
+)
 
 module.exports = { appUserModel };
 

@@ -31,9 +31,10 @@ function makeExpressCallback (requestHandler) {
 
 module.exports = { makeExpressCallback }
 
-
-// Deres kode, virker ikke med vores
-
+/**
+ * Adapter for express request / response callbacks
+ * to work with controllers representation of http requests (mostly similar)
+ */
 // function makeExpressCallback(requestHandler) {
 
 //     return async function callback(req, res) {
@@ -52,10 +53,24 @@ module.exports = { makeExpressCallback }
 //             }
 //         }
 
-//         const response = await requestHandler(httpRequest)
+//         await requestHandler(httpRequest)
+//         .then(response => {
+        
+//             let extras = {}
 
-//         res.status(response.status)
-//         res.send(response)
+//             if (response.data instanceof Array) {
+//                 extras['count'] = response.data.length
+//             }
+
+//             res.status(response.status)
+//             res.send({
+//                 status: response.status,
+//                 success: response.success,
+//                 ...extras,
+//                 ...response,
+//             })
+//         })
+//         .catch(e => res.status(500).send({ error: 'An unkown error occurred.' }))
 //     }
 // }
 

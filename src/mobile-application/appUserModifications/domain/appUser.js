@@ -2,8 +2,8 @@ module.exports = function buildMakeAppUser({ Phone, Password }) {
 
     return function makeAppUser({
         phone,
-        password
-        //loggedInAt = new Date()
+        password,
+        loggedInAt = new Date()
     } = {}) {
 
         if (!Phone.isValid(phone)) throw new Error("User must have a valid phone number")
@@ -18,11 +18,10 @@ module.exports = function buildMakeAppUser({ Phone, Password }) {
         const { salt, hash } = Password.encrypt(password)
 
         return Object.freeze({
-            getPhone: () => phone,
-            getPassword: () => password
-            //salt: salt,
-            //hash: hash,
-            //getLoggedInAt: () => loggedInAt
+            phone: phone,
+            salt: salt,
+            hash: hash,
+            loggedInAt: loggedInAt
         })
 
     }

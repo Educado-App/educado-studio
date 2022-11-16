@@ -19,8 +19,7 @@ module.exports = function makeRegisterAppUser ({ appUserList }) {
         //  }
 
         return await appUserList.add({
-            phone: appUser.getPhone(),
-            password: appUser.getPassword(),
+            ...appUser
             //timeOfLogin: appUser.getTimeOfLogin()
         })
     }

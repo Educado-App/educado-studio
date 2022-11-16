@@ -112,6 +112,6 @@ app.post("/api/eml/login", (request, response) => {
         response.json({ message: "You are authorized" });
     });
 
-        // User deletion endpoint
-        app.delete(`/api/eml/delete/:id`, AppUserController.deleteUser);
+    // User deletion endpoint
+    app.delete(`/api/eml/delete/:id`, AppUserController.deleteUser);
 }

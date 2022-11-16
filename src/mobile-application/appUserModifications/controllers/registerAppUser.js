@@ -3,7 +3,7 @@ const { registerAppUser } = require('../use-cases')
 
 module.exports = function makeRegisterAppUser({ registerAppUserList }) {
 
-    return async function AddAppUser (httpRequest) {
+    return async function addAppUser (httpRequest) {
         
         try {   
             const appUserInfo = httpRequest.body
@@ -25,13 +25,13 @@ module.exports = function makeRegisterAppUser({ registerAppUserList }) {
         } catch (error) {
             
             console.log(error)
-            // return makeHttpError({ status: 400, message: error.message })
-            return {
-                statusCode: 400,
-                body: {
-                    error: e.message
-                }
-            }
+            return makeHttpError({ status: 400, message: error.message })
+            // return {
+            //     statusCode: 400,
+            //     body: {
+            //         error: e.message
+            //     }
+            // }
             
             
         } 
