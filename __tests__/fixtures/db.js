@@ -12,5 +12,7 @@ module.exports = async function connectDb() {
                 useFindAndModify: false
             }
         )
+
+    return connection.db
     //db = db || connection.db(global.__MONGO_DB_NAME__)
 }

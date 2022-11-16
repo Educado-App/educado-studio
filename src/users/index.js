@@ -1,6 +1,5 @@
 const { UserModel } = require('../models/User')
-
-const Email = require('../helpers/Email')
+const Email = require('../helpers/email')
 const Password = require('../helpers/password')
 
 const makeUserList = require('./userList')

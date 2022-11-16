@@ -2,9 +2,10 @@
  * Based off of https://simonplend.com/how-to-create-an-error-handler-for-your-express-api/
  * Error handler for the express middleware
  */
- const errorHandler = (err, req, res, next) => {
-    const errorMessage = err.message
-    const errorStatusCode = err.status || err.statusCode
+
+const errorHandler = (err, req, res, next) => {
+
+    const errorStatusCode = err.status || err.statusCode || 500
 
     /**
      * If response headers have already been sent,
@@ -16,14 +17,12 @@
 
     //Send a formatted json response
     res.status(errorStatusCode)
-    res.json(
-        {
-            success: false,
-            status: errorStatusCode,
-            errors: errorMessage,
-        }
-    )
-    
+    res.send({
+        success: false,
+        status: errorStatusCode,
+        errors: err.message || err.errors.message || err.errors
+    })
+
     //Ensure any remaining middleware are run.
     next()
 }
