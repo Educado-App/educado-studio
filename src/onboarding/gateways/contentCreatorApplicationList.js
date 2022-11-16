@@ -1,4 +1,4 @@
-const { MultipleError } = require("../../helpers/error")
+const { ValidationError } = require("../../helpers/error")
 
 const findAllSchema = {
     type: 'object',
@@ -31,7 +31,7 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
             data: { sortBy, limit, offset, ...conditions }
         })
 
-        if (errors) throw new MultipleError(errors)
+        if (errors) throw new ValidationError(errors)
 
         let query = {
             $and: [

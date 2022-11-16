@@ -81,11 +81,10 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
         id: authorId
     }) {
 
-        const results = dbModel.find({
-            $and: [
-                authorId ? { 'author': authorId } : {}
-            ]
-        })
+        const results = await dbModel
+            .find({
+                $and: [authorId ? { 'author': authorId } : {}]
+            })
             .populate({
                 path: 'author category',
                 select: '-user'

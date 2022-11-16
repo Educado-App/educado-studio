@@ -52,23 +52,19 @@ module.exports = function makeCourseController({ courseList }) {
         const courseInfo = httpRequest.body
         const author = httpRequest.context.profile
 
-        try {
-            const posted = await addCourse({
-                author,
-                title: courseInfo.title,
-                description: courseInfo.description,
-                coverImg: courseInfo.coverImg
-            })
+        const posted = await addCourse({
+            author,
+            title: courseInfo.title,
+            description: courseInfo.description,
+            coverImg: courseInfo.coverImg
+        })
 
-            return {
-                success: true,
-                status: 201,
-                data: posted
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 201,
+            data: posted
         }
+
     }
 
     async function putCourse(httpRequest) {

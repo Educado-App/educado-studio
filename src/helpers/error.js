@@ -1,3 +1,23 @@
+
+class BaseError extends Error {
+    
+    constructor(msg, statusCode = 500) {
+        super()
+        
+        super.message = msg
+        this.statusCode = statusCode
+        this.isOperational = true
+    }
+}
+
+class ValidationError extends BaseError {
+
+    constructor(msg, statusCode = 400) {
+        super(msg, statusCode)
+    }
+}
+
+
 function makeHttpError({ status = 500, message }) {
 
     return {
@@ -7,15 +27,5 @@ function makeHttpError({ status = 500, message }) {
     }
 }
 
-/**
- * Allows for an object to be passed as a message
- */
-class MultipleError extends Error {
 
-    constructor(message = {}) {
-        super()
-        super.message = message
-    }
-}
-
-module.exports = { makeHttpError, MultipleError }
+module.exports = { makeHttpError, ValidationError }

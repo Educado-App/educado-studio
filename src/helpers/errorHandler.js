@@ -5,7 +5,15 @@
 
 const errorHandler = (err, req, res, next) => {
 
-    const errorStatusCode = err.status || err.statusCode || 500
+    /**
+     * Non-operational errors like programmer errors gets
+     * handled by express default error handler
+     */
+    if (!err.isOperational) {
+        return next(err)
+    }
+
+    //@TODO Add Logging
 
     /**
      * If response headers have already been sent,
@@ -14,6 +22,8 @@ const errorHandler = (err, req, res, next) => {
     if (res.headersSent) {
         return next(err)
     }
+    
+    const errorStatusCode = err.status || err.statusCode || 500
 
     //Send a formatted json response
     res.status(errorStatusCode)
