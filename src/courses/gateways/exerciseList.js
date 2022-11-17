@@ -55,9 +55,8 @@ module.exports = function makeExerciseList({ dbModel, Params, ParamsSchema }) {
 
     async function findById(id) {
         const result = await dbModel.findById(id)
-        const { _id: foundId, ...exerciseInfo } = result._doc
-
-        return { id: foundId, ...exerciseInfo }
+        
+        return result
     }
 
     async function add({ id: _id, ...exercise }) {

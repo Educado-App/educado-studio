@@ -67,13 +67,14 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
                 path: 'sections author',
                 select: '-user',
                 populate: {
-                    path: 'exercises'
-                }
+                    path: 'exercises',
+                    options: { getters: true }
+                },
+                options: { getters: true }
             })
 
-        const { _id: foundId, ...courseInfo } = result._doc
+        return result
 
-        return { id: foundId, ...courseInfo }
     }
 
     async function findAllByAuthor({

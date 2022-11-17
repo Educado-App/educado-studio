@@ -34,7 +34,7 @@ function makeExpressCallback(requestHandler) {
             status: response.status,
             success: response.success,
             ...extras,
-            ...response,
+            data: response.data,
         })
     }
 }
