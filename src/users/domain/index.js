@@ -1,5 +1,5 @@
-const Id = require('../../helpers/Id')
-const Email = require('../../helpers/Email')
+const Id = require('../../helpers/id')
+const Email = require('../../helpers/email')
 const Password = require('../../helpers/password')
 
 const buildMakeUser = require('./user')

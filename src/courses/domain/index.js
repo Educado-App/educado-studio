@@ -1,4 +1,4 @@
-const Id = require('../../helpers/Id')
+const Id = require('../../helpers/id')
 
 const buildMakeCourse = require('./course')
 const buildMakeSection = require('./section')

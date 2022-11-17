@@ -1,5 +1,5 @@
 const { MultipleError } = require('../error')
-const Id = require('../Id')
+const Id = require('../id')
 const Ajv = require('ajv')
 const ajv = new Ajv({ coerceTypes: true, allErrors: true })
 const AjvErrors = require('ajv-errors')
