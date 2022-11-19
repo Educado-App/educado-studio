@@ -67,13 +67,11 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
                 path: 'sections author',
                 select: '-user',
                 populate: {
-                    path: 'exercises'
-                }
+                    path: 'exercises',
+                },
             })
 
-        const { _id: foundId, ...courseInfo } = result._doc
-
-        return { id: foundId, ...courseInfo }
+        return result?.toObject()
     }
 
     async function findAllByAuthor({
@@ -81,9 +79,11 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
         id: authorId
     }) {
 
-        const results = await dbModel
+        const results = dbModel
             .find({
-                $and: [authorId ? { 'author': authorId } : {}]
+                $and: [
+                    authorId ? { 'author': authorId } : {}
+                ]
             })
             .populate({
                 path: 'author category',
@@ -94,18 +94,17 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
         return results
     }
 
-    async function add(course) {
+    async function add({ id: _id, ...course }) {
 
         const result = await dbModel.create({
+            _id,
             ...course,
-            _id: course.id,
             category: "635f9ae2991d8c6da796a1cc",   //@TODO: Implement Category
             author: course.author.id,
             sections: course.sections.map(section => section.id)
         })
 
-        const { _id: id, ...courseInfo } = result._doc
-        return { id, ...courseInfo }
+        return result?.toObject()
     }
 
     async function remove(course) {
@@ -117,7 +116,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
     async function update({ id: _id, ...changes }) {
 
         const result = await dbModel.findOneAndUpdate({ _id }, {
-            $set: { ...changes }
+            $set: changes
         }, { new: true })
 
         return result

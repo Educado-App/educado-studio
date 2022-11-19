@@ -15,9 +15,7 @@ module.exports = function makeSectionList({ dbModel, Id }) {
         const result = await dbModel.findById(id)
             .populate('exercises')
 
-        const { _id: foundId, ...sectionInfo } = result._doc
-
-        return { id: foundId, ...sectionInfo }
+        return result?.toObject()
     }
 
     async function findAllByCourseId(id) {
@@ -29,16 +27,15 @@ module.exports = function makeSectionList({ dbModel, Id }) {
             .sort('sectionNumber')
     }
 
-    async function add(section) {
+    async function add({ id: _id, ...section }) {
 
         const result = await dbModel.create({
+            _id,
             ...section,
-            _id: section.id,
             exercises: section.exercises.map(exercise => exercise.id)
         })
 
-        const { _id: id, ...sectionInfo } = result._doc
-        return { id, ...sectionInfo }
+        return result?.toObject()
     }
 
     async function remove({ id: _id, ...section }) {
