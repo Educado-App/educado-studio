@@ -71,9 +71,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
                 }
             })
 
-        const { _id: foundId, ...courseInfo } = result._doc
-
-        return { id: foundId, ...courseInfo }
+        return result.toObject()
     }
 
     async function findAllByAuthor({
