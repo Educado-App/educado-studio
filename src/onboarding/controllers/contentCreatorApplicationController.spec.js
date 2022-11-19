@@ -1,4 +1,3 @@
-const connectDb = require('../../../__tests__/fixtures/db')
 const makeFakeContentCreatorApplication = require('../../../__tests__/fixtures/fakeContentCreatorApplication')
 
 const { contentCreatorApplicationController: handle } = require('.')
@@ -7,7 +6,6 @@ const { userList } = require('../../users/gateways')
 
 describe('Content Creator Application Controller', () => {
 
-    beforeAll(() => connectDb())
     afterEach(async () => {
         await contentCreatorApplicationList.remove({})
         await userList.remove({})

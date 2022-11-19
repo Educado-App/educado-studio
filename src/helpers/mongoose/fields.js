@@ -1,5 +1,5 @@
-const aws = require('./AWS')
-const config = require('../../env/config/keys')
+const aws = require('../AWS')
+const config = require('../../../env/config/keys')
 
 /* 
    A getter field for mongoose models, to transform non-signed urls
@@ -13,13 +13,12 @@ function StorageLink(url) {
     const params = {
         Bucket: config.s3Bucket,
         Key: url,
-        Expires: EXPIRE_AFTER_SECONDS 
+        Expires: EXPIRE_AFTER_SECONDS
     };
 
     if (params.Key) {
-        const signedUrl = s3.getSignedUrl("getObject", params)
-
-        return signedUrl
+        
+        return s3.getSignedUrl("getObject", params)
     }
 
     return ""

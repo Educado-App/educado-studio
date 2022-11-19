@@ -1,4 +1,4 @@
-module.exports = function makeProfileList(db_model) {
+module.exports = function makeProfileList(dbModel) {
 
     return Object.freeze({
         add,
@@ -9,25 +9,29 @@ module.exports = function makeProfileList(db_model) {
 
     async function add(profile) {
 
-        return await db_model.create({
+        const result = await dbModel.create({
             ...profile,
             _id: profile.id,
             user: profile.user.id
         })
+
+        return result?.toObject()
     }
 
     async function remove(profile = {}) {
-        const results = await db_model.deleteMany({ _id: profile.id })
+        const results = await dbModel.deleteMany({ _id: profile.id })
 
         return results.deletedCount
     }
 
     async function findById(id) {
-        return await db_model.findById(id)
+        const result = await dbModel.findById(id)
+        return result?.toObject()
     }
 
     async function findByUserId(user_id) {
-        return await db_model.findOne({ user: user_id })
+        const result = await dbModel.findOne({ user: user_id })
+        return result?.toObject()
     }
 
 }

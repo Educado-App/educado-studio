@@ -1,4 +1,4 @@
-module.exports = function makeUserList(db_model) {
+module.exports = function makeUserList(dbModel) {
 
     return Object.freeze({
         add,
@@ -9,33 +9,34 @@ module.exports = function makeUserList(db_model) {
         findByGoogleId
     })
 
-    async function add({id: _id, ...user}) {
-        return await db_model.create({
-            _id,
-            ...user
-        })
+    async function add({ id: _id, ...user }) {
+        const result = await dbModel.create({ _id, ...user })
+        return result?.toObject()
     }
 
-    async function remove(user = {}) {
-        const results = await db_model.deleteMany(user)
+    async function remove({ id: _id, ...user }) {
+        const results = await dbModel.deleteMany({ _id, ...user })
 
         return results.deletedCount
     }
 
     async function update({ _id, ...changes }) {
-        const result = await db_model.findOneAndUpdate({ _id }, { ...changes }, { new: true })
-        return result
+        const result = await dbModel.findOneAndUpdate({ _id }, { ...changes }, { new: true })
+        return result?.toObject()
     }
 
     async function findByEmail(email) {
-        return await db_model.findOne({ email: email })
+        const result = await dbModel.findOne({ email: email })
+        return result?.toObject()
     }
 
     async function findById(id) {
-        return await db_model.findById(id)
+        const result = await dbModel.findById(id)
+        return result?.toObject()
     }
 
     async function findByGoogleId(googleId) {
-        return await db_model.findOne({ googleID: googleId })
+        const result = await dbModel.findOne({ googleID: googleId })
+        return result?.toObject()
     }
 }

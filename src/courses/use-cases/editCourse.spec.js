@@ -1,4 +1,3 @@
-const connectDb = require('../../../__tests__/fixtures/db')
 const makeFakeCourse = require('../../../__tests__/fixtures/courses/fakeCourse')
 const makeFakeUser = require('../../../__tests__/fixtures/fakeUser')
 const { courseList } = require('../gateways')
@@ -6,7 +5,6 @@ const { editCourse } = require('.')
 
 describe('Edit Course', () => {
 
-    beforeAll(() => connectDb())
     afterEach(async () => await courseList.remove({}))
 
     it('successfully changes the title of an existing course', async () => {

@@ -19,24 +19,24 @@ function normalizeOutput(schema) {
         transform(doc, returnValue, options) {
 
             if (removeVersion) {
-                const { __v } = returnValue;
+                const { __v } = returnValue
 
                 if (!__v) {
-                    delete returnValue.__v;
+                    delete returnValue.__v
                 }
             }
 
             if (normalizeId) {
-                const { _id, id } = returnValue;
+                const { _id } = returnValue
 
-                if (_id && !id) {
-                    returnValue.id = _id.toString();
-                    delete returnValue._id;
+                if (_id) {
+                    returnValue.id = _id
+                    delete returnValue._id
                 }
             }
 
             if (transform) {
-                return transform(doc, returnValue, options);
+                return transform(doc, returnValue, options)
             }
         }
     }

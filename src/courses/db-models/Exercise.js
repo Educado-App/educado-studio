@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const { StorageLink } = require('../../helpers/fields')
+const { StorageLink } = require('../../helpers/mongoose/fields')
 
 const exerciseSchema = new Schema({
     parentSection: { type: Schema.Types.ObjectId, ref: "Section" },

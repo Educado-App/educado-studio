@@ -22,9 +22,11 @@ module.exports = function makeSectionList({ dbModel, Id }) {
 
         if (!Id.isValid(id)) throw new Error(`Invalid course id '${id}'`)
 
-        return await dbModel
+        const results = await dbModel
             .find({ parentCourse: id })
             .sort('sectionNumber')
+
+        return results.map((doc) => doc.toObject())
     }
 
     async function add({ id: _id, ...section }) {
@@ -49,7 +51,7 @@ module.exports = function makeSectionList({ dbModel, Id }) {
         const result = await dbModel.findOneAndUpdate({ _id }, {
             $set: { ...changes }
         }, { new: true })
-        
+
         return result
     }
 }

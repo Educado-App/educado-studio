@@ -4,3 +4,5 @@ config/dev.js
 package-lock.json
 dev.js
 __tests__/setup/globalConfigMongo.json
+env/config/.env
+.env

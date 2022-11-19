@@ -55,7 +55,7 @@
     "babel-jest": "^24.4.0",
     "jest": "^29.1.2",
     "mongodb-memory-server": "^8.9.3",
-    "nodemon": "^2.0.6",
+    "nodemon": "^2.0.20",
     "supertest": "^6.3.1",
     "swagger-ui-express": "^4.5.0"
   },
@@ -66,6 +66,7 @@
       "<rootDir>/__tests__/helpers",
       "<rootDir>/__tests__/setup"
     ],
+    "setupFiles": ["<rootDir>/__tests__/setup/connect-db.js"],
     "globalSetup": "<rootDir>/__tests__/setup/jest-setup.js",
     "globalTeardown": "<rootDir>/__tests__/setup/jest-teardown.js",
     "testEnvironment": "<rootDir>/__tests__/setup/jest-mongo.js",

@@ -15,7 +15,7 @@ module.exports = function setupDb() {
   // Load any global mongoose plugins
   for (let plugin of mongoosePlugins) {
     mongoose.plugin(plugin)
-}
+  }
 
 }
 

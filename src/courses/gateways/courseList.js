@@ -45,7 +45,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             ]
         }
 
-        return await dbModel
+        const results = await dbModel
             .find(query)
             .sort(sortBy)
             .populate({
@@ -55,6 +55,8 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             .select('-sections')
             .limit(parseInt(limit))
             .skip(parseInt(offset))
+
+        return results.map((doc) => doc.toObject())
     }
 
     async function findById(id) {
@@ -79,7 +81,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
         id: authorId
     }) {
 
-        const results = dbModel
+        const results = await dbModel
             .find({
                 $and: [
                     authorId ? { 'author': authorId } : {}
@@ -91,7 +93,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             })
             .select('-sections')
 
-        return results
+        return results.map((doc) => doc.toObject())
     }
 
     async function add({ id: _id, ...course }) {
@@ -119,6 +121,6 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             $set: changes
         }, { new: true })
 
-        return result
+        return result?.toObject()
     }
 }

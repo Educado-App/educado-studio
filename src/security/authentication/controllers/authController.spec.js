@@ -1,4 +1,3 @@
-const connectDb = require('../../../../__tests__/fixtures/db')
 const makeFakeUser = require('../../../../__tests__/fixtures/fakeUser')
 
 const { userList } = require('../../../users/gateways')
@@ -7,7 +6,6 @@ const { authAuthController: handle } = require('.')
 
 describe('Authentication Endpoint Handler', () => {
 
-    beforeAll(async () => await connectDb())
     afterEach(async () => await userList.remove({}))
 
     it('handles login of a user', async () => {

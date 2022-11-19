@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const { StorageLink } = require("../../helpers/fields");
+const { StorageLink } = require("../../helpers/mongoose/fields");
 const { Schema } = mongoose;
 
 const CourseSchema = new Schema({
@@ -9,7 +9,6 @@ const CourseSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: "Profile" },
   coverImg: { type: String, get: StorageLink },
   published: { type: Boolean },
-  //category: { type: Number },
   category: { type: Schema.Types.ObjectId, ref: "Category" },
   sections: [{ type: Schema.Types.ObjectId, ref: "Section" }],
   createdAt: { type: Date },

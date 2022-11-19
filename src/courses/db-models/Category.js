@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const { StorageLink } = require("../../helpers/fields");
+const { StorageLink } = require("../../helpers/mongoose/fields");
 const { Schema } = mongoose;
 
 const categorySchema = new Schema({
