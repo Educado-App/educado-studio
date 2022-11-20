@@ -7,14 +7,13 @@
 
 const { makeUser } = require('../domain')
  
-module.exports = function makeDeleteAppUser( appUserList ){
+module.exports = function makeDeleteAppUser({ appUserList }){
     return async function deleteAppUser(appUserInfo) {
+            //const appUserInfo = await appUserList.findById(appUserId)
 
-            const appUser = await makeUser({ id: appUserInfo._id })
+            //const appUser = await makeUser({ ...appUserInfo })
 
-            return await appUserList.remove({
-                id: appUser._id
-            })
+            return await appUserList.remove(appUserInfo.id)
 
     }
     

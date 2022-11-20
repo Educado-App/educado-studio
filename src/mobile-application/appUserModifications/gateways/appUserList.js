@@ -14,15 +14,7 @@ module.exports = function makeAppUserList({ dbModel }) {
         })
     }
 
-        // const result = await dbModel.create({
-        //     ...appUserModel
-        // })
-
-        // const { ...appUserModelInfo } = result._doc
-        // return { ...appUserModelInfo }
-
     async function findByPhone (phone) {
-        //const db = await dbModel()
         return await dbModel
             .findOne({phone: phone})
     }
@@ -32,6 +24,6 @@ module.exports = function makeAppUserList({ dbModel }) {
     }
 
     async function remove(id) {
-        return await dbModel.findByIdAndDelete({id})
+        return await dbModel.findOneAndDelete({ _id: id })
     }
 }
