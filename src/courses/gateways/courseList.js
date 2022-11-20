@@ -68,7 +68,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
         const result = await dbModel
             .findById(id)
             .populate({
-                path: 'sections author',
+                path: 'sections author category',
                 select: '-user',
                 populate: {
                     path: 'exercises',
