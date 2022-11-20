@@ -2,19 +2,19 @@
 //import { appUserDb } from '../data-access'
 const phone = require('../../../helpers/phone')
 const password = require('../../../helpers/password')
-
-const {userList} = require('../../../users')
+const JWT = require('../../../security/authentication/utils/jwt')
 const { appUserList } = require('../gateways')
 
 const makeRegisterAppUser = require('./registerAppUser')
-const makeLoginAppUser = require("./loginAppUser")
+//const buildMakeLoginAppUser = require('./loginAppUser')
+const makeDeleteAppUser = require('./deleteAppUser')
 
-const registerAppUser = makeRegisterAppUser( {userList, appUserList, phone, password} )
-const loginAppUser = makeLoginAppUser({password})
+const registerAppUser = makeRegisterAppUser( {appUserList, phone, password} )
+//const loginAppUser = buildMakeLoginAppUser({ JWT, password })
+const deleteAppUser = makeDeleteAppUser( {appUserList} )
+//const authService = loginAppUser(appUserList)
 
-const appUserService = Object.freeze({
-    registerAppUser
-})
+
 
 //export default appUserService
-module.exports = { registerAppUser, loginAppUser }
+module.exports = { registerAppUser, deleteAppUser }

@@ -1,13 +1,15 @@
 const router = require("express").Router();
 
 const { makeExpressCallback } = require('../../../helpers/express')
-const { appUserController } = require('../controllers')
+const { appUserController, makeDeleteAppUser } = require('../controllers')
 //const { appAuthController } = require('../../../security/authentication/controllers')
+//const { appAuthService } = require('../../../security/authentication/services')
 
 
 router.post("/register", makeExpressCallback(appUserController))
-router.post("/login", makeExpressCallback(appUserController))
-//router.post('/auth/jwt', makeExpressCallback(appAuthController))
+router.delete("delete/:id", makeExpressCallback(makeDeleteAppUser))
+//router.post("/login", makeExpressCallback(appUserController))
+//router.post('/auth/jwt', appAuthController(appAuthService))
 
 module.exports = router;
 

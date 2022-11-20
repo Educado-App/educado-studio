@@ -1,36 +1,63 @@
 /**
   * Use-case for logging in an app user
   * 
-  * Last Modified: 16-11-2022
+  * Last Modified: 18-11-2022
   * By: Anton + Charlotte
   **/
 
-module.exports = function makeLoginAppUser(dbModel) {
-    return async function (phone) {
-        dbModel.findOne({ phone: phone})
-        if (dbModel === null) {
-            return res.status(400).send({
-                message : "User not found."
-            });
-        }
-        else {
-            if (dbModel.isValid(dbModel.password, dbModel.hash, dbModel.salt)) {
-                return res.status(201).send({
-                    message : "User Logged In",
-                })
+module.exports = function buildMakeLoginAppUser({ Password, JWT }) {
+    return function makeAuthenticateUser(appUserList) {
+        return Object.freeze = ({
+            authenticateApp,
+        })
+
+        async function authenticateApp(appUser) {
+
+            const foundUserPhone = await appUserList.findByPhone(appUser.phone)
+
+            if (!foundUserPhone) { throw new Error("Authentication: Invalid phone number") }
+
+            const isAuthenticated = Password.isValid({
+                password: appUser.password,
+                salt: appUser.salt,
+                hash: appUser.hash
+            })
+
+            if (!isAuthenticated) { throw new Error("Authentication: Access denied") }
+
+            return {
+                'accessToken': JWT.signAccessToken({ appUser: appUser.id }),
+                'refreshToken': JWT.signRefreshToken({ appUser: appUser.id }),
             }
-            else {
-                return res.status(400).send({
-                    message : "Wrong Password"
-                });
-            }
         }
-        // .then((appUser) => {
-        //     appUser.isValid(appUser.password, appUser.hash, appUser.salt)
-        // })
-        // .catch(e)
     }
 }
+
+
+    // return async function (phone) {
+    //     dbModel.findOne({ phone: phone})
+    //     if (dbModel === null) {
+    //         return res.status(400).send({
+    //             message : "User not found."
+    //         });
+    //     }
+    //     else {
+    //         if (dbModel.isValid(dbModel.password, dbModel.hash, dbModel.salt)) {
+    //             return res.status(201).send({
+    //                 message : "User Logged In",
+    //             })
+    //         }
+    //         else {
+    //             return res.status(400).send({
+    //                 message : "Wrong Password Dumbass"
+    //             });
+    //         }
+    //     }
+    //     // .then((appUser) => {
+    //     //     appUser.isValid(appUser.password, appUser.hash, appUser.salt)
+    //     // })
+    //     // .catch(e)
+    // }
 
 
 // // check if phone exists
