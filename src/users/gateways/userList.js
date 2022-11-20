@@ -15,7 +15,7 @@ module.exports = function makeUserList(dbModel) {
     }
 
     async function remove({ id: _id, ...user }) {
-        const results = await dbModel.deleteMany({ _id, ...user })
+        const results = await dbModel.deleteMany(_id ? { _id } : user )
 
         return results.deletedCount
     }

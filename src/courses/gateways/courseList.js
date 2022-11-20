@@ -1,3 +1,5 @@
+const { ValidationError } = require("../../helpers/error")
+
 const findAllSchema = {
     type: 'object',
     properties: {
@@ -61,7 +63,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
 
     async function findById(id) {
 
-        if (!Id.isValid(id)) throw new Error(`Invalid course id '${id}'`)
+        if (!Id.isValid(id)) throw new ValidationError(`Invalid course id '${id}'`)
 
         const result = await dbModel
             .findById(id)
@@ -109,8 +111,8 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
         return result?.toObject()
     }
 
-    async function remove(course) {
-        const result = await dbModel.deleteMany({ _id: course.id })
+    async function remove({ id: _id, ...course }) {
+        const result = await dbModel.deleteMany(_id ? { _id } : course)
 
         return result.deletedCount
     }

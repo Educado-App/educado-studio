@@ -1,4 +1,4 @@
-const { makeHttpError } = require('../../helpers/error')
+const { HttpMethodNotAllowedError } = require('../../helpers/error')
 
 const { addCourse, editCourse } = require('../use-cases')
 
@@ -17,12 +17,8 @@ module.exports = function makeCourseController({ courseList }) {
                 return await putCourse(httpRequest)
 
             default:
-                return makeHttpError({
-                    status: 405,
-                    message: `Method '${httpRequest.method}' is not allowed`
-                })
+                throw new HttpMethodNotAllowedError(httpRequest.method)
         }
-
     }
 
     async function getCourse(httpRequest) {
@@ -30,19 +26,14 @@ module.exports = function makeCourseController({ courseList }) {
         const id = httpRequest.params.id
         const author = httpRequest.context.profile
 
-        try {
-            const results = id ?
-                await courseList.findById(id) :
-                await courseList.findAllByAuthor({ id: author.id })
+        const results = id ?
+            await courseList.findById(id) :
+            await courseList.findAllByAuthor({ id: author.id })
 
-            return {
-                success: true,
-                status: 200,
-                data: results
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 200,
+            data: results
         }
 
     }
@@ -50,14 +41,11 @@ module.exports = function makeCourseController({ courseList }) {
     async function postCourse(httpRequest) {
 
         const courseInfo = httpRequest.body
+
+        /* Author of the course gets set the profile sending the request */
         const author = httpRequest.context.profile
 
-        const posted = await addCourse({
-            author,
-            title: courseInfo.title,
-            description: courseInfo.description,
-            coverImg: courseInfo.coverImg
-        })
+        const posted = await addCourse({ ...courseInfo, author })
 
         return {
             success: true,
@@ -72,20 +60,16 @@ module.exports = function makeCourseController({ courseList }) {
         const courseChanges = httpRequest.body
         const courseId = httpRequest.params.id
 
-        try {
-            const updated = await editCourse({
-                id: courseId,
-                ...courseChanges
-            })
+        const updated = await editCourse({
+            id: courseId,
+            ...courseChanges
+        })
 
-            return {
-                success: true,
-                status: 202,
-                data: updated
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 202,
+            data: updated
         }
+
     }
 }

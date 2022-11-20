@@ -5,7 +5,7 @@ module.exports = function makeApproveCCApplication({ userList, contentCreatorApp
 
     return async function approveApplication(applicationInfo) {
 
-        const application = makeContentCreatorApplication({ id: applicationInfo._id, ...applicationInfo })
+        const application = makeContentCreatorApplication(applicationInfo)
         application.approve()
 
         const updatedApplication = await contentCreatorApplicationList.update({

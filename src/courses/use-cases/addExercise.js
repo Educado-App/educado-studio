@@ -17,7 +17,6 @@ module.exports = function makeAddExercise({ exerciseList, sectionList }) {
             modifiedAt: new Date()
         })
 
-
         return await exerciseList.add({
             id: exercise.id,
             parentSection: section.id,

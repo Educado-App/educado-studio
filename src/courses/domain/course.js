@@ -1,4 +1,6 @@
-module.exports = function buildMakeCourse({ Id, makeSection, ValidationError }) {
+const { ValidationError } = require("../../helpers/error")
+
+module.exports = function buildMakeCourse({ Id, makeSection }) {
 
     return function makeCourse({
         id = Id.makeId(),

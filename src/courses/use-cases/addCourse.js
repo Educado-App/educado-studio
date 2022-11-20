@@ -4,7 +4,12 @@ module.exports = function makeAddCourse({ courseList }) {
 
     return async function addCourse(courseInfo) {
 
-        const course = makeCourse(courseInfo)
+        const course = makeCourse({
+            author: courseInfo.author,
+            title: courseInfo.title,
+            description: courseInfo.description,
+            coverImg: courseInfo.coverImg
+        })
 
         return await courseList.add({
             id: course.getId(),

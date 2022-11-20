@@ -31,7 +31,7 @@ app.use(session({
     maxAge: 6000000000
   }
 }))
-app.use(morgan('combined'))
+app.use(morgan('dev'))
 app.use(passport.initialize());
 app.use(passport.session());
 

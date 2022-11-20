@@ -1,3 +1,5 @@
+const { ValidationError } = require("../../helpers/error")
+
 module.exports = function buildMakeContentCreatorApplication({ Id }) {
 
     return function makeContentCreatorApplication({
@@ -11,9 +13,9 @@ module.exports = function buildMakeContentCreatorApplication({ Id }) {
         modifiedAt = new Date()
     }) {
 
-        if (!firstName) throw new Error('A firstname must be provided in the application')
-        if (!lastName) throw new Error('A lastname must be provided in the application')
-        if (!email) throw new Error('An email must be provided in the application')
+        if (!firstName) throw new ValidationError('A firstname must be provided in the application')
+        if (!lastName) throw new ValidationError('A lastname must be provided in the application')
+        if (!email) throw new ValidationError('An email must be provided in the application')
 
         let rejectReason = ''
 

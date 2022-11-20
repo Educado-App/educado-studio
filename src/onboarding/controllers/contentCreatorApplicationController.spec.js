@@ -75,6 +75,8 @@ describe('Content Creator Application Controller', () => {
         expect(response.success).toBe(true)
         expect(response.data.approved).toBe(true)
 
+        await userList.remove(found)
+
     })
 
     it('rejects a single content creator application', async () => {

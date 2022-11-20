@@ -1,22 +1,44 @@
+class OperationalError extends Error {
 
-class BaseError extends Error {
-    
     constructor(msg, statusCode = 500) {
         super()
-        
-        super.message = msg
+
+        this.name = 'OperationalError'
         this.statusCode = statusCode
-        this.isOperational = true
+
+        // Lets users of this class define messages that are objects
+        this.message = msg
     }
 }
 
-class ValidationError extends BaseError {
+class ValidationError extends OperationalError {
 
     constructor(msg, statusCode = 400) {
         super(msg, statusCode)
+
+        this.name = 'ValidationError'
     }
 }
 
+
+class AuthenticationError extends OperationalError {
+
+    constructor(msg, statusCode = 401) {
+        super(msg, statusCode)
+
+        this.name = 'AuthenticationError'
+    }
+}
+
+
+class HttpMethodNotAllowedError extends OperationalError {
+
+    constructor(httpMethod, statusCode = 405) {
+        super(`method ${httpMethod} not allowed`, statusCode)
+
+        this.name = 'HttpMethodNotAllowedError'
+    }
+}
 
 function makeHttpError({ status = 500, message }) {
 
@@ -27,5 +49,10 @@ function makeHttpError({ status = 500, message }) {
     }
 }
 
-
-module.exports = { makeHttpError, ValidationError }
+module.exports = { 
+    makeHttpError, 
+    OperationalError, 
+    ValidationError, 
+    AuthenticationError,
+    HttpMethodNotAllowedError
+}

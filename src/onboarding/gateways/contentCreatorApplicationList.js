@@ -70,8 +70,8 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
         return { id, ...contentCreatorApplicationInfo }
     }
 
-    async function remove(contentCreatorApplication) {
-        const result = await dbModel.deleteMany(contentCreatorApplication)
+    async function remove({ id: _id, ...contentCreatorApplication }) {
+        const result = await dbModel.deleteMany(_id ? { _id } : contentCreatorApplication)
 
         return result.deletedCount
     }

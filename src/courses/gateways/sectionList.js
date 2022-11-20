@@ -1,3 +1,5 @@
+const { ValidationError } = require("../../helpers/error")
+
 module.exports = function makeSectionList({ dbModel, Id }) {
 
     return Object.freeze({
@@ -10,7 +12,7 @@ module.exports = function makeSectionList({ dbModel, Id }) {
 
     async function findById(id) {
 
-        if (!Id.isValid(id)) throw new Error(`Invalid section id '${id}'`)
+        if (!Id.isValid(id)) throw new ValidationError(`Invalid section id '${id}'`)
 
         const result = await dbModel.findById(id)
             .populate('exercises')
@@ -20,7 +22,7 @@ module.exports = function makeSectionList({ dbModel, Id }) {
 
     async function findAllByCourseId(id) {
 
-        if (!Id.isValid(id)) throw new Error(`Invalid course id '${id}'`)
+        if (!Id.isValid(id)) throw new ValidationError(`Invalid course id '${id}'`)
 
         const results = await dbModel
             .find({ parentCourse: id })
@@ -41,7 +43,7 @@ module.exports = function makeSectionList({ dbModel, Id }) {
     }
 
     async function remove({ id: _id, ...section }) {
-        const result = await dbModel.deleteMany({ _id, ...section })
+        const result = await dbModel.deleteMany(_id ? { _id } : section)
 
         return result.deletedCount
     }

@@ -1,3 +1,5 @@
+const { ValidationError } = require("../../helpers/error")
+
 module.exports = function buildMakeProfile({ Id }) {
 
     return function makeProfile({
@@ -8,10 +10,10 @@ module.exports = function buildMakeProfile({ Id }) {
         modifiedAt = new Date()
     } = {}) {
 
-        if (!firstName) throw new Error("Profile must contain a first name")
-        if (!lastName) throw new Error("Profile must contain a last name")
-        if (!user) throw new Error("Profile must be associated to a user")
-        if (!Id.isValid(user.id)) throw new Error("Profile must have a valid user id")
+        if (!firstName) throw new ValidationError("Profile must contain a first name")
+        if (!lastName) throw new ValidationError("Profile must contain a last name")
+        if (!user) throw new ValidationError("Profile must be associated to a user")
+        if (!Id.isValid(user.id)) throw new ValidationError("Profile must have a valid user id")
 
         return Object.freeze({
             id,

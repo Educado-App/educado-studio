@@ -31,7 +31,7 @@ module.exports = function makeExerciseList({ dbModel }) {
     }
 
     async function remove({ id: _id, ...exercise }) {
-        const result = await dbModel.deleteMany({ _id, ...exercise })
+        const result = await dbModel.deleteMany(_id ? { _id } : exercise)
 
         return result.deletedCount
     }

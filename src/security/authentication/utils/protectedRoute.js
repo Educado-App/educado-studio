@@ -1,4 +1,4 @@
-const { makeHttpError, ValidationError } = require('../../../helpers/error')
+const { ValidationError } = require('../../../helpers/error')
 
 module.exports = function makeProtectedRoute({ passport, profileList }) {
 

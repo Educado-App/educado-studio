@@ -34,9 +34,9 @@ describe('Authentication Endpoint Handler', () => {
             method: 'GET',
         }
 
-        const response = await handle(request)
+        expect(handle(request))
+            .rejects
+            .toThrow('method GET not allowed')
 
-        expect(response.success).toBe(false)
-        expect(response).toHaveProperty('errors')
     })
 })

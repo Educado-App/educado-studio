@@ -10,11 +10,6 @@ const {
     reorderSectionsController,
     exerciseController,
 } = require('../controllers')
-const { ValidationError } = require('../../helpers/error')
-const { exerciseList } = require('../gateways')
-const Id = require('../../helpers/id')
-
-
 
 /* Courses */
 router.get('/public/courses', makeExpressCallback(publicCourseController))
@@ -25,19 +20,6 @@ router.delete('/courses/:id', restricted, makeExpressCallback(courseController))
 router.post('/courses', restricted, makeExpressCallback(courseController))
 router.get('/courses/:id', restricted, makeExpressCallback(courseController))
 router.put('/courses/:id', restricted, makeExpressCallback(courseController))
-router.get('/errorTest1', makeExpressCallback((httpRequest) => {
-    throw new Error("Should result in programming error")
-}))
-router.get('/errorTest2', makeExpressCallback((httpRequest) => {
-    throw new ValidationError("Should result in operational error")
-}))
-router.get('/errorTest3', makeExpressCallback((httpRequest) => {
-    // Should also end up restarting application
-    someVariableThatIsDefinetlyNotDefined
-}))
-router.get('/errorTest4', makeExpressCallback(async (httpRequest) => {
-    return await exerciseList.findById(Id.makeId())
-}))
 
 /* Sections */
 router.get('/sections/:sid', restricted, makeExpressCallback(sectionController))

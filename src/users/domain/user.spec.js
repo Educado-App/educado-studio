@@ -31,15 +31,4 @@ describe("User", () => {
 
   })
 
-  it("test", async () => {
-    const fakeUser = makeFakeUser({email: "demo@gmail.com", password: "Demo1234"})
-
-    const madeUser = makeUser(fakeUser)
-    console.log(madeUser);
-
-    expect(madeUser).toHaveProperty('salt')
-    expect(madeUser).toHaveProperty('hash')
-
-  })
-
 })

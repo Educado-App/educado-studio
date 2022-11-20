@@ -12,7 +12,7 @@ module.exports = function connectDb() {
     if (!globalConfig) return
 
     mongoose.connect(globalConfig.mongoUri, {
-        useUnifiedTopology: true,
+        useUnifiedTopology: false,
         useNewUrlParser: true,
         useFindAndModify: false
     })

@@ -4,7 +4,7 @@ module.exports = function makeRejectCCApplication({ contentCreatorApplicationLis
 
     return async function rejectCCApplication({ applicationInfo, reason }) {
 
-        const application = makeContentCreatorApplication({ id: applicationInfo._id, ...applicationInfo })
+        const application = makeContentCreatorApplication(applicationInfo)
 
         if (reason) {
             application.reject({ reason })
