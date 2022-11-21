@@ -5,10 +5,10 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
     return function makeExercise({
         id = Id.makeId(),
         exerciseNumber,
-        title,
-        description,
-        content = {},
-        onWrongFeedback = {},
+        title = "",
+        description = "",
+        content = "",
+        onWrongFeedback = "",
         answers = [],
         modifiedAt = new Date()
     }) {
