@@ -6,8 +6,12 @@ module.exports = function makeAddExercise({ exerciseList, sectionList }) {
 
         const sectionDoc = await sectionList.findById(sectionId)
 
-        const section = makeSection({ id: sectionDoc.id, ...sectionDoc })
-        const exercise = makeExercise(exerciseInfo)
+        const section = makeSection(sectionDoc)
+        const exercise = makeExercise({
+            content: exerciseInfo.content,
+            onWrongFeedback: exerciseInfo.onWrongFeedback,
+            answers: exerciseInfo.answers
+        })
 
         section.addExercise(exercise)
 
