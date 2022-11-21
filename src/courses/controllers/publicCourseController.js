@@ -1,4 +1,4 @@
-const { makeHttpError } = require('../../helpers/error')
+const { HttpMethodNotAllowedError } = require('../../helpers/error')
 
 module.exports = function makePublicCourseController({ courseList }) {
 
@@ -9,10 +9,7 @@ module.exports = function makePublicCourseController({ courseList }) {
                 return await getCourse(httpRequest)
 
             default:
-                return makeHttpError({
-                    status: 405,
-                    message: `Method '${httpRequest.method}' is not allowed`
-                })
+                throw new HttpMethodNotAllowedError(httpRequest.method)
         }
 
     }
@@ -21,19 +18,14 @@ module.exports = function makePublicCourseController({ courseList }) {
 
         const id = httpRequest.params.id
 
-        try {
-            const results = id ?
-                await courseList.findById(id) :
-                await courseList.findAll({ ...httpRequest.queryParams, published: true })
+        const results = id ?
+            await courseList.findById(id) :
+            await courseList.findAll({ ...httpRequest.queryParams, published: true })
 
-            return {
-                success: true,
-                status: 200,
-                data: results
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 200,
+            data: results
         }
 
     }

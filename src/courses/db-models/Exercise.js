@@ -1,16 +1,19 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const { Link } = require('../../helpers/fields')
+const { StorageLink } = require('../../helpers/mongoose/fields')
 
 const exerciseSchema = new Schema({
+    title: { type: String },
+    description: { type: String },
     parentSection: { type: Schema.Types.ObjectId, ref: "Section" },
     exerciseNumber: { type: Number },
-    content: { type: String, get: Link },
-    onWrongFeedback: { type: String, get: Link },
+    content: { type: String, get: StorageLink },
+    onWrongFeedback: { type: String, get: StorageLink },
     answers: [{
         text: { type: String },
         correct: { type: Boolean },
         modifiedAt: { type: Date },
+        _id: false
     }],
     modifiedAt: { type: Date },
 }, {

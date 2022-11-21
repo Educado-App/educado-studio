@@ -1,4 +1,4 @@
-const { makeHttpError } = require('../../helpers/error')
+const { HttpMethodNotAllowedError } = require('../../helpers/error')
 
 const { addExercise, editExercise, removeExercise } = require('../use-cases')
 
@@ -21,10 +21,7 @@ module.exports = function makeExerciseController({ exerciseList }) {
                 return await deleteExercise(httpRequest)
 
             default:
-                return makeHttpError({
-                    status: 405,
-                    message: `Method '${httpRequest.method}' is not allowed`
-                })
+                throw new HttpMethodNotAllowedError(httpRequest.method)
         }
 
     }
@@ -34,19 +31,14 @@ module.exports = function makeExerciseController({ exerciseList }) {
         const exerciseId = httpRequest.params.eid
         const sectionId = httpRequest.params.sid
 
-        try {
-            const results = exerciseId ?
-                await exerciseList.findById(exerciseId) :
-                await exerciseList.findAllBySectionId(sectionId)
+        const results = exerciseId ?
+            await exerciseList.findById(exerciseId) :
+            await exerciseList.findAllBySectionId(sectionId)
 
-            return {
-                success: true,
-                status: 200,
-                data: results
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 200,
+            data: results
         }
     }
 
@@ -54,17 +46,12 @@ module.exports = function makeExerciseController({ exerciseList }) {
         const exerciseInfo = httpRequest.body
         const sectionId = httpRequest.params.sid
 
-        try {
-            const posted = await addExercise({ exerciseInfo, sectionId })
+        const posted = await addExercise({ exerciseInfo, sectionId })
 
-            return {
-                success: true,
-                status: 201,
-                data: posted
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 201,
+            data: posted
         }
     }
 
@@ -73,20 +60,15 @@ module.exports = function makeExerciseController({ exerciseList }) {
         const exerciseChanges = httpRequest.body
         const exerciseId = httpRequest.params.eid
 
-        try {
-            const updated = await editExercise({ 
-                id: exerciseId, 
-                changes: exerciseChanges 
-            })
+        const updated = await editExercise({
+            id: exerciseId,
+            changes: exerciseChanges
+        })
 
-            return {
-                success: true,
-                status: 202,
-                data: updated
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 202,
+            data: updated
         }
     }
 
@@ -95,20 +77,15 @@ module.exports = function makeExerciseController({ exerciseList }) {
         const exerciseId = httpRequest.params.eid
         const sectionId = httpRequest.params.sid
 
-        try {
-            await removeExercise({
-                fromSection: sectionId,
-                toRemove: exerciseId,
-            })
+        await removeExercise({
+            fromSection: sectionId,
+            toRemove: exerciseId,
+        })
 
-            return {
-                success: true,
-                status: 204,
-                data: {}
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 204,
+            data: {}
         }
     }
 }

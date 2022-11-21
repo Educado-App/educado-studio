@@ -1,5 +1,3 @@
-const connectDb = require('../../../__tests__/fixtures/db')
-
 const makeFakeUser = require("../../../__tests__/fixtures/fakeUser")
 
 const { userList } = require(".")
@@ -7,7 +5,6 @@ const { userList } = require(".")
 
 describe("User List", () => {
 
-    beforeAll(() => connectDb())
     afterEach(async () => await userList.remove({}))
 
     it("successfully adds a user to the db", async () => {

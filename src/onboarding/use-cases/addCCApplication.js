@@ -4,7 +4,12 @@ module.exports = function makeAddCCApplication({ contentCreatorApplicationList, 
 
     return async function addCCApplication(applicationInfo) {
 
-        const application = makeContentCreatorApplication({ id: applicationInfo._id, ...applicationInfo })
+        const application = makeContentCreatorApplication({
+            firstName: applicationInfo.firstName,
+            lastName: applicationInfo.lastName,
+            email: applicationInfo.email,
+            motivation: applicationInfo.motivation
+        })
 
         sendConfirmationEmail(application)
 

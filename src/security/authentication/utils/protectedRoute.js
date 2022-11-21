@@ -1,4 +1,4 @@
-const { makeHttpError, MultipleError } = require('../../../helpers/error')
+const { ValidationError } = require('../../../helpers/error')
 
 module.exports = function makeProtectedRoute({ passport, profileList }) {
 
@@ -7,22 +7,13 @@ module.exports = function makeProtectedRoute({ passport, profileList }) {
 
         passport.authenticate('JWT', { session: false }, (err, user, info) => {
             if (info instanceof Error) {
-                next(makeHttpError({
-                    status: 400,
-                    message: info
-                }))
+                throw new ValidationError(info)
             }
             else if (err) {
-                next(makeHttpError({
-                    status: 500,
-                    message: err
-                }))
+                next(err)
             }
             else if (!user) {
-                next(makeHttpError({
-                    status: 500,
-                    message: "Could not find user from jwt payload"
-                }))
+                throw new Error("Could not find user from jwt payload")
             } else {
                 // Successfull authentication
                 // Adds the authenticated user to global context
@@ -34,7 +25,6 @@ module.exports = function makeProtectedRoute({ passport, profileList }) {
                         next()
                     })
 
-                //next()
             }
 
 

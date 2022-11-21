@@ -1,3 +1,5 @@
+const { ValidationError } = require("../../helpers/error")
+
 module.exports = function buildMakeSection({ Id, makeExercise }) {
 
     return function makeSection({
@@ -10,7 +12,7 @@ module.exports = function buildMakeSection({ Id, makeExercise }) {
         modifiedAt = new Date(),
     }) {
         
-        if (!sectionNumber) throw new Error('Sections must have a section number')
+        if (!sectionNumber) throw new ValidationError('Sections must have a section number')
         
         validExercises = exercises.map(exercises => makeExercise(exercises))
 

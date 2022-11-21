@@ -1,3 +1,5 @@
+const { HttpMethodNotAllowedError } = require('../../../helpers/error')
+
 module.exports = function makeAuthController(authService) {
 
     return async function handle(httpRequest) {
@@ -6,37 +8,20 @@ module.exports = function makeAuthController(authService) {
             case 'POST':
                 return await postUser(httpRequest)
             default:
-                return {
-                    success: false,
-                    status: 405,
-                    errors: [{ 
-                        message: `method ${httpRequest.method} not allowed` 
-                    }]
-                }
+                throw new HttpMethodNotAllowedError(httpRequest.method)
         }
     }
 
     async function postUser(httpRequest) {
         user = httpRequest.body
 
-        try {
-            const response = await authService.authenticate(user)
+        const response = await authService.authenticate(user)
 
-            return {
-                success: true,
-                status: 200,
-                data: response
-            }
-
-        } catch (error) {
-
-            return {
-                success: false,
-                status: 400,
-                errors: [{ 
-                    message: error.message 
-                }]
-            }
+        return {
+            success: true,
+            status: 200,
+            data: response
         }
+
     }
 }

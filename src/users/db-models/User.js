@@ -3,7 +3,10 @@ const Schema = mongoose.Schema
 
 const userSchema = new Schema({
   googleID: String,
-  email: String,
+  email: {
+    type: String,
+    unique: [true, "User with given email already exists"]
+  },
   salt: String,
   hash: String,
   joinedAt: Date,

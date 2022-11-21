@@ -1,5 +1,4 @@
 const AppUser = require("../../models/AppUser");
-const connectDb = require('../../../__tests__/fixtures/db')
 
 const userInformation = {
     phone: "99999999",
@@ -11,7 +10,6 @@ const userInformation = {
 describe('User model test', () => {
 
     
-    beforeAll(async () => await connectDb());   //Connects to an in-memory database for faster testing
     afterEach(async () => await AppUser.remove({}))
 
     it('create & save user successfully', async () => {

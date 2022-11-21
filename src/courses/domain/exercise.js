@@ -1,8 +1,12 @@
+const { ValidationError } = require("../../helpers/error")
+
 module.exports = function buildMakeExercise({ Id, makeAnswer }) {
 
     return function makeExercise({
         id = Id.makeId(),
         exerciseNumber,
+        title,
+        description,
         content = {},
         onWrongFeedback = {},
         answers = [],
@@ -17,6 +21,8 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
             content,
             onWrongFeedback,
             modifiedAt,
+            title,
+            description,
             getAnswers: () => validAnswers,
             addAnswer: (answ) => {
                 const validAnswer = makeAnswer(answ)
@@ -32,18 +38,18 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
         containsCorrectAnswers(answers)
 
         return answers.map(answer => makeAnswer(answer))
-        
+
     }
 
     function containsCorrectAnswers(answers) {
-        
+
         let containsCorrect
         for (let answer of answers) {
             if (answer.correct) containsCorrect = true
         }
-        
+
         if (!containsCorrect) {
-            throw new Error("Atleast one answer should be the correct one")
+            throw new ValidationError("Atleast one answer should be the correct one")
         }
     }
 

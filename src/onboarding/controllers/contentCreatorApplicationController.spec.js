@@ -1,4 +1,3 @@
-const connectDb = require('../../../__tests__/fixtures/db')
 const makeFakeContentCreatorApplication = require('../../../__tests__/fixtures/fakeContentCreatorApplication')
 
 const { contentCreatorApplicationController: handle } = require('.')
@@ -7,7 +6,6 @@ const { userList } = require('../../users/gateways')
 
 describe('Content Creator Application Controller', () => {
 
-    beforeAll(() => connectDb())
     afterEach(async () => {
         await contentCreatorApplicationList.remove({})
         await userList.remove({})
@@ -76,6 +74,8 @@ describe('Content Creator Application Controller', () => {
         expect(response.status).toBe(200)
         expect(response.success).toBe(true)
         expect(response.data.approved).toBe(true)
+
+        await userList.remove(found)
 
     })
 

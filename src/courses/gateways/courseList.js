@@ -1,3 +1,5 @@
+const { ValidationError } = require("../../helpers/error")
+
 const findAllSchema = {
     type: 'object',
     properties: {
@@ -45,7 +47,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             ]
         }
 
-        return await dbModel
+        const results = await dbModel
             .find(query)
             .sort(sortBy)
             .populate({
@@ -55,26 +57,25 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             .select('-sections')
             .limit(parseInt(limit))
             .skip(parseInt(offset))
+
+        return results.map((doc) => doc.toObject())
     }
 
     async function findById(id) {
 
-        if (!Id.isValid(id)) throw new Error(`Invalid course id '${id}'`)
+        if (!Id.isValid(id)) throw new ValidationError(`Invalid course id '${id}'`)
 
         const result = await dbModel
             .findById(id)
             .populate({
-                path: 'sections author',
+                path: 'sections author category',
                 select: '-user',
                 populate: {
                     path: 'exercises',
-                    options: { getters: true }
                 },
-                options: { getters: true }
             })
 
-        return result
-
+        return result?.toObject()
     }
 
     async function findAllByAuthor({
@@ -82,36 +83,36 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
         id: authorId
     }) {
 
-        const results = dbModel.find({
-            $and: [
-                authorId ? { 'author': authorId } : {}
-            ]
-        })
+        const results = await dbModel
+            .find({
+                $and: [
+                    authorId ? { 'author': authorId } : {}
+                ]
+            })
             .populate({
                 path: 'author category',
                 select: '-user'
             })
             .select('-sections')
 
-        return results
+        return results.map((doc) => doc.toObject())
     }
 
-    async function add(course) {
+    async function add({ id: _id, ...course }) {
 
         const result = await dbModel.create({
+            _id,
             ...course,
-            _id: course.id,
             category: "635f9ae2991d8c6da796a1cc",   //@TODO: Implement Category
             author: course.author.id,
             sections: course.sections.map(section => section.id)
         })
 
-        const { _id: id, ...courseInfo } = result._doc
-        return { id, ...courseInfo }
+        return result?.toObject()
     }
 
-    async function remove(course) {
-        const result = await dbModel.deleteMany({ _id: course.id })
+    async function remove({ id: _id, ...course }) {
+        const result = await dbModel.deleteMany(_id ? { _id } : course)
 
         return result.deletedCount
     }
@@ -119,9 +120,9 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
     async function update({ id: _id, ...changes }) {
 
         const result = await dbModel.findOneAndUpdate({ _id }, {
-            $set: { ...changes }
+            $set: changes
         }, { new: true })
 
-        return result
+        return result?.toObject()
     }
 }

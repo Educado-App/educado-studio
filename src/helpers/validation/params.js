@@ -1,4 +1,4 @@
-const { MultipleError } = require('../error')
+const { ValidationError } = require('../error')
 const Id = require('../id')
 const Ajv = require('ajv')
 const ajv = new Ajv({ coerceTypes: true, allErrors: true })
@@ -24,7 +24,7 @@ function validate({ schema, data, throwOnFail = false }) {
     const valid = _validate(data)
     if (!valid) {
         const errors = formatAjvErrors(_validate.errors)
-        if (throwOnFail) throw new MultipleError(errors)
+        if (throwOnFail) throw new ValidationError(errors)
         else data['errors'] = errors
     }
 

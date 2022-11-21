@@ -1,18 +1,15 @@
-const connectDb = require('../../../__tests__/fixtures/db')
-
-const { courseList } = require('.')
-const { profileList } = require('../../users/gateways')
-
 const makeFakeCourse = require('../../../__tests__/fixtures/courses/fakeCourse')
 const makeFakeProfile = require('../../../__tests__/fixtures/fakeProfile')
 
 describe('Content Creator Application List', () => {
 
-    beforeAll(() => connectDb())
     afterEach(async () => {
         await courseList.remove({})
         await profileList.remove({})
     })
+
+    const { courseList } = require('.')
+    const { profileList } = require('../../users/gateways')
 
     it('finds all courses by an author', async () => {
         const fakeAuthor = makeFakeProfile()
@@ -25,8 +22,8 @@ describe('Content Creator Application List', () => {
 
         const [course1, course2] = await courseList.findAllByAuthor({ id: fakeAuthor.id })
 
-        expect(course1.author._id).toEqual(fakeAuthor.id)
-        expect(course2.author._id).toEqual(fakeAuthor.id)
+        expect(course1.author.id).toEqual(fakeAuthor.id)
+        expect(course2.author.id).toEqual(fakeAuthor.id)
     })
 
     it('finds a course by id', async () => {

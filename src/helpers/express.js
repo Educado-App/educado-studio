@@ -4,7 +4,7 @@
  */
 function makeExpressCallback(requestHandler) {
 
-    return async function callback(req, res) {
+    return async function callback(req, res, next) {
 
         const httpRequest = {
             method: req.method,
@@ -20,22 +20,30 @@ function makeExpressCallback(requestHandler) {
             }
         }
 
-        const response = await requestHandler(httpRequest)
+        try {
+            const response = await requestHandler(httpRequest)
 
-        
-        let extras = {}
+            let extras = {}
 
-        if (response.data instanceof Array) {
-            extras['count'] = response.data.length
+            if (response.data instanceof Array) {
+                extras['count'] = response.data.length
+            }
+
+            res.status(response.status)
+            res.send({
+                status: response.status,
+                success: response.success,
+                ...extras,
+                ...response,
+            })
+
+        } catch (error) {
+
+            // Forwards error to central error handler
+            next(error)
+
         }
 
-        res.status(response.status)
-        res.send({
-            status: response.status,
-            success: response.success,
-            ...extras,
-            data: response.data,
-        })
     }
 }
 

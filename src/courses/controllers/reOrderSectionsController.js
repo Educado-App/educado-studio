@@ -1,4 +1,4 @@
-const { makeHttpError } = require('../../helpers/error')
+const { HttpMethodNotAllowedError } = require('../../helpers/error')
 
 const { reorderSections } = require('../use-cases')
 
@@ -11,10 +11,7 @@ module.exports = function makeReorderSectionController({ Params }) {
                 return await putSection(httpRequest)
 
             default:
-                return makeHttpError({
-                    status: 405,
-                    message: `Method '${httpRequest.method}' is not allowed`
-                })
+                throw new HttpMethodNotAllowedError(httpRequest.method)
         }
 
     }
@@ -23,20 +20,16 @@ module.exports = function makeReorderSectionController({ Params }) {
 
         const moveTable = httpRequest.body
 
-        try {
-            validateMoveTable(moveTable)
+        validateMoveTable(moveTable)
 
-            const updated = await reorderSections(moveTable)
+        const updated = await reorderSections(moveTable)
 
-            return {
-                success: true,
-                status: 202,
-                data: updated
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 202,
+            data: updated
         }
+
     }
 
     function validateMoveTable(moveTable) {
