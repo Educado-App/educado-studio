@@ -73,11 +73,11 @@ module.exports = function makeRoleList({ dbModel, Params, ParamsSchema, Id }) {
 
     async function add({ id: _id, ...role }) {
 
-        const result = await dbModel.create({
+        const result = await dbModel.create(
             _id,
             ...role,
-            permissions: role.permissions.map(permission => permission.id)
-        })
+            //permissions: role.permissions.map(permission => permission)
+        )
 
         return result?.toObject()
     }

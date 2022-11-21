@@ -1,26 +1,25 @@
 const { ValidationError } = require("../../../helpers/error")
 
-module.exports = function buildMakeRole({ Id, makePermission }) {
+module.exports = function buildMakeRole() {
 
     return function makeRole({
-        id = Id.makeId(),
+        id,
         name,
-        permissions = [],
+        permissions,
         createdAt = new Date(),
         modifiedAt = new Date()
     }) {
 
-        let validPermissions = permissions.map(permission => makePermission(permission))
-
-        if (!name) throw new ValidationError('Permission must have a name')
+        if (!name) throw new ValidationError('Role must have a name')
+        if (!id) throw new ValidationError('Role must have a specific ID')
 
         return Object.freeze({
             getId: () => id,
             getName: () => name,
             getCreatedAt: () => createdAt,
             getModifiedAt: () => modifiedAt,
-            getPermissions: () => validPermissions,
-            getPermission: (permission) => validPermission.find(perm => perm.id === perm.id)
+            getPermissions: () => permissions,
+            //getPermission: (permission) => permissions.find(perm => perm.id === perm.id)
         })
     }
 }
