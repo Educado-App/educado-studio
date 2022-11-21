@@ -7,6 +7,8 @@ const config = require('../../../env/config/keys')
 */
 function StorageLink(url) {
 
+    if (!url) return ""
+    
     const EXPIRE_AFTER_SECONDS = 86436      // 1-day expiary
 
     const s3 = new aws.S3();
