@@ -1,34 +1,33 @@
 /**
   * Use-case for logging in an app user
   * 
-  * Last Modified: 18-11-2022
+  * Last Modified: 21-11-2022
   * By: Anton + Charlotte
   **/
 
-module.exports = function buildMakeLoginAppUser({ Password, JWT }) {
-    return function makeAuthenticateUser(appUserList) {
-        return Object.freeze = ({
-            authenticateApp,
+module.exports = function makeLoginAppUser({ appUserList, Password, JWT }) {
+    // return function loginAppUser() {
+    //     return Object.freeze = ({
+    //         authenticateApp,
+    //     })
+
+    return async function authenticateAppUser(appUserInfo) {
+
+        const foundUserPhone = await appUserList.findByPhone(appUserInfo.phone)
+
+        if (!foundUserPhone) { throw new Error("Authentication: Invalid phone number") }
+
+        const isAuthenticated = Password.isValid({
+            password: appUserInfo.password,
+            salt: appUserInfo.salt,
+            hash: appUserInfo.hash
         })
 
-        async function authenticateApp(appUser) {
+        if (!isAuthenticated) { throw new Error("Authentication: Access denied") }
 
-            const foundUserPhone = await appUserList.findByPhone(appUser.phone)
-
-            if (!foundUserPhone) { throw new Error("Authentication: Invalid phone number") }
-
-            const isAuthenticated = Password.isValid({
-                password: appUser.password,
-                salt: appUser.salt,
-                hash: appUser.hash
-            })
-
-            if (!isAuthenticated) { throw new Error("Authentication: Access denied") }
-
-            return {
-                'accessToken': JWT.signAccessToken({ appUser: appUser.id }),
-                'refreshToken': JWT.signRefreshToken({ appUser: appUser.id }),
-            }
+        return {
+            'accessToken': JWT.signAccessToken({ appUserInfo: appUserInfo.id }),
+            'refreshToken': JWT.signRefreshToken({ appUserInfo: appUserInfo.id }),
         }
     }
 }

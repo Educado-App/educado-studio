@@ -10,13 +10,6 @@ module.exports = function buildMakeAuthService({ Password, JWT }) {
 
             const foundUserEmail = await userList.findByEmail(user.email)
 
-            if (foundUserEmail == null) {
-
-                const foundUserPhone = await userList.findByPhone(user.phone)
-
-                if (!foundUserPhone) { throw new Error("Authentication: Invalid Phone Number") }
-            }
-
             if (!foundUserEmail) { throw new Error("Authentication: Invalid Email") }
 
             const isAuthenticated = Password.isValid({
