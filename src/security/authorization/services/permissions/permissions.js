@@ -1,7 +1,7 @@
 /*
 A list of all permissions
 */
-const Permissions = {
+module.exports = Permissions = {
     'VIEW_INSTITUTION': "Allows you to view the institution",
 	'EDIT_INSTITUTION' : "Edit institution details",
 	'ASSIGN_MODERATORS' : "Assign new moderators",
@@ -10,4 +10,5 @@ const Permissions = {
 	'ADD_MEMBER': "Add new members",
 	'HANDLE_APPLICATIONS' : "Approve / decline motivations"
 };
+
 

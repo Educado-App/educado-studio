@@ -3,6 +3,7 @@ const { HttpMethodNotAllowedError } = require('../../../helpers/error')
 //create use cases
 const { addRole } = require('../use-cases')
 
+
 module.exports = function makeRoleController({ roleList }) {
 
     return async function handle(httpRequest) {
@@ -37,9 +38,7 @@ module.exports = function makeRoleController({ roleList }) {
     async function postRole(httpRequest) {
 
         const roleInfo = httpRequest.body
-
         const posted = await addRole({ ...roleInfo })
-
         return {
             success: true,
             status: 201,

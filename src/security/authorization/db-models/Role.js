@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const RoleSchema = new Schema({
+  _id: { type: String },
   name: { type: String },
   permissions: [{ type: String }],
 }, {

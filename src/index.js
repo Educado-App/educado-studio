@@ -14,7 +14,6 @@ const errorHandler = require("./helpers/errorHandler")
 const attachAdminJS = require('./admin/setup')
 const router = require("./routes")
 
-
 const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku
 
 const app = express();

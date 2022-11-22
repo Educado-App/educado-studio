@@ -3,23 +3,21 @@ const { ValidationError } = require("../../../helpers/error")
 module.exports = function buildMakeRole( Id ) {
 
     return function makeRole({
-        id = Id.makeId(),
+        key,
         name,
         permissions,
         createdAt = new Date(),
         modifiedAt = new Date()
     }) {
-
+        if (!key) throw new ValidationError('Role must have a unique key')
         if (!name) throw new ValidationError('Role must have a name')
-        if (!id) throw new ValidationError('Role must have a specific ID')
 
         return Object.freeze({
-            id,
+            key,
             name,
             createdAt,
             modifiedAt,
             getPermissions: () => permissions,
-            //getPermission: (permission) => permissions.find(perm => perm.id === perm.id)
         })
     }
 }

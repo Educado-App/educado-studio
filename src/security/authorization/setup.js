@@ -1,3 +1,0 @@
-/*
-Functions to be autorun upon server start
-*/

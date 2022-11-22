@@ -5,13 +5,13 @@ module.exports = function makeAddRole({ roleList }) {
     return async function addRole(roleInfo) {
 
         const role = makeRole({
-            id: roleInfo.id,
+            key: roleInfo.key,
             name: roleInfo.name,
             permissions: roleInfo.permissions
         })
 
         return await roleList.add({
-            id: role.id,
+            key: role.key,
             name: role.name,
             permissions: role.getPermissions(),
             modifiedAt: role.modifiedAt,

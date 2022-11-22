@@ -1,5 +1,4 @@
 const { ValidationError } = require("../../../helpers/error")
-
 module.exports = function makeRoleList({ dbModel }) {
 
     return Object.freeze({
@@ -25,12 +24,12 @@ module.exports = function makeRoleList({ dbModel }) {
         return result?.toObject()
     }
 
-    async function add({ id: _id }) {
-
-        //console.log(_id)
-        const result = await dbModel.create(
+    async function add({ key: _id, name: name, permissions: permissions }) {
+        const result = await dbModel.create({
             _id,
-        )   
+            name,
+            permissions: permissions
+        })   
 
         return result?.toObject()
     }
