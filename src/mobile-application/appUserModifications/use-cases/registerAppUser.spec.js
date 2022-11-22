@@ -1,5 +1,4 @@
 import makeRegisterAppUser from 'src/use-cases/appUsers/registerAppUser.js'
-// need to make this path real!!!
 import makeAppUsersDb from '../data-access/appUserDb'
 import makeFakeAppUser from '__tests__/fixtures/fakeAppUser.js'
 import makeDb from '__tests__/fixtures/db.js'
