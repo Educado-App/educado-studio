@@ -8,7 +8,7 @@ require('../../../users/db-models')
 
 const makeRoleList = require('./roleList')
 
-const roleList = makeRoleList({ dbModel: RoleModel, Params, ParamsSchema, Id })
+const roleList = makeRoleList({ dbModel: RoleModel, Params, ParamsSchema })
 
 module.exports = {
     roleList

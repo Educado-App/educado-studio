@@ -11,11 +11,11 @@ module.exports = function makeAddRole({ roleList }) {
         })
 
         return await roleList.add({
-            id: role.getId(),
-            name: role.getName(),
+            id: role.id,
+            name: role.name,
             permissions: role.getPermissions(),
-            modifiedAt: role.getModifiedAt(),
-            createdAt: role.getCreatedAt(),
+            modifiedAt: role.modifiedAt,
+            createdAt: role.createdAt,
         })
     }
 }
