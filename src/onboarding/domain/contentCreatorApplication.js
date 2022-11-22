@@ -26,13 +26,14 @@ module.exports = function buildMakeContentCreatorApplication({ Id }) {
             getEmail: () => email,
             getMotivation: () => motivation,
             isApproved: () => approved,
+            isRejected: () => rejectReason.length > 0,
             getRejectReason: () => rejectReason,
             getCreatedAt: () => createdAt,
             getModifiedAt: () => modifiedAt,
             fullname: () => `${firstName} ${lastName}`,
             approve: () => approved = true,
             reject: ({ reason = 'No reason given' } = {}) => {
-                approved = false
+                approved = false,
                 rejectReason = reason
             }
         })

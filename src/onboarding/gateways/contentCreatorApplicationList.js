@@ -4,6 +4,7 @@ const findAllSchema = {
     type: 'object',
     properties: {
         'approved': { type: 'boolean' },
+        'isRejected': { type: 'boolean' },
         'before': { type: 'string', format: "date" },
         'after': { type: 'string', format: "date" }
     },
@@ -26,7 +27,7 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
         ...conditions
     } = {}) {
 
-        const { approved, before, after, errors } = Params.validate({
+        const { approved, isRejected, before, after, errors } = Params.validate({
             schema: ParamsSchema.extendFindAllSchema(findAllSchema),
             data: { sortBy, limit, offset, ...conditions }
         })
@@ -35,12 +36,12 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
 
         let query = {
             $and: [
+                typeof isRejected !== 'undefined' ? { isRejected } : {},
                 typeof approved !== 'undefined' ? { approved } : {},
                 before ? { createdAt: { $lte: new Date(before) } } : {},
                 after ? { createdAt: { $gte: new Date(after) } } : {},
             ]
         }
-        query = {}
 
         const results = await dbModel
             .find(query)

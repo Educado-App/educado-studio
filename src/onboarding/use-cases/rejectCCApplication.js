@@ -15,6 +15,7 @@ module.exports = function makeRejectCCApplication({ contentCreatorApplicationLis
             id: application.getId(),
             approved: application.isApproved(),
             rejectReason: application.getRejectReason(),
+            isRejected: application.isRejected(),
             modifiedAt: application.getModifiedAt()
         })
 
