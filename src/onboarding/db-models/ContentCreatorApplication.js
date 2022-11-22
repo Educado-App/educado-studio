@@ -11,6 +11,9 @@ const ContentCreatorSchema = new Schema({
   isRejected: { type: Boolean },
   createdAt: { type: Date },
   modifiedAt: { type: Date },
+}, {
+  toJSON: { getters: true, setters: true },
+  toObject: { getters: true, setters: true }
 })
 
 const ContentCreatorApplication = mongoose.model("Content-Creator-Application", ContentCreatorSchema);

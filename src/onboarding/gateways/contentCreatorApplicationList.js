@@ -49,16 +49,15 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
             .limit(parseInt(limit))
             .skip(parseInt(offset))
 
-        return results
+        return results.map((doc) => doc.toObject())
     }
 
 
 
     async function findById(id) {
         const result = await dbModel.findById(id)
-        const { _id: foundId, ...contentCreatorApplicationInfo } = result._doc
 
-        return { id: foundId, ...contentCreatorApplicationInfo }
+        return result.toObject()
     }
 
     async function add(contentCreatorApplication) {
@@ -67,8 +66,7 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
             ...contentCreatorApplication
         })
 
-        const { _id: id, ...contentCreatorApplicationInfo } = result._doc
-        return { id, ...contentCreatorApplicationInfo }
+        return result.toObject()
     }
 
     async function remove({ id: _id, ...contentCreatorApplication }) {
@@ -79,6 +77,7 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
 
     async function update({ id: _id, ...changes }) {
         const result = await dbModel.findOneAndUpdate({ _id }, { ...changes }, { new: true })
-        return result
+        
+        return result.toObject()
     }
 }
