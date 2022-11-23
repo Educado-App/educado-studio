@@ -4,19 +4,10 @@
   * Last Modified: 21-11-2022
   **/
 
-const makeDb = require('../../../../__tests__/fixtures/db')
 const { appUserList } = require('.')
 const makeFakeAppUser = require('../../../../__tests__/fixtures/fakeAppUser')
 
 describe('App user db', () => {
-
-    beforeAll(async() => {
-        makeDb()
-    })
-
-    afterAll(async() => {
-        makeDb().close
-    })
 
     it('Creates a new app user', async() => {
         const fakeAppUser = makeFakeAppUser()

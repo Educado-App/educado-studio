@@ -1,21 +1,9 @@
 const { registerAppUser } = require('.')
 const { appUserList } = require('../gateways')
 const makeFakeAppUser = require('../../../../__tests__/fixtures/fakeAppUser')
-const makeDb = require('../../../../__tests__/fixtures/db')
 
 describe ('register app user', () => {
     let newAppUser
-
-    beforeAll(() => {
-        makeDb()
-    })
-    beforeEach(() => {
-        
-    })
-
-    afterAll(async() => {
-        makeDb().close
-    })
 
     it('inserts app user in database', async() => {
         newAppUser = makeFakeAppUser()

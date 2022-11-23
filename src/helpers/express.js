@@ -1,10 +1,5 @@
-/**
- * Adapter for express request / response callbacks
- * to work with controllers representation of http requests (mostly similar)
- */
-function makeExpressCallback(requestHandler) {
-
-    return async function callback(req, res, next) {
+function makeExpressCallback (requestHandler) {
+    return async function callback (req, res) {
 
         const httpRequest = {
             method: req.method,
@@ -21,31 +16,16 @@ function makeExpressCallback(requestHandler) {
                 'User-Agent': req.get('User-Agent')
             }
         }
-
-        try {
-            const response = await requestHandler(httpRequest)
-
-            let extras = {}
-
-            if (response.data instanceof Array) {
-                extras['count'] = response.data.length
-            }
-
-            res.status(response.status)
-            res.send({
-                status: response.status,
-                success: response.success,
-                ...extras,
-                ...response,
+        requestHandler(httpRequest)
+            .then(httpResponse => {
+                if (httpResponse.headers) {
+                    res.set(httpResponse.headers)
+                }
+                res.type('json')
+                res.status(httpResponse.statusCode)
+                res.send(httpResponse.body)
             })
-
-        } catch (error) {
-
-            // Forwards error to central error handler
-            next(error)
-
-        }
-
+            .catch(e => res.status(500).send({ error: 'An unkown error occurred.' }))
     }
 }
 
