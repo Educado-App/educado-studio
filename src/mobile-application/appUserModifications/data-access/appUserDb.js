@@ -12,7 +12,7 @@ const Schema = mongoose.Schema;
 // Class description
 const AppUserSchema = new Schema({
     phone: { 
-        type: String
+        type: String,
     },
     salt: { type: String },
     hash: { type: String },

@@ -24,6 +24,7 @@ module.exports = function makeAppUserList({ dbModel }) {
     }
 
     async function remove(id) {
+        // Returns the removed document
         return await dbModel.findOneAndDelete({ _id: id })
     }
 }

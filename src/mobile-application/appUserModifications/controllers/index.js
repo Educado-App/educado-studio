@@ -7,9 +7,9 @@
 const { appUserList } = require('../gateways')
 const phone = require('../../../helpers/phone')
 
-const makeRegisterAppUser = require('./registerAppUser')
-const makeDeleteAppUser = require('./deleteAppUser')
-const appUserController = makeRegisterAppUser({ appUserList, phone })
-const deleteAppUser = makeDeleteAppUser({appUserList})
+const makeRegisterAppUser = require('./registerAppUserController')
+const makeDeleteAppUser = require('./deleteAppUserController')
+const registerAppUserController = makeRegisterAppUser({ appUserList, phone })
+const deleteAppUserController = makeDeleteAppUser({appUserList})
 
-module.exports = { appUserController, deleteAppUser }
+module.exports = { registerAppUserController, deleteAppUserController }

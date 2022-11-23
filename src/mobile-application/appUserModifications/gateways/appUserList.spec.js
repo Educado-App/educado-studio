@@ -40,15 +40,18 @@ describe('App user db', () => {
         expect(insertedUser.phone).toEqual(fakeAppUser.phone)
     })
 
-    // it('Removes an app user from the collection', async() => {
-    //     const fakeAppUser = makeFakeAppUser()
-    //     const addedUser = await appUserList.add(fakeAppUser)
+    it('Removes an app user from the collection', async() => {
+        const fakeAppUser = makeFakeAppUser()
+        const addedUser = await appUserList.add(fakeAppUser)
 
-    //     expect(addedUser).not.toBeNull()
+        expect(addedUser).not.toBeNull()
 
-    //     await appUserList.remove(addedUser)
-    //     expect(addedUser).toBeNull()
-        
-    // })
+        const removed = await appUserList.remove(addedUser.id)
+
+        // remove returns the removed document.
+        // Testing to see if the removed documents id matches the 
+        // originally added id
+        expect(removed.id).toBe(addedUser.id) 
+    })
     
 })
