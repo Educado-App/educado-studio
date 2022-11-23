@@ -9,7 +9,7 @@ module.exports = function makeLoginAppUser({ }) {
 
         try {
 
-            const validPhone = await registerAppUser(appUserPhone)
+            const validPhone = await authenticateAppUser(appUserPhone)
 
             console.log(typeof registered)
 

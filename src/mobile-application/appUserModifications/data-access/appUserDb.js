@@ -11,7 +11,9 @@ const Schema = mongoose.Schema;
 
 // Class description
 const AppUserSchema = new Schema({
-    phone: { type: String },
+    phone: { 
+        type: String
+    },
     salt: { type: String },
     hash: { type: String },
     loggedInAt: { type: String },

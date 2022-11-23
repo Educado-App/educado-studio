@@ -13,7 +13,7 @@ module.exports = function makeRegisterAppUser ({ appUserList }) {
 
         const appUser = makeUser({...appUserInfo})
 
-        //  const exists = await appUserList.findByPhone({phone: })
+        //  const exists = await appUserList.findByPhone(appUser.phone)
         //  if (exists) {
         //      return exists
         //  }

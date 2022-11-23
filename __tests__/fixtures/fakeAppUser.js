@@ -10,6 +10,6 @@ module.exports = function makeFakeAppUser(overrides = {}) {
 
     return {
         ...fakeAppUser,
-        ...overides
+        ...overrides
     }
 }

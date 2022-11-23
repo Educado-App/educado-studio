@@ -1,34 +1,37 @@
 const makeFakeAppUser = require('../../../../__tests__/fixtures/fakeAppUser')
-const { makeAppUser } = require('.')
+const { makeUser } = require('.')
 
 describe("AppUser", () => {
 
-  it("Must have a valid phone number", async () => {
-    const fakeAppUser = makeFakeAppUser()
 
-    const badAppUser = { ...fakeAppUser, phone: "ABCDEFGH" }
-    const goodAppUser = { ...fakeAppUser, phone: "12345678" }
+    it("Must have a valid phone number", async () => {
+        const fakeAppUser = makeFakeAppUser()
 
-    expect(() => makeAppUser(badAppUser)).toThrow("AppUser must have a valid phone number")
-    expect(() => makeAppUser(goodAppUser)).not.toThrow()
-  })
+        const badAppUser = { ...fakeAppUser, phone: "ABCDEFGHEJ" }
+        const goodAppUser = { ...fakeAppUser, phone: "12345678" }
 
-  it("must have a valid password", async () => {
-    const fakeUser = makeFakeUser()
+        expect(() => makeUser(badAppUser)).toThrow("User must have a valid phone number")
+        expect(() => makeUser({ ...fakeAppUser, phone: "1234567"})).toThrow("Phone Number must be at least 8 characters")
+        expect(() => makeUser({ ...fakeAppUser, phone: "123456789123"})).toThrow("Phone number can at most be 11 characters")
+        expect(() => makeUser(goodAppUser)).not.toThrow()
+    })
 
-    expect(() => makeUser({ ...fakeUser, password: "" })).toThrow("User must have a password")
-    expect(() => makeUser({ ...fakeUser, password: "1234567" })).toThrow("Password should be atleast 8 characters long")
-    expect(() => makeUser({ ...fakeUser, password: "withoutcapitalletter" })).toThrow("Password must contain a capital letter")
-  })
+    it("must have a valid password", async () => {
+        const fakeAppUser = makeFakeAppUser()
 
-  it("must have an encrypted password", async () => {
-    const fakeUser = makeFakeUser()
+        expect(() => makeUser({ ...fakeAppUser, password: "" })).toThrow("User must have a password")
+        expect(() => makeUser({ ...fakeAppUser, password: "1234567" })).toThrow("Password should be at least 8 characters long")
+        expect(() => makeUser({ ...fakeAppUser, password: "withoutcapitalletter" })).toThrow("Password must contain a capital letter")
+    })
 
-    const madeUser = makeUser(fakeUser)
+    it("must have an encrypted password", async () => {
+        const fakeAppUser = makeFakeAppUser()
 
-    expect(madeUser).toHaveProperty('salt')
-    expect(madeUser).toHaveProperty('hash')
+        const madeUser = makeUser(fakeAppUser)
 
-  })
+        expect(madeUser).toHaveProperty('salt')
+        expect(madeUser).toHaveProperty('hash')
+
+    })
 
 })
