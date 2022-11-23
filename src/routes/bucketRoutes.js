@@ -29,6 +29,7 @@ router.get("/download-s3", restricted, async (req, res) => {
     };
 
     try {
+      
       const data = await s3.getObject(download).promise();
       const encoded = data.Body.toString("base64");
       res.send({ img: encoded });

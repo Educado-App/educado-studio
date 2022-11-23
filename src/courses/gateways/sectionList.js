@@ -1,3 +1,5 @@
+const { ValidationError } = require("../../helpers/error")
+
 module.exports = function makeSectionList({ dbModel, Id }) {
 
     return Object.freeze({
@@ -10,39 +12,38 @@ module.exports = function makeSectionList({ dbModel, Id }) {
 
     async function findById(id) {
 
-        if (!Id.isValid(id)) throw new Error(`Invalid section id '${id}'`)
+        if (!Id.isValid(id)) throw new ValidationError(`Invalid section id '${id}'`)
 
         const result = await dbModel.findById(id)
             .populate('exercises')
 
-        const { _id: foundId, ...sectionInfo } = result._doc
-
-        return { id: foundId, ...sectionInfo }
+        return result?.toObject()
     }
 
     async function findAllByCourseId(id) {
 
-        if (!Id.isValid(id)) throw new Error(`Invalid course id '${id}'`)
+        if (!Id.isValid(id)) throw new ValidationError(`Invalid course id '${id}'`)
 
-        return await dbModel
+        const results = await dbModel
             .find({ parentCourse: id })
             .sort('sectionNumber')
+
+        return results.map((doc) => doc.toObject())
     }
 
-    async function add(section) {
+    async function add({ id: _id, ...section }) {
 
         const result = await dbModel.create({
+            _id,
             ...section,
-            _id: section.id,
             exercises: section.exercises.map(exercise => exercise.id)
         })
 
-        const { _id: id, ...sectionInfo } = result._doc
-        return { id, ...sectionInfo }
+        return result?.toObject()
     }
 
     async function remove({ id: _id, ...section }) {
-        const result = await dbModel.deleteMany({ _id, ...section })
+        const result = await dbModel.deleteMany(_id ? { _id } : section)
 
         return result.deletedCount
     }
@@ -52,7 +53,7 @@ module.exports = function makeSectionList({ dbModel, Id }) {
         const result = await dbModel.findOneAndUpdate({ _id }, {
             $set: { ...changes }
         }, { new: true })
-        
+
         return result
     }
 }

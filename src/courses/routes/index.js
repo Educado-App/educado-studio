@@ -11,8 +11,6 @@ const {
     exerciseController,
 } = require('../controllers')
 
-
-
 /* Courses */
 router.get('/public/courses', makeExpressCallback(publicCourseController))
 router.get('/public/courses/:id', makeExpressCallback(publicCourseController))
@@ -22,7 +20,6 @@ router.delete('/courses/:id', restricted, makeExpressCallback(courseController))
 router.post('/courses', restricted, makeExpressCallback(courseController))
 router.get('/courses/:id', restricted, makeExpressCallback(courseController))
 router.put('/courses/:id', restricted, makeExpressCallback(courseController))
-
 
 /* Sections */
 router.get('/sections/:sid', restricted, makeExpressCallback(sectionController))

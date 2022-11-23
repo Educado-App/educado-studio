@@ -1,3 +1,5 @@
+const { ValidationError } = require("../../helpers/error")
+
 module.exports = function buildMakeCourse({ Id, makeSection }) {
 
     return function makeCourse({
@@ -15,9 +17,9 @@ module.exports = function buildMakeCourse({ Id, makeSection }) {
 
         let validSections = sections.map(section => makeSection(section))
 
-        if (!title) throw new Error('Course must have a title')
-        if (!author) throw new Error('Course must have an author')
-        if (!description) throw new Error('Course must have a description')
+        if (!title) throw new ValidationError('Course must have a title')
+        if (!author) throw new ValidationError('Course must have an author')
+        if (!description) throw new ValidationError('Course must have a description')
 
         return Object.freeze({
             getId: () => id,

@@ -6,7 +6,7 @@ module.exports = function makeAddSection({ sectionList, courseList }) {
 
         const courseDoc = await courseList.findById(courseId)
 
-        const course = makeCourse({ id: courseDoc.id, ...courseDoc })
+        const course = makeCourse(courseDoc)
 
         const addedSection = course.addSection(sectionInfo)
 

@@ -1,16 +1,6 @@
-const findAllSchema = {
-    type: 'object',
-    properties: {
-        'title': { type: 'string' },
-        'before': { type: 'string', format: "date" },
-        'after': { type: 'string', format: "date" },
-    },
-}
-
-module.exports = function makeExerciseList({ dbModel, Params, ParamsSchema }) {
+module.exports = function makeExerciseList({ dbModel }) {
 
     return Object.freeze({
-        findAll,
         findAllBySectionId,
         findById,
         add,
@@ -18,46 +8,16 @@ module.exports = function makeExerciseList({ dbModel, Params, ParamsSchema }) {
         update
     })
 
-    async function findAll({
-        sortBy = '-createdAt',
-        limit = 50,
-        offset = 0,
-        ...conditions
-    } = {}) {
-
-        const { title, before, after } = Params.validate({
-            schema: ParamsSchema.extendFindAllSchema(findAllSchema),
-            data: { sortBy, limit, offset, ...conditions }
-        })
-
-        const query = {
-            $and: [
-                title ? { title: new RegExp(title, 'i') } : {},
-                before ? { createdAt: { $lte: new Date(before) } } : {},
-                after ? { createdAt: { $gte: new Date(after) } } : {},
-            ]
-        }
-
-        return await dbModel
-            .find(query)
-            .sort(sortBy)
-            .populate({
-                path: 'exercises',
-                select: ''
-            })
-            .limit(parseInt(limit))
-            .skip(parseInt(offset))
-    }
-    
     async function findAllBySectionId(sid) {
-        return await dbModel.find({ parentSection: sid })
+        const results = await dbModel.find({ parentSection: sid })
+        
+        return results.map((doc) => doc.toObject())
     }
 
     async function findById(id) {
         const result = await dbModel.findById(id)
-        const { _id: foundId, ...exerciseInfo } = result._doc
 
-        return { id: foundId, ...exerciseInfo }
+        return result?.toObject()
     }
 
     async function add({ id: _id, ...exercise }) {
@@ -67,12 +27,11 @@ module.exports = function makeExerciseList({ dbModel, Params, ParamsSchema }) {
             ...exercise,
         })
 
-        const { _id: id, ...exerciseInfo } = result._doc
-        return { id, ...exerciseInfo }
+        return result?.toObject()
     }
 
     async function remove({ id: _id, ...exercise }) {
-        const result = await dbModel.deleteMany({ _id, ...exercise })
+        const result = await dbModel.deleteMany(_id ? { _id } : exercise)
 
         return result.deletedCount
     }
@@ -80,6 +39,7 @@ module.exports = function makeExerciseList({ dbModel, Params, ParamsSchema }) {
     async function update({ id: _id, ...changes }) {
 
         const result = await dbModel.findOneAndUpdate({ _id }, { ...changes }, { new: true })
-        return result
+
+        return result?.toObject()
     }
 }

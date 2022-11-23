@@ -11,6 +11,7 @@ module.exports = function makeEditSection({ sectionList }) {
         return await sectionList.update({
             id: section.id,
             title: section.title,
+            description: section.description,
             modifiedAt: new Date(),
         })
     }

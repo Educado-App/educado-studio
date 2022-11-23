@@ -1,11 +1,9 @@
-const connectDb = require('../../../__tests__/fixtures/db')
 const makeFakeContentCreatorApplication = require('../../../__tests__/fixtures/fakeContentCreatorApplication')
 
 const { contentCreatorApplicationList } = require('.')
 
 describe('Content Creator Application List', () => {
 
-    beforeAll(() => connectDb())
     afterEach(async () => await contentCreatorApplicationList.remove({}))
 
     it('can add a new content creator application', async () => {

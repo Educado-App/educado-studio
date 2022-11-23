@@ -1,6 +1,6 @@
 const Params = require('../../helpers/validation/params')
 const ParamsSchema = require('../../helpers/validation/paramsSchema')
-const Id = require('../../helpers/Id')
+const Id = require('../../helpers/id')
 
 
 const { CourseModel, SectionModel, ExerciseModel } = require('../db-models')

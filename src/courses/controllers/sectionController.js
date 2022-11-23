@@ -1,4 +1,4 @@
-const { makeHttpError } = require('../../helpers/error')
+const { HttpMethodNotAllowedError } = require('../../helpers/error')
 
 const { addSection, editSection, removeSection } = require('../use-cases')
 
@@ -21,10 +21,7 @@ module.exports = function makeSectionController({ sectionList }) {
                 return await deleteSection(httpRequest)
 
             default:
-                return makeHttpError({
-                    status: 405,
-                    message: `Method '${httpRequest.method}' is not allowed`
-                })
+                throw new HttpMethodNotAllowedError(httpRequest.method)
         }
 
     }
@@ -34,21 +31,15 @@ module.exports = function makeSectionController({ sectionList }) {
         const sectionId = httpRequest.params.sid
         const courseId = httpRequest.params.cid
 
-        try {
-            const results = sectionId ?
-                await sectionList.findById(sectionId) :
-                await sectionList.findAllByCourseId(courseId)
+        const results = sectionId ?
+            await sectionList.findById(sectionId) :
+            await sectionList.findAllByCourseId(courseId)
 
-            return {
-                success: true,
-                status: 200,
-                data: results
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 200,
+            data: results
         }
-
     }
 
     async function postSection(httpRequest) {
@@ -56,20 +47,15 @@ module.exports = function makeSectionController({ sectionList }) {
         const sectionInfo = httpRequest.body
         const courseId = httpRequest.params.cid
 
-        try {
-            const posted = await addSection({
-                info: sectionInfo,
-                toCourse: courseId
-            })
+        const posted = await addSection({
+            info: sectionInfo,
+            toCourse: courseId
+        })
 
-            return {
-                success: true,
-                status: 201,
-                data: posted
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 201,
+            data: posted
         }
     }
 
@@ -78,20 +64,15 @@ module.exports = function makeSectionController({ sectionList }) {
         const sectionChanges = httpRequest.body
         const sectionId = httpRequest.params.sid
 
-        try {
-            const updated = await editSection({
-                id: sectionId,
-                changes: sectionChanges
-            })
+        const updated = await editSection({
+            id: sectionId,
+            changes: sectionChanges
+        })
 
-            return {
-                success: true,
-                status: 202,
-                data: updated
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 202,
+            data: updated
         }
     }
 
@@ -100,20 +81,16 @@ module.exports = function makeSectionController({ sectionList }) {
         const sectionId = httpRequest.params.sid
         const courseId = httpRequest.params.cid
 
-        try {
-            await removeSection({
-                fromCourse: courseId,
-                toRemove: sectionId,
-            })
+        await removeSection({
+            fromCourse: courseId,
+            toRemove: sectionId,
+        })
 
-            return {
-                success: true,
-                status: 204,
-                data: {}
-            }
-
-        } catch (error) {
-            return makeHttpError({ status: 400, message: error.message })
+        return {
+            success: true,
+            status: 204,
+            data: {}
         }
+
     }
 }
