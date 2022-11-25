@@ -2,15 +2,21 @@
 Functions to be autorun upon server start
 */
 const { addRole } = require('../use-cases')
-const { adminRole }  = require('./roles')
+const { roles }  = require('./roles')
+const { roleList } = require('../gateways')
 
-const setupDb = require('../../../../db')
-setupDb()
+module.exports = async function setupPermissions() {
+        //deletes a collection from the database
+        await roleList.remove({})
 
+        //post all roles into database
+        roles.forEach(role =>postRole(role))
+}
 
+//posts a role to the database
 async function postRole(role) {
     try{
-        const posted = await addRole({key: role.key, name: role.name, permissions: Object.keys(role.permissions)})
+        const posted = await addRole({key: role.key, name: role.name, permissions: role.permissions})
         return {
             success: true,
             status: 201,
@@ -24,9 +30,27 @@ async function postRole(role) {
     }
 }
 
-postRole(adminRole);
-console.log(adminRole);
 
+// Gets a role from the database
+async function getRole(role) {
+    try{
+        const id = role.id
 
+        const results = id ?
+            await role.findById(id) :
+            await role.findAll()
+        //const posted = await addRole({key: role.key, name: role.name, permissions: Object.keys(role.permissions)})
 
-//TODO: import gateways to remove collection, fix permissions file to be uploaded, iterate through all roles and upload. 
+        return {
+            success: true,
+            status: 200,
+            data: results
+        }
+    }catch(err){
+
+        return {
+            success: false,
+            status: 400,
+        }
+    }
+}

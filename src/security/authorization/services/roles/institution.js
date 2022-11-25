@@ -1,8 +1,8 @@
-const { Permissions } = require('../permissions/permissions');
+const Permissions = require('../permissions/permissions');
 
-
-const InstitutionOwner = { 
-	name: "Institution owner",
+module.exports =  InstitutionPermissions = { 
+	key: "ROLE_INSTITUTION",
+	name: "Institution",
 	permissions: [
         Permissions.VIEW_INSTITUTION,
         Permissions.EDIT_INSTITUTION,

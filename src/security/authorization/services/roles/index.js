@@ -1,6 +1,8 @@
 
-const adminRole = require('./admin')
+const superAdminRole = require('./superAdmin')
+const institutionRole = require('./institution')
+const roles =  [superAdminRole, institutionRole]
 
 module.exports = {
-    adminRole,
+    roles
 }

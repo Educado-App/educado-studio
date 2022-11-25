@@ -4,6 +4,7 @@ const passport = require("passport")
 const setupDatabase = require('../db') // Database and corresponding plugins must be loaded before any models are loaded
 setupDatabase()
 
+const setupPermissions= require('../src/security/authorization/services/setup')
 const swaggerUi = require('swagger-ui-express')
 const swaggerSpec = require('../docs/swagger')
 const session = require('express-session')
@@ -17,6 +18,9 @@ const router = require("./routes")
 const PORT = process.env.PORT || 8888; // Get dynamic port allocation when deployed by Heroku
 
 const app = express();
+
+//setup permissions
+setupPermissions()
 
 // Adds the admin panel onto /admin //
 attachAdminJS(app, '/admin')
