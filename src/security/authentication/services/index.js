@@ -6,6 +6,10 @@ const { appUserList } = require('../../../mobile-application/appUserModification
 const buildMakeAuthService = require('./authService')
 const makeAuthService = buildMakeAuthService({ Password, JWT })
 const authService = makeAuthService(userList)
-const appAuthService = makeAuthService(appUserList)
+
+const buildMakeAppAuthService = require('./appAuthService')
+const makeAppAuthService = buildMakeAppAuthService({ Password, JWT })
+const appAuthService = makeAppAuthService(appUserList)
+
 
 module.exports = { authService, appAuthService }

@@ -10,8 +10,6 @@ const { authAuthController, appAuthController } = require('../controllers')
 
 router.post('/auth/jwt', makeExpressCallback(authAuthController))
 
-router.post('/api/eml/auth/jwt', makeExpressCallback(appAuthController))
-
 router.get('/auth/jwt/test', restricted, (req, res) => {
   res.status(200)
   res.send("Successfully authenticated using accessToken")
@@ -44,5 +42,13 @@ router.get("/auth/google/callback",
     })
   }
 );
+
+// App user
+router.post('/api/eml/auth/login', makeExpressCallback(appAuthController))
+
+router.post('/api/eml/auth/loggedIn', restricted, (req, res) => {
+  res.status(200)
+  res.send("Successfully authenticated using accessToken")
+})
 
 module.exports = router
