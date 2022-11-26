@@ -1,3 +1,9 @@
+/**
+  * Controller for registering an app user
+  * 
+  * Last Modified: 23-11-2022
+  **/
+
 const { makeHttpError } = require('../../../helpers/error')
 const { registerAppUser } = require('../use-cases')
 

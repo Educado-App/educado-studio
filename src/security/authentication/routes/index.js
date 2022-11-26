@@ -3,7 +3,7 @@ const passport = require("../utils/passport")
 
 const JWT = require('../utils/jwt')
 
-const { restricted } = require('..');
+const { restricted, restrictedApp } = require('..');
 const { makeExpressCallback } = require('../../../helpers/express')
 const { authAuthController, appAuthController } = require('../controllers')
 
@@ -44,11 +44,27 @@ router.get("/auth/google/callback",
 );
 
 // App user
-router.post('/api/eml/auth/login', makeExpressCallback(appAuthController))
+router.post('/api/eml/login', makeExpressCallback(appAuthController))
 
-router.post('/api/eml/auth/loggedIn', restricted, (req, res) => {
-  res.status(200)
-  res.send("Successfully authenticated using accessToken")
-})
+router.get('/api/eml/login/test', restrictedApp,
+  (req, res) => {
+    res.status(200)
+    res.send("Successfully authenticated using accessToken")
+  })
+
+// Route handler for auth callback
+router.get("/login/callback",
+  passport.authenticate("login", { failureRedirect: '/api/eml/login' }),
+  (req, res) => {
+    res.status(200)
+    res.send({
+      success: true,
+      data: {
+        'accessToken': JWT.signAccessToken({ appUser: req.appUser.id }),
+        'refreshToken': JWT.signRefreshToken({ appUser: req.appUser.id }),
+      }
+    })
+  }
+);
 
 module.exports = router

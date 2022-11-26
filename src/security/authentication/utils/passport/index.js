@@ -4,7 +4,6 @@ const { appUserList } = require('../../../../mobile-application/appUserModificat
 
 // Strategies
 const { googleStrategy, googleRestrictedStrategy } = require('./usingGoogle')
-const { phoneStrategy } = require('./usingPhone')
 const { jwtStrategy, jwtAppStrategy } = require('./usingJWT')
 
 

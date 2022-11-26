@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { makeExpressCallback } = require('../../../helpers/express')
+const { makeExpressCallback } = require('../../../helpers/appExpress')
 const { registerAppUserController, deleteAppUserController } = require('../controllers')
 const { restrictedApp } = require('../../../security/authentication')
 //const { appAuthController } = require('../../../security/authentication/controllers')
