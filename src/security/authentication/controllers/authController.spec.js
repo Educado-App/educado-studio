@@ -1,11 +1,11 @@
-const connectDb = require('../../../../__tests__/fixtures/db')
 const makeFakeUser = require('../../../../__tests__/fixtures/fakeUser')
-const { userList, makeUser } = require('../../../users')
-const { authAuthController: handle }  = require('.')
+
+const { userList } = require('../../../users/gateways')
+const { makeUser } = require('../../../users/domain')
+const { authAuthController: handle } = require('.')
 
 describe('Authentication Endpoint Handler', () => {
 
-    beforeAll(async () => await connectDb())
     afterEach(async () => await userList.remove({}))
 
     it('handles login of a user', async () => {
@@ -34,9 +34,9 @@ describe('Authentication Endpoint Handler', () => {
             method: 'GET',
         }
 
-        const response = await handle(request)
+        expect(handle(request))
+            .rejects
+            .toThrow('method GET not allowed')
 
-        expect(response.success).toBe(false)
-        expect(response).toHaveProperty('errors')
     })
 })

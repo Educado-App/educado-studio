@@ -1,0 +1,214 @@
+openapi: "3.0.2"
+info:
+  title: Content-Creation backend API
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8888
+
+paths:
+  /api/public/courses:
+    get:
+      summary: Retrieve a list of all courses available on the platform
+      tags:
+        - "Courses"
+      security: []
+      parameters:
+      - name: author
+        in: query
+        description: 'Finds courses by this author'
+        schema:
+          $ref : "#/components/schemas/ObjectId"
+        example: 635dacde991d8c6da796a1c5
+      - name: category
+        in: query
+        description: 'Finds courses of this category'
+        schema:
+          $ref : "#/components/schemas/ObjectId"
+        example: 6368be5d71e079ae8d537eb1
+      - name: title
+        in: query
+        description: 'Searches for courses by this title'
+        schema:
+          type: string
+        
+      - $ref: "#/components/parameters/sortBy"
+      - $ref: "#/components/parameters/before"
+      - $ref: "#/components/parameters/after"
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    example: 200
+                  success:
+                    type: boolean
+                    example: true
+                  count:
+                    type: number
+                    example: 2
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Course"
+  /api/public/courses/{id}:
+    get:
+      summary: 'Retrieves a specific course'
+      tags:
+        - "Courses"
+      security: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ObjectId"
+          example: 635fb90624e7fa5085caba29
+          description: The course id
+
+      responses:
+        '200':
+          description: OK
+      
+  /api/courses:
+    get:
+      summary: 'Gets all courses for author sending request'
+      tags:
+        - "Courses"
+      parameters: []
+      responses:
+        '200':
+          description: OK
+  /auth/jwt:
+    post:
+      description: 'Authenticate with the API via basic login'
+      tags:
+        - "Authentication"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: demo@gmail.com
+                password:
+                  type: string
+                  example: Demo1234
+                
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessfullAuthentication"
+      
+
+components:
+  schemas:
+    Course:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ObjectId"
+        title:
+          type: string
+          example: Finance 101
+        category:
+          $ref: "#/components/schemas/Category"
+        author:
+          $ref: "#/components/schemas/Profile"
+        createdAt:
+          type: string
+          format: UTC
+    Category:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ObjectId"
+        name:
+          type: string
+          example: Finance
+        icon:
+          type: string
+          format: url
+          example: http://storagebucket/finance.png
+    Profile:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ObjectId"
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+    ObjectId:
+      type: string
+      format: ObjId
+
+    SuccessfullAuthentication:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+    
+  parameters:
+    sortBy:
+      name: sortBy
+      in: query
+      required: false
+      description: "Sorts the resulting list by the specified property"
+      schema:
+        type: string
+        enum: [createdAt, -createdAt]
+    before:
+      name: before
+      in: query
+      required: false
+      description: 'Gets results that have a creation date BEFORE this date'
+      schema:
+        type: string
+        format: YYYY-MM-DD
+    after:
+      name: after
+      in: query
+      required: false
+      description: 'Gets results that have a creation date AFTER this date'
+      schema:
+        type: string
+        format: YYYY-MM-DD
+  
+  responses:
+    SuccessfullAuthentication:
+      description: A list of users
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SuccessfullAuthentication"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      description: " 
+        JWT token to authorize requests.
+        To try out the api, go under the Authentication tab and run
+        the example, then copy/paste the accessToken from the response in the
+        field below"
+      scheme: bearer
+      bearerFormat: JWT
+
+# Applies the security globally to all operations
+security:
+  - bearerAuth: []

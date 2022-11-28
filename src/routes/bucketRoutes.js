@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const requireLogin = require("../security/authentication/helpers/requireAuth");
+const { restricted } = require("../security/authentication");
 const aws = require("aws-sdk");
 const config = require("../../env/config/keys");
 const multer = require("multer");
@@ -9,7 +9,7 @@ let mulreq = multer();
 const { CourseModel } = require("../models/Courses")
 const { ComponentModel } = require("../models/Components")
 
-router.get("/download-s3", requireLogin, async (req, res) => {
+router.get("/download-s3", restricted, async (req, res) => {
   aws.config.setPromisesDependency();
   aws.config.update({
     region: "eu-central-1",
@@ -29,6 +29,7 @@ router.get("/download-s3", requireLogin, async (req, res) => {
     };
 
     try {
+      
       const data = await s3.getObject(download).promise();
       const encoded = data.Body.toString("base64");
       res.send({ img: encoded });
@@ -38,7 +39,7 @@ router.get("/download-s3", requireLogin, async (req, res) => {
   }
 });
 
-router.get("/api/download-s3-image", requireLogin, async (req, res) => {
+router.get("/api/download-s3-image", restricted, async (req, res) => {
   aws.config.setPromisesDependency();
   aws.config.update({
     region: "eu-central-1",
@@ -71,7 +72,7 @@ router.get("/api/download-s3-image", requireLogin, async (req, res) => {
 router.post(
   "/api/upload-s3-image",
   mulreq.single("file"),
-  requireLogin,
+  restricted,
   async (req, res) => {
     aws.config.update({
       region: "eu-central-1",
@@ -111,7 +112,7 @@ router.post(
 router.post(
   "/upload-s3",
   mulreq.single("file"),
-  requireLogin,
+  restricted,
   async (req, res) => {
     aws.config.update({
       region: "eu-central-1",

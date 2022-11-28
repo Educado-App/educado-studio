@@ -1,3 +1,5 @@
+const { AuthenticationError } = require('../../../helpers/error')
+
 module.exports = function buildMakeAuthService({ Password, JWT }) {
 
     return function makeAuthService(userList) {
@@ -8,22 +10,23 @@ module.exports = function buildMakeAuthService({ Password, JWT }) {
 
         async function authenticate(user) {
 
-            const foundUser = await userList.findByEmail(user.email)
-            if (!foundUser) { throw new Error("Authentication: Access denied") }
+            const foundUser = await userList.findByEmail(user.email) 
+
+            if (!foundUser) { throw new AuthenticationError("Authentication: Access denied") }
 
             const isAuthenticated = Password.isValid({
-                password: user.password, 
+                password: user.password,
                 salt: foundUser.salt,
                 hash: foundUser.hash
             })
 
-            if (!isAuthenticated) { throw new Error("Authentication: Access denied") }
+            if (!isAuthenticated) { throw new AuthenticationError("Authentication: Access denied") }
 
             return {
                 'accessToken': JWT.signAccessToken({ user: foundUser.id }),
                 'refreshToken': JWT.signRefreshToken({ user: foundUser.id }),
             }
         }
-    }
 
+    }
 }

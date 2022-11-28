@@ -1,47 +1,46 @@
 const router = require('express').Router()
-const passport = require("passport"); // Import passport library module
+const passport = require("../utils/passport")
 
+const JWT = require('../utils/jwt')
+
+const { restricted } = require('..');
 const { makeExpressCallback } = require('../../../helpers/express')
-const { authAuthController } = require('../controllers');
-const requiresAuth = require('../helpers/requireAuth');
+const { authAuthController } = require('../controllers')
 
-// Services
-require("../helpers");
 
 router.post('/auth/jwt', makeExpressCallback(authAuthController))
 
-router.get('/auth/jwt/test', requiresAuth, (req, res, next) => {
+router.get('/auth/jwt/test', restricted, (req, res) => {
   res.status(200)
-  res.send("Successfully logged into an authenticated route!!")
+  res.send("Successfully authenticated using accessToken")
+})
+
+
+router.get('/auth/google/test', restricted, (req, res) => {
+  res.status(200)
+  res.send("Successfully authenticated using google")
 })
 
 // Route handler for login simulation
 router.get("/auth/google",
-  passport.authenticate("google-restricted", {
-    // 'google' identifies a GoogleStrategy
+  passport.authenticate('google', {
     scope: ["profile", "email"], // Specifies to google what access we request access to. Full list of possibilities can be seen on google.
   })
 );
 
 // Route handler for auth callback (Automatically gets 'code' from earlier call)
 router.get("/auth/google/callback",
-  passport.authenticate("google-restricted"),
+  passport.authenticate("google"),
   (req, res) => {
-    res.redirect("/");
+    res.status(200)
+    res.send({
+      success: true,
+      data: {
+        'accessToken': JWT.signAccessToken({ user: req.user.id }),
+        'refreshToken': JWT.signRefreshToken({ user: req.user.id }),
+      }
+    })
   }
 );
-
-// Logout simulation
-router.get("/auth/logout", (req, res) => {
-  req.logout();
-  res.redirect("/");
-});
-
-// Show current user simulation
-router.get("/auth/current_user", (req, res) => {
-  setTimeout(() => {
-    res.send(req.user);
-  }, 1500);
-});
 
 module.exports = router
