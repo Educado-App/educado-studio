@@ -13,7 +13,7 @@ module.exports = function buildMakeAppUser({ Phone, Password }) {
         
         if (!password) throw new Error("User must have a password")
         if (!(password.length >= 8)) throw new Error("Password should be at least 8 characters long")
-        if (password.search("[A-Z]") == -1) throw new Error("Password must contain a capital letter")
+        if (password.search("[A-Z]" && "[a-z]") == -1) throw new Error("Password must contain a letter")
         //if (password.search("[a-z]") == -1) throw new Error("Password must contain a lower case letter")
         
         const { salt, hash } = Password.encrypt(password)

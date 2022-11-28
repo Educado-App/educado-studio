@@ -23,6 +23,5 @@ module.exports = function makeAppAuthController(authAppService) {
             data: response
         }
     }
-
     
 }

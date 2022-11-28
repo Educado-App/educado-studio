@@ -4,7 +4,7 @@ module.exports = function makeFakeAppUser(overrides = {}) {
     
     const fakeAppUser = {
         phone: "12345678",
-        password: "ABC123456!",
+        password: "ABc123456!",
         loggedInAt: new Date()
     }
 
