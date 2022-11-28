@@ -17,7 +17,7 @@ module.exports = function makeSectionList({ dbModel, Id }) {
         const result = await dbModel.findById(id)
             .populate('exercises')
 
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 
     async function findAllByCourseId(id) {
@@ -28,7 +28,7 @@ module.exports = function makeSectionList({ dbModel, Id }) {
             .find({ parentCourse: id })
             .sort('sectionNumber')
 
-        return results.map((doc) => doc.toObject())
+        return results.map((doc) => doc.toObject({ getters: true, virtuals: true }))
     }
 
     async function add({ id: _id, ...section }) {
@@ -39,7 +39,7 @@ module.exports = function makeSectionList({ dbModel, Id }) {
             exercises: section.exercises.map(exercise => exercise.id)
         })
 
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 
     async function remove({ id: _id, ...section }) {

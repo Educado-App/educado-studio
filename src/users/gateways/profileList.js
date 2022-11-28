@@ -15,7 +15,7 @@ module.exports = function makeProfileList(dbModel) {
             user: profile.user.id
         })
 
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 
     async function remove({ id: _id, ...profile }) {
@@ -26,12 +26,12 @@ module.exports = function makeProfileList(dbModel) {
 
     async function findById(id) {
         const result = await dbModel.findById(id)
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 
     async function findByUserId(user_id) {
         const result = await dbModel.findOne({ user: user_id })
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 
 }

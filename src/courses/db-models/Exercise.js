@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const { VideoField } = require('../../helpers/mongoose/fields/file')
 const { StorageLink } = require('../../helpers/mongoose/fields')
 
 const exerciseSchema = new Schema({
@@ -8,7 +9,7 @@ const exerciseSchema = new Schema({
     parentSection: { type: Schema.Types.ObjectId, ref: "Section" },
     exerciseNumber: { type: Number },
     content: { type: String, get: StorageLink },
-    onWrongFeedback: { type: String, get: StorageLink },
+    onWrongFeedback: VideoField(),
     answers: [{
         text: { type: String },
         correct: { type: Boolean },
@@ -16,9 +17,6 @@ const exerciseSchema = new Schema({
         _id: false
     }],
     modifiedAt: { type: Date },
-}, {
-    toJSON: { getters: true, setters: true },
-    toObject: { getters: true, setters: true }
 });
 
 

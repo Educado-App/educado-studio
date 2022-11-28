@@ -11,13 +11,13 @@ module.exports = function makeExerciseList({ dbModel }) {
     async function findAllBySectionId(sid) {
         const results = await dbModel.find({ parentSection: sid })
         
-        return results.map((doc) => doc.toObject())
+        return results.map((doc) => doc.toObject({ getters: true, virtuals: true }))
     }
 
     async function findById(id) {
         const result = await dbModel.findById(id)
 
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 
     async function add({ id: _id, ...exercise }) {
@@ -27,7 +27,7 @@ module.exports = function makeExerciseList({ dbModel }) {
             ...exercise,
         })
 
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 
     async function remove({ id: _id, ...exercise }) {
@@ -40,6 +40,6 @@ module.exports = function makeExerciseList({ dbModel }) {
 
         const result = await dbModel.findOneAndUpdate({ _id }, { ...changes }, { new: true })
 
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 }

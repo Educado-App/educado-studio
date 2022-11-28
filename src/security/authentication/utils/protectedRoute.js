@@ -7,7 +7,7 @@ module.exports = function makeProtectedRoute({ passport, profileList }) {
 
         passport.authenticate('JWT', { session: false }, (err, user, info) => {
             if (info instanceof Error) {
-                throw new ValidationError(info)
+                throw new ValidationError(info.message)
             }
             else if (err) {
                 next(err)

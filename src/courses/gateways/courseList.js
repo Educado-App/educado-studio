@@ -58,7 +58,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             .limit(parseInt(limit))
             .skip(parseInt(offset))
 
-        return results.map((doc) => doc.toObject())
+        return results.map((doc) => doc.toObject({ getters: true, virtuals: true }))
     }
 
     async function findById(id) {
@@ -75,7 +75,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
                 },
             })
 
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 
     async function findAllByAuthor({
@@ -95,7 +95,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             })
             .select('-sections')
 
-        return results.map((doc) => doc.toObject())
+        return results.map((doc) => doc.toObject({ getters: true, virtuals: true }))
     }
 
     async function add({ id: _id, ...course }) {
@@ -108,7 +108,7 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             sections: course.sections.map(section => section.id)
         })
 
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 
     async function remove({ id: _id, ...course }) {
@@ -123,6 +123,6 @@ module.exports = function makeCourseList({ dbModel, Params, ParamsSchema, Id }) 
             $set: changes
         }, { new: true })
 
-        return result?.toObject()
+        return result?.toObject({ getters: true, virtuals: true })
     }
 }

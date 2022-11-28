@@ -1,3 +1,5 @@
+const mongoose = require('mongoose')
+const { Schema } = mongoose;
 const aws = require('../AWS')
 const config = require('../../../env/config/keys')
 
@@ -8,7 +10,7 @@ const config = require('../../../env/config/keys')
 function StorageLink(url) {
 
     if (!url) return ""
-    
+
     const EXPIRE_AFTER_SECONDS = 86436      // 1-day expiary
 
     const s3 = new aws.S3();
@@ -19,13 +21,25 @@ function StorageLink(url) {
     };
 
     if (params.Key) {
-        
+
         return s3.getSignedUrl("getObject", params)
     }
 
     return ""
 }
 
+
+
+// Class description
+const FileSchema = new Schema({
+    key: { type: String },
+    bucket: { type: String },
+    mime: { type: String }
+})
+
+const StorageFile = mongoose.model("File", FileSchema);
+
 module.exports = {
-    StorageLink
+    StorageLink,
+    StorageFile
 }

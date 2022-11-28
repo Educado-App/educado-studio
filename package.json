@@ -37,6 +37,7 @@
     "heroku": "^7.7.8",
     "http-proxy-middleware": "^2.0.3",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "mongoose": "^5.10.9",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
@@ -66,7 +67,9 @@
       "<rootDir>/__tests__/helpers",
       "<rootDir>/__tests__/setup"
     ],
-    "setupFiles": ["<rootDir>/__tests__/setup/connect-db.js"],
+    "setupFiles": [
+      "<rootDir>/__tests__/setup/connect-db.js"
+    ],
     "globalSetup": "<rootDir>/__tests__/setup/jest-setup.js",
     "globalTeardown": "<rootDir>/__tests__/setup/jest-teardown.js",
     "testEnvironment": "<rootDir>/__tests__/setup/jest-mongo.js",
