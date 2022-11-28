@@ -10,6 +10,8 @@ module.exports = function makeEditExercise({ exerciseList }) {
 
         return await exerciseList.update({
             id: exercise.id,
+            title: exercise.title,
+            description: exercise.description,
             content: exercise.content,
             onWrongFeedback: exercise.onWrongFeedback,
             answers: exercise.getAnswers(),
