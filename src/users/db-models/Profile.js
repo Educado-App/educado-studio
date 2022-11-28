@@ -5,7 +5,7 @@ const profileSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: "User" },
     firstName: String,
     lastName: String,
-    roles: [{type: Schema.Types.ObjectId, ref: "roles"}],
+    groups: [{type: Schema.Types.ObjectId, ref: "Role"}],
 });
 
 profileSchema.virtual('name').get(() => {

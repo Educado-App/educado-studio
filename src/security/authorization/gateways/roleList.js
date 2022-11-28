@@ -9,18 +9,7 @@ module.exports = function makeRoleList({ dbModel }) {
     })
 
     async function findById(id) {
-
-        if (!Id.isValid(id)) throw new ValidationError(`Invalid course id '${id}'`)
-
         const result = await dbModel.findById(id)
-            /*.populate({
-                path: 'id',
-                /*select: '-user',
-                populate: {
-                    path: 'exercises',
-                },
-            })*/
-
         return result?.toObject()
     }
 
