@@ -6,7 +6,7 @@ module.exports =  InstitutionPermissions = {
 	permissions: [
         Permissions.VIEW_INSTITUTION,
         Permissions.EDIT_INSTITUTION,
-		Permissions.ASSIGN_MODERATORS,
-		Permissions.DEASSIGN_MODERATORS
+		Permissions.ASSIGN_ADMIN,
+		Permissions.RESIGN_ADMIN
     ]
 }

@@ -1,12 +1,12 @@
 /*
-Functions to be autorun upon server start
+Functions to be auto run upon server start
 */
 const { addRole } = require('../use-cases')
 const { roles }  = require('./roles')
 const { roleList } = require('../gateways')
 
 module.exports = async function setupPermissions() {
-        //deletes a collection from the database
+        //deletes roles collection from the database at app start up 
         await roleList.remove({})
 
         //post all roles into database
@@ -32,7 +32,7 @@ async function postRole(role) {
 
 
 // Gets a role from the database
-async function getRole(role) {
+/*async function getRole(role) {
     try{
         const id = role.id
 
@@ -53,4 +53,4 @@ async function getRole(role) {
             status: 400,
         }
     }
-}
+}*/
