@@ -1,3 +1,9 @@
+/**
+  * A list over different interactions used with the database
+  * 
+  * Last Modified: 28-11-2022
+  **/
+
 module.exports = function makeAppUserList({ dbModel }) {
 
     return Object.freeze({

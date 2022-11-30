@@ -12,7 +12,6 @@ passport.use("google", googleStrategy)
 passport.use("google-restricted", googleRestrictedStrategy)
 
 passport.use("login", jwtAppStrategy)
-//passport.use("login", phoneStrategy)
 
 // ** SERIALIZATION & DESERIALIZATION ** //
 

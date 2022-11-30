@@ -1,5 +1,5 @@
 const makeFakeAppUser = require('../../../../__tests__/fixtures/fakeAppUser')
-const { deleteAppUserController: removeAppUser } = require('.')
+const { deleteAppUserController: handle } = require('.')
 const { appUserList } = require('../gateways')
 
 describe('App user deletion controller', () => {
@@ -11,10 +11,11 @@ describe('App user deletion controller', () => {
 
         const request = {
             header: { 'Content-Type': 'application/json' },
+            method: 'DELETE',
             params: { id: fakeAppUser.id },
         }
 
-        const response = await removeAppUser(request)
+        const response = await handle(request)
 
         expect(response.statusCode).toBe(200)
         expect(response.success).toBe(true)

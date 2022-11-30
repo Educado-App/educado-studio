@@ -2,7 +2,6 @@
   * Use-case for deleting an app user
   * 
   * Last Modified: 20-11-2022
-  * By: Anton + Charlotte
   **/
 
  

@@ -1,35 +1,35 @@
 /**
   * Controller for deleting an app user
   * 
-  * Last Modified: 20-11-2022
-  * By: Anton + Charlotte
+  * Last Modified: 30-11-2022
   **/
 
+const { ValidationError, HttpMethodNotAllowedError } = require('../../../helpers/error')
 const { deleteAppUser } = require('../use-cases')
 
 module.exports = function makeDeleteAppUser({ }) {
-    
-    return async function removeAppUser (httpRequest) {
-        // Finding app users id  
-        const id = httpRequest.params.id     
-        try {
-            // Calling deleteAppUser use case with id of the app user
-            const deleted = await deleteAppUser({id})
-            
-            return {
-                success: true,
-                statusCode: 200,
-                body: deleted
-            }
 
-        } catch (error) {
-            console.log(error)
-            return {
-                statusCode: 400,
-                body: {
-                    error: error.message
-                }
-            }
+    return async function handle(httpRequest) {
+        switch (httpRequest.method) {
+            case 'DELETE':
+                return await postRemoveAppUser(httpRequest)
+        
+            default:
+                throw new HttpMethodNotAllowedError(httpRequest.method)
+        }
+    }
+    
+    async function postRemoveAppUser (httpRequest) {
+        // Finding app users id  
+        const id = httpRequest.params.id
+        
+        // Calling deleteAppUser use case with id of the app user
+        const deleted = await deleteAppUser({id})
+            
+        return {
+            success: true,
+            statusCode: 200,
+            body: deleted
         }
     }
 
