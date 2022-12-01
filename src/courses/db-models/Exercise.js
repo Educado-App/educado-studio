@@ -8,7 +8,7 @@ const exerciseSchema = new Schema({
     description: { type: String },
     parentSection: { type: Schema.Types.ObjectId, ref: "Section" },
     exerciseNumber: { type: Number },
-    content: { type: String, get: StorageLink },
+    content: VideoField(),
     onWrongFeedback: VideoField(),
     answers: [{
         text: { type: String },

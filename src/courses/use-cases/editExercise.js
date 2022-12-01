@@ -11,7 +11,7 @@ module.exports = function makeEditExercise({ exerciseList }) {
         return await exerciseList.update({
             id: exercise.id,
             content: exercise.content,
-            onWrongFeedback: exercise.onWrongFeedback,
+            onWrongFeedback: {},
             answers: exercise.getAnswers(),
             modifiedAt: new Date(),
         })
