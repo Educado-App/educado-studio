@@ -4,6 +4,7 @@ const findAllSchema = {
     type: 'object',
     properties: {
         'approved': { type: 'boolean' },
+        'isRejected': { type: 'boolean' },
         'before': { type: 'string', format: "date" },
         'after': { type: 'string', format: "date" }
     },
@@ -26,7 +27,7 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
         ...conditions
     } = {}) {
 
-        const { approved, before, after, errors } = Params.validate({
+        const { approved, isRejected, before, after, errors } = Params.validate({
             schema: ParamsSchema.extendFindAllSchema(findAllSchema),
             data: { sortBy, limit, offset, ...conditions }
         })
@@ -35,12 +36,12 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
 
         let query = {
             $and: [
+                typeof isRejected !== 'undefined' ? { isRejected } : {},
                 typeof approved !== 'undefined' ? { approved } : {},
                 before ? { createdAt: { $lte: new Date(before) } } : {},
                 after ? { createdAt: { $gte: new Date(after) } } : {},
             ]
         }
-        query = {}
 
         const results = await dbModel
             .find(query)
@@ -48,16 +49,15 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
             .limit(parseInt(limit))
             .skip(parseInt(offset))
 
-        return results
+        return results.map((doc) => doc.toObject())
     }
 
 
 
     async function findById(id) {
         const result = await dbModel.findById(id)
-        const { _id: foundId, ...contentCreatorApplicationInfo } = result._doc
 
-        return { id: foundId, ...contentCreatorApplicationInfo }
+        return result.toObject()
     }
 
     async function add(contentCreatorApplication) {
@@ -66,8 +66,7 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
             ...contentCreatorApplication
         })
 
-        const { _id: id, ...contentCreatorApplicationInfo } = result._doc
-        return { id, ...contentCreatorApplicationInfo }
+        return result.toObject()
     }
 
     async function remove({ id: _id, ...contentCreatorApplication }) {
@@ -78,6 +77,7 @@ module.exports = function makeContentCreatorApplicationList({ dbModel, Params, P
 
     async function update({ id: _id, ...changes }) {
         const result = await dbModel.findOneAndUpdate({ _id }, { ...changes }, { new: true })
-        return result
+        
+        return result.toObject()
     }
 }

@@ -6,7 +6,7 @@ const authorization = require('../security/authorization/services/authorizationS
  */
 function makeExpressCallback(requestHandler) {
 
-    return async function callback(req, res, next) {
+    return async function callback(req, res) {
 
         const httpRequest = {
             method: req.method,
@@ -34,21 +34,15 @@ function makeExpressCallback(requestHandler) {
                 extras['count'] = response.data.length
             }
 
-            res.status(response.status)
+            res.status(response.status || response.statusCode)
             res.send({
                 status: response.status,
                 success: response.success,
                 ...extras,
                 ...response,
             })
-
-        } catch (error) {
-
-            // Forwards error to central error handler
-            next(error)
-
-        }
-
+        })
+        .catch(e => res.status(500).send({ error: e }))
     }
 }
 

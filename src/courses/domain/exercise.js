@@ -33,7 +33,7 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
     }
 
     function validateAnswers(answers) {
-        if (answers.length === 0) return
+        if (answers.length === 0) return []
 
         containsCorrectAnswers(answers)
 
