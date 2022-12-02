@@ -22,11 +22,7 @@ function makeExpressCallback(requestHandler) {
             }
         }
 
-        try {
-
-            authorization.checkPermission(profile, controller)
-
-            const response = await controller.handle(httpRequest) ? controller.handle(httpRequest) : requestHandler(httpRequest)
+        await controller.handle(httpRequest) ? controller.handle(httpRequest) : requestHandler(httpRequest).then(response => {
 
             let extras = {}
 
@@ -41,8 +37,7 @@ function makeExpressCallback(requestHandler) {
                 ...extras,
                 ...response,
             })
-        })
-        .catch(e => res.status(500).send({ error: e }))
+        }).catch (e => res.status(500).send({ error: e }))
     }
 }
 
