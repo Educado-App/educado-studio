@@ -1,3 +1,5 @@
+const authorization = require('../security/authorization/services/authorizationService')
+
 /**
  * Adapter for express request / response callbacks
  * to work with controllers representation of http requests (mostly similar)
@@ -20,9 +22,12 @@ function makeExpressCallback(requestHandler) {
             }
         }
 
-        await requestHandler(httpRequest)
-        .then(response => {
-        
+        try {
+
+            authorization.checkPermission(profile, controller)
+
+            const response = await controller.handle(httpRequest) ? controller.handle(httpRequest) : requestHandler(httpRequest)
+
             let extras = {}
 
             if (response.data instanceof Array) {

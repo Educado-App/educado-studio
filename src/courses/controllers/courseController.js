@@ -1,4 +1,5 @@
 const { HttpMethodNotAllowedError } = require('../../helpers/error')
+const { courseDetailController } = require('./courseDetailController')
 
 const { addCourse, editCourse } = require('../use-cases')
 
@@ -8,7 +9,7 @@ module.exports = function makeCourseController({ courseList }) {
 
         switch (httpRequest.method) {
             case 'GET':
-                return await getCourse(httpRequest)
+                return await new courseDetailController()
 
             case 'POST':
                 return await postCourse(httpRequest)

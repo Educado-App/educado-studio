@@ -7,6 +7,7 @@ module.exports = function buildMakeProfile({ Id }) {
         firstName,
         lastName,
         user,
+        groups,
         modifiedAt = new Date()
     } = {}) {
 
@@ -20,6 +21,7 @@ module.exports = function buildMakeProfile({ Id }) {
             firstName,
             lastName,
             user,
+            groups,
             modifiedAt
         })
 
