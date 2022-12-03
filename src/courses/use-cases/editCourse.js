@@ -11,7 +11,7 @@ module.exports = function makeEditCourse({ courseList }) {
         return await courseList.update({
             id: course.getId(),
             title: course.getTitle(),
-            category: course.getCategory(),
+            category: course.getCategory().id,
             coverImg: course.getCoverImg(),
             description: course.getDescription(),
             modifiedAt: new Date(),

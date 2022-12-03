@@ -27,11 +27,12 @@ module.exports = function getFileConfigurationAdminJS(fields) {
                 provider: { aws: AWSOptions },
                 properties: {
                     key: `${fieldName}.path`,
-                    //bucket: 'icon.folder',
                     mimeType: `${fieldName}.type`,
                     size: `${fieldName}.size`,
                     filename: `${fieldName}.filename`,
                     file: `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`,
+                    filePath: `${fieldName}.filePath`,
+                    filesToDelete: `${fieldName}.filesToDelete`
                 },
                 validation: { mimeTypes: field.options.mimeTypes }
             }))

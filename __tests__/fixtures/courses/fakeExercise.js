@@ -1,9 +1,11 @@
+const makeFakeFile = require('../fakeFile')
+
 module.exports = function makeFakeExercise(overrides = {}) {
 
     const exercise = {
         exerciseNumber: 1,
-        content: "https://www.youtube.com/watch?v=C0DPdy98e4c",
-        on_wrong_feedback: "https://www.youtube.com/watch?v=C0DPdy98e4c",
+        content: makeFakeFile({ type: "video/mp4" }),
+        on_wrong_feedback: makeFakeFile({ type: "video/mp4" }),
         answers: [],
         modifiedAt: new Date(),
     }

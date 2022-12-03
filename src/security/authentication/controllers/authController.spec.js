@@ -2,7 +2,7 @@ const makeFakeUser = require('../../../../__tests__/fixtures/fakeUser')
 
 const { userList } = require('../../../users/gateways')
 const { makeUser } = require('../../../users/domain')
-const { authAuthController: handle } = require('.')
+const { authController: handle } = require('.')
 
 describe('Authentication Endpoint Handler', () => {
 

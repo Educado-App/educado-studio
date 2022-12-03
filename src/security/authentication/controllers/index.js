@@ -1,6 +1,6 @@
 const { authService } = require('../services')
 const makeAuthController = require('./authController')
 
-const authAuthController = makeAuthController(authService)
+const authController = makeAuthController(authService)
 
-module.exports = { authAuthController }
+module.exports = { authController }

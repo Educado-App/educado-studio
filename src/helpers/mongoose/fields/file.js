@@ -9,6 +9,8 @@ const FileSchema = new Schema({
     size: Number,
     folder: String,
     filename: String,
+    filesToDelete: String,
+    filePath: String
 })
 
 /**
