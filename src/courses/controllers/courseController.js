@@ -9,7 +9,7 @@ module.exports = function makeCourseController({ courseList }) {
 
         switch (httpRequest.method) {
             case 'GET':
-                return await new courseDetailController()
+                return await getCourse(httpRequest)
 
             case 'POST':
                 return await postCourse(httpRequest)

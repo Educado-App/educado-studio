@@ -19,7 +19,7 @@ router.get('/public/courses/:id', makeExpressCallback(publicCourseController))
 router.get('/courses', restricted, makeExpressCallback(courseController))
 router.delete('/courses/:id', restricted, makeExpressCallback(courseController))
 router.post('/courses', restricted, makeExpressCallback(courseController))
-router.get('/courses/:id', restricted, makeExpressCallback(new courseDetailController()))
+router.get('/courses/:id', restricted, makeExpressCallback(courseController))
 router.put('/courses/:id', restricted, makeExpressCallback(courseController))
 
 /* Sections */
