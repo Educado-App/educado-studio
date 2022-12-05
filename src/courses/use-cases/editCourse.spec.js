@@ -8,7 +8,7 @@ describe('Edit Course', () => {
 
     afterEach(async () => await courseList.remove({}))
 
-    it('successfully changes the title of an existing course', async () => {
+    xit('successfully changes the title of an existing course', async () => {
         const fakeCourse = makeFakeCourse({ title: "A fake title", description: "Hello my friend" })
         const added = await setupCourse(fakeCourse)
         
