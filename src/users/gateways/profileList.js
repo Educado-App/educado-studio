@@ -4,7 +4,8 @@ module.exports = function makeProfileList(dbModel) {
         add,
         remove,
         findById,
-        findByUserId
+        findByUserId,
+        update
     })
 
     async function add(profile) {
@@ -32,6 +33,17 @@ module.exports = function makeProfileList(dbModel) {
     async function findByUserId(user_id) {
         const result = await dbModel.findOne({ user: user_id })
         return result?.toObject({ getters: true, virtuals: true })
+    }
+
+
+    
+    async function update({ id: _id, ...changes }) {
+
+        const result = await dbModel.findOneAndUpdate({ _id }, {
+            $set: changes
+        }, { new: true })
+
+        return result?.toObject()
     }
 
 }

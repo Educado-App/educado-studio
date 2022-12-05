@@ -2,6 +2,7 @@ const router = require('express').Router()
 
 const { restricted } = require('../../security/authentication')
 const { makeExpressCallback } = require('../../helpers/express')
+const { courseDetailController } = require('../controllers/courseDetailController')
 
 const {
     publicCourseController,

@@ -6,6 +6,8 @@
 const { UserModel, ProfileModel } = require("../users/db-models");
 const { CourseModel, SectionModel, ExerciseModel, CategoryModel } = require('../courses/db-models')
 const { ContentCreatorApplication } = require('../onboarding/db-models')
+const { RoleModel } = require('../security/authorization/db-models')
+
 
 
 module.exports = [
@@ -16,4 +18,5 @@ module.exports = [
     SectionModel,
     ExerciseModel,
     ContentCreatorApplication,
+    RoleModel
 ]
