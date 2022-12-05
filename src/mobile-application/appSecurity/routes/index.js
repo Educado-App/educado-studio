@@ -30,10 +30,7 @@ router.get("/login/callback",
     res.status(200)
     res.send({
       success: true,
-      data: {
-        'accessToken': JWT.signAccessToken({ appUser: req.appUser.id }),
-        'refreshToken': JWT.signRefreshToken({ appUser: req.appUser.id }),
-      }
+      data: JWT.generateTokenPair({ appUser: req.appUser.id })
     })
   }
 );

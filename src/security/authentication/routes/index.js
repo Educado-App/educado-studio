@@ -37,10 +37,7 @@ router.get("/auth/google/callback",
     res.status(200)
     res.send({
       success: true,
-      data: {
-        'accessToken': JWT.signAccessToken({ user: req.user.id }),
-        'refreshToken': JWT.signRefreshToken({ user: req.user.id }),
-      }
+      data: JWT.generateTokenPair({ user: req.user.id })
     })
   }
 );

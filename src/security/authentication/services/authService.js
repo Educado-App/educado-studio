@@ -10,7 +10,7 @@ module.exports = function buildMakeAuthService({ Password, JWT }) {
 
         async function authenticate(user) {
 
-            const foundUser = await userList.findByEmail(user.email) 
+            const foundUser = await userList.findByEmail(user.email)
 
             if (!foundUser) { throw new AuthenticationError("Authentication: Access denied") }
 
@@ -22,10 +22,7 @@ module.exports = function buildMakeAuthService({ Password, JWT }) {
 
             if (!isAuthenticated) { throw new AuthenticationError("Authentication: Access denied") }
 
-            return {
-                'accessToken': JWT.signAccessToken({ user: foundUser.id }),
-                'refreshToken': JWT.signRefreshToken({ user: foundUser.id }),
-            }
+            return JWT.generateTokenPair({ user: foundUser.id })
         }
     }
 }
