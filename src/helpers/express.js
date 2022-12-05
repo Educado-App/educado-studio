@@ -15,11 +15,7 @@ function makeExpressCallback(requestHandler) {
             queryParams: req.query,
             ip: req.ip,
             context: req.context,
-            headers: {
-                'Content-Type': req.get('Content-Type'),
-                'Referer': req.get('referer'),
-                'User-Agent': req.get('User-Agent')
-            }
+            headers: req.headers
         }
 
         await requestHandler(httpRequest)

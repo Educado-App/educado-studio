@@ -9,7 +9,7 @@ const { authController } = require('../controllers')
 
 
 router.post('/auth/jwt', makeExpressCallback(authController))
-router.post('/auth/refresh/jwt', makeExpressCallback(authController))
+router.get('/auth/refresh/jwt', makeExpressCallback(authController))
 
 
 router.get('/auth/jwt/test', restricted, (req, res) => {

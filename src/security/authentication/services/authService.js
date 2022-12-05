@@ -27,6 +27,5 @@ module.exports = function buildMakeAuthService({ Password, JWT }) {
                 'refreshToken': JWT.signRefreshToken({ user: foundUser.id }),
             }
         }
-
     }
 }
