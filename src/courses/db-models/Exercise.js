@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { VideoField } = require('../../helpers/mongoose/fields/file')
-const { StorageLink } = require('../../helpers/mongoose/fields')
 
 const exerciseSchema = new Schema({
     title: { type: String },

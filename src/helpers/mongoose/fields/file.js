@@ -1,3 +1,8 @@
+/**
+ * This file contains custom mongoose fields that can be included
+ * in mongoose schemas to support upload and handling of files
+ */
+
 const mongoose = require("mongoose");
 const aws = require('../../AWS')
 const config = require('../../../../env/config/keys')
