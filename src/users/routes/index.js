@@ -4,12 +4,14 @@ const { restricted } = require('../../security/authentication')
 const { makeExpressCallback } = require('../../helpers/express')
 
 const {
-    groupController
+    groupController,
+    profileController
 } = require('../controllers')
 
-/* profiles */
 
+
+router.get('/profiles/:id', restricted, makeExpressCallback(profileController))
+router.put('/profiles/:id', restricted, makeExpressCallback(profileController))
 router.post('/profiles/:id/addGroup/:group', restricted, makeExpressCallback(groupController))
-router.delete('/courses/:id', restricted, makeExpressCallback(groupController))
 
 module.exports = router

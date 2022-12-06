@@ -7,11 +7,8 @@ const profileSchema = new Schema({
     lastName: String,
     groups: [{type: Schema.Types.ObjectId, ref: "Role"}],
     courseMember: [{
-        course: { type: Schema.Types.ObjectId, ref: "course" },
-        role: [{
-            _id: { type: Schema.Types.ObjectId, ref: "role" },
-            name: { type: String }
-        }]
+        course: { type: Schema.Types.ObjectId, ref: "Course" },
+        role: { type: Schema.Types.ObjectId, ref: "Role" }
     }],
     institution: [{
         name: { type: String },
@@ -20,16 +17,9 @@ const profileSchema = new Schema({
             email: { type: String },
             address: { type: String }
         }],
-        role: [{
-            _id: { type: Schema.Types.ObjectId, ref: "role" },
-            name: { type: String }
-        }],
+        role: { type: Schema.Types.ObjectId, ref: "Role" },
     }]
 });
-
-profileSchema.virtual('name').get(() => {
-    return `${this.firstName} + ${this.lastName}`
-})
 
 const ProfileModel = mongoose.model("Profile", profileSchema);
 

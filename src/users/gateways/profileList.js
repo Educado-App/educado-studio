@@ -1,4 +1,6 @@
-module.exports = function makeProfileList(dbModel) {
+const { ValidationError } = require("../../helpers/error")
+
+module.exports = function makeProfileList({ dbModel, Id }) {
 
     return Object.freeze({
         add,
@@ -26,6 +28,8 @@ module.exports = function makeProfileList(dbModel) {
     }
 
     async function findById(id) {
+        if (!Id.isValid(id)) throw new ValidationError(`Invalid profile id '${id}'`)
+
         const result = await dbModel.findById(id)
         return result?.toObject({ getters: true, virtuals: true })
     }
@@ -36,7 +40,7 @@ module.exports = function makeProfileList(dbModel) {
     }
 
 
-    
+
     async function update({ id: _id, ...changes }) {
 
         const result = await dbModel.findOneAndUpdate({ _id }, {
