@@ -27,7 +27,6 @@ module.exports = function makeProfileController({ profileList, Params }) {
         }
     }
 
-
     async function updateProfileInfo(httpRequest) {
 
         const profileId = httpRequest.params.id

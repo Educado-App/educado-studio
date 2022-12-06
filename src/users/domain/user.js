@@ -13,9 +13,10 @@ module.exports = function buildMakeUser({ Id, Email, Password }) {
 
         if (!Email.isValid(email))          throw new ValidationError("User must have a valid email")
         if (!password)                      throw new ValidationError("User must have a password")
-        if (!(password.length >= 8))        throw new ValidationError("Password should be atleast 8 characters long")
-        if (password.search("[A-Z]") == -1) throw new ValidationError("Password must contain one capital letter")
 
+        const [_, error] = Password.isStrong(password)
+        if (error) throw error
+        
         const { salt, hash } = Password.encrypt(password)
 
         return Object.freeze({

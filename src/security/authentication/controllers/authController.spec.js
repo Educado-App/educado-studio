@@ -35,7 +35,7 @@ describe('Authentication Endpoint Handler', () => {
 
         const request = {
             method: 'GET',
-            headers: { authorization: `Bearer ${JWT.signRefreshToken({ userId: validUser.id })}` },
+            headers: { authorization: `Bearer ${JWT.signRefreshToken({ user: validUser.id })}` },
             context: {
                 profile: { user: validUser.id}
             }
