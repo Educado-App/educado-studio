@@ -14,7 +14,6 @@ module.exports = function makePasswordManagerController({ authService, Password,
 
     async function changePassword(httpRequest) {
 
-
         const userId = httpRequest.context.profile.user
         const { oldPassword, newPassword } = validatePasswordChangeInfo(httpRequest.body)
 

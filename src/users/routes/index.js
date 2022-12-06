@@ -7,9 +7,14 @@ const { groupController, profileController } = require('../controllers')
 const { passwordManagerController } = require('../../security/authentication/controllers')
 
 
-router.put('/user/changePassword', restricted, makeExpressCallback(passwordManagerController))
-router.get('/profiles/:id', restricted, makeExpressCallback(profileController))
-router.put('/profiles/:id', restricted, makeExpressCallback(profileController))
+// Public profile routes
+router.get('/public/profiles/:id', restricted, makeExpressCallback(profileController))
+
+// Private profile routes
+router.get('/profile/whoami', restricted, makeExpressCallback(profileController))
+router.put('/profile/changePassword', restricted, makeExpressCallback(passwordManagerController))
+router.put('/profile', restricted, makeExpressCallback(profileController))
+
 router.post('/profiles/:id/addGroup/:group', restricted, makeExpressCallback(groupController))
 
 module.exports = router

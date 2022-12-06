@@ -15,10 +15,12 @@ module.exports = function makeProfileController({ profileList, Params }) {
     }
 
     async function getProfile(httpRequest) {
+        let result
 
-        const id = httpRequest.params.id
+        const profileId = httpRequest.params.id
 
-        const result = await profileList.findById(id)
+        if (profileId)  result = await profileList.findById(profileId)
+        else            result = httpRequest.context.profile
 
         return {
             success: true,
@@ -29,7 +31,7 @@ module.exports = function makeProfileController({ profileList, Params }) {
 
     async function updateProfileInfo(httpRequest) {
 
-        const profileId = httpRequest.params.id
+        const profileId = httpRequest.context.profile.id
 
         const validatedData = validateProfileInfo(httpRequest.body)
 
