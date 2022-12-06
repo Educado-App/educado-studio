@@ -1,6 +1,6 @@
 const { HttpMethodNotAllowedError } = require('../../helpers/error')
 
-module.exports = function makeProfileController({ profileList }) {
+module.exports = function makeProfileController({ profileList, Params }) {
 
     return async function handle(httpRequest) {
 
@@ -27,15 +27,16 @@ module.exports = function makeProfileController({ profileList }) {
         }
     }
 
+
     async function updateProfileInfo(httpRequest) {
 
         const profileId = httpRequest.params.id
-        const { firstName, lastName } = httpRequest.body
+
+        const validatedData = validateProfileInfo(httpRequest.body)
 
         const updated = await profileList.update({
             id: profileId,
-            firstName,
-            lastName
+            ...validatedData
         })
 
         return {
@@ -43,5 +44,21 @@ module.exports = function makeProfileController({ profileList }) {
             status: 202,
             data: updated
         }
+    }
+
+    function validateProfileInfo(profileInfo) {
+        const validProfileInfo = {
+            type: 'object',
+            properties: {
+                'firstName': { type: 'string' },
+                'lastName': { type: 'string' }
+            },
+            additionalProperties: false,
+        }
+
+        return Params.validate({
+            schema: validProfileInfo,
+            data: profileInfo,
+        })
     }
 }
