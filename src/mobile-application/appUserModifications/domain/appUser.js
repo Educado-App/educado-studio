@@ -8,8 +8,9 @@ module.exports = function buildMakeAppUser({ Phone, Password }) {
 
     return function makeAppUser({
         phone,
+        username,
         password,
-        loggedInAt = new Date()
+        createdAt = new Date()
     } = {}) {
 
         // Validates only numbers are used in the phone number
@@ -27,9 +28,10 @@ module.exports = function buildMakeAppUser({ Phone, Password }) {
 
         return Object.freeze({
             phone: phone,
+            username: username,
             salt: salt,
             hash: hash,
-            loggedInAt: loggedInAt
+            createdAt: createdAt
         })
 
     }

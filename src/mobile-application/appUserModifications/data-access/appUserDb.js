@@ -13,9 +13,34 @@ const AppUserSchema = new Schema({
     phone: { 
         type: String,
     },
+    username: { type: String, unique: false },
     salt: { type: String },
     hash: { type: String },
-    loggedInAt: { type: String },
+    createdAt: { type: String },
+
+    activeCourses: [{
+      course: {
+        type: Schema.Types.ObjectId,
+        ref: 'Courses'
+      },
+      completed: Boolean,
+
+      sections: [{
+        section: {
+          type: Schema.Types.ObjectId,
+          ref: 'Sections'
+        },
+        completed: Boolean,
+        
+        exercises: [{
+          exercise: {
+            type: Schema.Types.ObjectId,
+            ref: 'Exercises'
+          },
+          completed: Boolean
+        }]
+      }]
+    }]
 })
 
 const appUserModel = mongoose.model(
