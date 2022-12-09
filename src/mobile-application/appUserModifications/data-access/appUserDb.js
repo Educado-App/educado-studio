@@ -19,25 +19,37 @@ const AppUserSchema = new Schema({
     createdAt: { type: String },
 
     activeCourses: [{
-      course: {
+      _id: false,
+      courseId: {
         type: Schema.Types.ObjectId,
         ref: 'Courses'
       },
-      completed: Boolean,
+      isComplete: { 
+        type: Boolean,
+        default: false
+      },
 
       sections: [{
+        _id: false,
         section: {
           type: Schema.Types.ObjectId,
           ref: 'Sections'
         },
-        completed: Boolean,
+        isComplete: { 
+          type: Boolean,
+          default: false
+        },
         
         exercises: [{
+          _id: false,
           exercise: {
             type: Schema.Types.ObjectId,
             ref: 'Exercises'
           },
-          completed: Boolean
+          isComplete: { 
+            type: Boolean,
+            default: false
+          },
         }]
       }]
     }]
