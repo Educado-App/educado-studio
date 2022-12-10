@@ -2,7 +2,7 @@ const makeFakeAppUser = require('../../../../__tests__/fixtures/fakeAppUser')
 const { registerAppUserController: handle } = require('.')
 
 describe('App user registration controller', () => {
- 
+
     it('Successfully posts a new user', async () => {
 
         const fakeAppUser = makeFakeAppUser()

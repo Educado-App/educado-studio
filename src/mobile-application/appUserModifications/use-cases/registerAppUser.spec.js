@@ -1,10 +1,10 @@
 const { registerAppUser } = require('.')
 const makeFakeAppUser = require('../../../../__tests__/fixtures/fakeAppUser')
 
-describe ('register app user', () => {
-    
+describe('register app user', () => {
 
-    it('inserts app user in database', async() => {
+
+    it('inserts app user in database', async () => {
         const newAppUser = makeFakeAppUser()
         await registerAppUser(newAppUser)
 
@@ -12,7 +12,7 @@ describe ('register app user', () => {
         expect(newAppUser.phone).toMatch('12345678')
     })
 
-    it('Cannot add app user if phone number already exists', async() => {
+    it('Cannot add app user if phone number already exists', async () => {
         const newAppUser = makeFakeAppUser()
         const repeatAppUser = makeFakeAppUser()
 

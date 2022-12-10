@@ -11,8 +11,8 @@ describe("AppUser", () => {
         const goodAppUser = { ...fakeAppUser, phone: "12345678" }
 
         expect(() => makeUser(badAppUser)).toThrow("User must have a valid phone number")
-        expect(() => makeUser({ ...fakeAppUser, phone: "1234567"})).toThrow("Phone Number must be at least 8 characters")
-        expect(() => makeUser({ ...fakeAppUser, phone: "123456789123"})).toThrow("Phone number can at most be 11 characters")
+        expect(() => makeUser({ ...fakeAppUser, phone: "1234567" })).toThrow("Phone Number must be at least 8 characters")
+        expect(() => makeUser({ ...fakeAppUser, phone: "123456789123" })).toThrow("Phone number can at most be 11 characters")
         expect(() => makeUser(goodAppUser)).not.toThrow()
     })
 

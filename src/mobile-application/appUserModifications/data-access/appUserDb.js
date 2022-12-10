@@ -10,54 +10,54 @@ const Schema = mongoose.Schema;
 
 // Class description
 const AppUserSchema = new Schema({
-    phone: { 
-        type: String,
-    },
-    username: { type: String, unique: false },
-    salt: { type: String },
-    hash: { type: String },
-    createdAt: { type: String },
+	phone: {
+		type: String,
+	},
+	username: { type: String, unique: false },
+	salt: { type: String },
+	hash: { type: String },
+	createdAt: { type: String },
 
-    activeCourses: [{
-      _id: false,
-      courseId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Courses'
-      },
-      isComplete: { 
-        type: Boolean,
-        default: false
-      },
+	activeCourses: [{
+		_id: false,
+		courseId: {
+			type: Schema.Types.ObjectId,
+			ref: 'Courses'
+		},
+		isComplete: {
+			type: Boolean,
+			default: false
+		},
 
-      sections: [{
-        _id: false,
-        section: {
-          type: Schema.Types.ObjectId,
-          ref: 'Sections'
-        },
-        isComplete: { 
-          type: Boolean,
-          default: false
-        },
-        
-        exercises: [{
-          _id: false,
-          exercise: {
-            type: Schema.Types.ObjectId,
-            ref: 'Exercises'
-          },
-          isComplete: { 
-            type: Boolean,
-            default: false
-          },
-        }]
-      }]
-    }]
+		sections: [{
+			_id: false,
+			section: {
+				type: Schema.Types.ObjectId,
+				ref: 'Sections'
+			},
+			isComplete: {
+				type: Boolean,
+				default: false
+			},
+
+			exercises: [{
+				_id: false,
+				exercise: {
+					type: Schema.Types.ObjectId,
+					ref: 'Exercises'
+				},
+				isComplete: {
+					type: Boolean,
+					default: false
+				},
+			}]
+		}]
+	}]
 })
 
 const appUserModel = mongoose.model(
-  "appUser",
-  AppUserSchema
+	"appUser",
+	AppUserSchema
 )
 
 module.exports = { appUserModel };
