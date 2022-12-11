@@ -2,6 +2,7 @@ const router = require('express').Router()
 
 const { restricted } = require('../../security/authentication')
 const { makeExpressCallback } = require('../../helpers/express')
+const { courseDetailController } = require('../controllers/courseDetailController')
 
 const {
     publicCourseController,
@@ -9,11 +10,16 @@ const {
     sectionController,
     reorderSectionsController,
     exerciseController,
+    categoryController
 } = require('../controllers')
 
 /* Courses */
 router.get('/public/courses', makeExpressCallback(publicCourseController))
 router.get('/public/courses/:id', makeExpressCallback(publicCourseController))
+
+/* Categories */
+router.get('/public/categories', makeExpressCallback(categoryController))
+router.get('/categories', makeExpressCallback(categoryController))
 
 router.get('/courses', restricted, makeExpressCallback(courseController))
 router.delete('/courses/:id', restricted, makeExpressCallback(courseController))
@@ -38,5 +44,6 @@ router.delete('/exercises/:eid', restricted, makeExpressCallback(exerciseControl
 router.post('/sections/:sid/exercises', restricted, makeExpressCallback(exerciseController))
 router.get('/courses/:cid/sections/:sid/exercises', restricted, makeExpressCallback(exerciseController))
 router.get('/courses/:cid/sections/:sid/exercises/:eid', restricted, makeExpressCallback(exerciseController))
+
 
 module.exports = router

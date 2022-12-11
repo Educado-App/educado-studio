@@ -1,3 +1,5 @@
+const authorization = require('../security/authorization/services/authorizationService')
+
 /**
  * Adapter for express request / response callbacks
  * to work with controllers representation of http requests (mostly similar)
@@ -13,11 +15,7 @@ function makeExpressCallback(requestHandler) {
             queryParams: req.query,
             ip: req.ip,
             context: req.context,
-            headers: {
-                'Content-Type': req.get('Content-Type'),
-                'Referer': req.get('referer'),
-                'User-Agent': req.get('User-Agent')
-            }
+            headers: req.headers
         }
 
         await requestHandler(httpRequest)
@@ -38,6 +36,7 @@ function makeExpressCallback(requestHandler) {
             })
         })
         .catch(e => res.status(500).send({ error: e }))
+
     }
 }
 

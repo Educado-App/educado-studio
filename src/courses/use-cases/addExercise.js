@@ -30,8 +30,9 @@ module.exports = function makeAddExercise({ exerciseList, sectionList }) {
             title: exercise.title,
             description: exercise.description,
             content: exercise.content,
-            onWrongFeedback: exercise.onWrongFeedback,
+            onWrongFeedback: exercise.onWrongFeedback || {},
             modifiedAt: exercise.modifiedAt,
+            createdAt: exercise.createdAt,
             answers: exercise.getAnswers()
         })
     }

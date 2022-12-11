@@ -63,7 +63,7 @@ const errorHandler = (err, req, res, next) => {
         res.send(finalResponse)
 
         //Ensure any remaining middleware are run.
-        next()
+        //next()
     }
 
 }

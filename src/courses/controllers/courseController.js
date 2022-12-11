@@ -1,4 +1,5 @@
 const { HttpMethodNotAllowedError } = require('../../helpers/error')
+const { courseDetailController } = require('./courseDetailController')
 
 const { addCourse, editCourse } = require('../use-cases')
 

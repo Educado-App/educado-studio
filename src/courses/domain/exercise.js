@@ -7,8 +7,8 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
         exerciseNumber,
         title = "",
         description = "",
-        content = "",
-        onWrongFeedback = "",
+        content = {},
+        onWrongFeedback = {},
         answers = [],
         modifiedAt = new Date()
     }) {
@@ -33,7 +33,7 @@ module.exports = function buildMakeExercise({ Id, makeAnswer }) {
     }
 
     function validateAnswers(answers) {
-        if (answers.length === 0) return
+        if (answers.length === 0) return []
 
         containsCorrectAnswers(answers)
 

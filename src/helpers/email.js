@@ -1,6 +1,7 @@
-const nodemailer = require("nodemailer")
 const config = require("../../env/config/keys")
+const sgMail = require('@sendgrid/mail')
 
+sgMail.setApiKey(config.SENDGRID_API_KEY)
 
 module.exports = Object.freeze({
   isValid,
@@ -12,7 +13,6 @@ function isValid(email) {
   return regEx.test(email)
 }
 
-
 async function sendMail({
   subject,
   from = config.outlookUser,
@@ -21,32 +21,13 @@ async function sendMail({
   html
 }) {
 
-  const transporter = nodemailer.createTransport({
-    service: "hotmail",
-    auth: {
-      type: "login",
-      user: config.outlookUser,
-      pass: config.outlookPass,
-
-    },
-    tls: {
-      rejectUnauthorized: false,
-    }
-  })
-
-  const mailOptions = {
-    from: from,
-    to: to,
-    subject: subject,
-    text: text,
-    html: html
-  }
-  
   if (config.MAILS_DISABLED) return
 
-  await transporter.sendMail(mailOptions)
+  await sgMail.send({
+    from,
+    to,
+    subject,
+    text,
+    html
+  })
 }
-
-
-
-

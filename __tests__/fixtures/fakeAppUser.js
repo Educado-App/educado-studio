@@ -1,11 +1,11 @@
-const Id = require('../../src/helpers/Id')
-
 module.exports = function makeFakeAppUser(overrides = {}) {
     
     const fakeAppUser = {
+        username: "blob",
         phone: "12345678",
         password: "ABc123456!",
-        loggedInAt: new Date()
+        createdAt: new Date(),
+        activeCourse: []
     }
 
     return {

@@ -38,7 +38,6 @@ module.exports = function buildMakeCourse({ Id, makeSection }) {
             addSection,
             removeSectionById,
             moveSectionById
-
         })
 
         function moveSectionById({ section: id, to: sectionNumber }) {

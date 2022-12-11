@@ -6,11 +6,11 @@
 
 const { makeUser } = require('../domain')
 
-module.exports = function makeRegisterAppUser ({ appUserList }) {
+module.exports = function makeRegisterAppUser({ appUserList }) {
 
-    return async function makeRegisteruser (appUserInfo) {
+    return async function makeRegisteruser(appUserInfo) {
 
-        const appUser = makeUser({...appUserInfo})
+        const appUser = makeUser({ ...appUserInfo })
 
         return await appUserList.add({
             ...appUser

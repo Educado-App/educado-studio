@@ -3,7 +3,7 @@ const { userList } = require('../../../users/gateways')
 const { makeUser } = require('../../../users/domain')
 const { authService } = require('.')
 
-describe('Authentication Handler', () => {
+describe('Authentication Service', () => {
 
     afterEach(async () => await userList.remove({}))
 
@@ -16,4 +16,5 @@ describe('Authentication Handler', () => {
         expect(result.accessToken).toMatch('ey')
         expect(result.refreshToken).toMatch('ey')
     })
+
 })

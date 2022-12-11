@@ -1,6 +1,7 @@
 const Id = require("../../../src/helpers/Id")
 const makeFakeProfile = require('../fakeProfile')
 const makeFakeCategory = require('./fakeCategory')
+const makeFakeFile = require('../fakeFile')
 
 module.exports = function makeFakeCourse(overrides = {}) {
 
@@ -9,7 +10,7 @@ module.exports = function makeFakeCourse(overrides = {}) {
         title: 'Basic testing',
         category: makeFakeCategory(),
         description: 'A course about testing',
-        coverImg: "https://dummyjson.com/",
+        coverImg: makeFakeFile(),
         author: makeFakeProfile(),
         sections: [],
         published: false,

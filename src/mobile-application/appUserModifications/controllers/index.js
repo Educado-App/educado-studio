@@ -1,7 +1,7 @@
 /**
   * index for app user controllers
   * 
-  * Last Modified: 20-11-2022
+  * Last Modified: 10-12-2022
   **/
 
 const { appUserList } = require('../gateways')

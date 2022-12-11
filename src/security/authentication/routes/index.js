@@ -5,10 +5,12 @@ const JWT = require('../utils/jwt')
 
 const { restricted } = require('..');
 const { makeExpressCallback } = require('../../../helpers/express')
-const { authAuthController } = require('../controllers')
+const { authController } = require('../controllers')
 
 
-router.post('/auth/jwt', makeExpressCallback(authAuthController))
+router.post('/auth/jwt', makeExpressCallback(authController))
+router.get('/auth/refresh/jwt', makeExpressCallback(authController))
+
 
 router.get('/auth/jwt/test', restricted, (req, res) => {
   res.status(200)
@@ -35,10 +37,7 @@ router.get("/auth/google/callback",
     res.status(200)
     res.send({
       success: true,
-      data: {
-        'accessToken': JWT.signAccessToken({ user: req.user.id }),
-        'refreshToken': JWT.signRefreshToken({ user: req.user.id }),
-      }
+      data: JWT.generateTokenPair({ user: req.user.id })
     })
   }
 );
