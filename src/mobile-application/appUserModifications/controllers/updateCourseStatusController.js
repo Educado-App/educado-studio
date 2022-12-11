@@ -17,11 +17,6 @@ exports.updateCourseStatus = async function (req, res, next) {
 
 		// find the course in the user's activeCourses list
 		const course = await appUserList.findCourseById(user, req.params.courseId)
-		if (!course) {
-			return res.status(404).json({
-				message: 'Course not found'
-			})
-		}
 
 		// Error if course does not exists
 		if (!course) {
