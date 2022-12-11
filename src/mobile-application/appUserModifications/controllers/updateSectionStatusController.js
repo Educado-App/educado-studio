@@ -1,7 +1,7 @@
 /**
   * Controller for updating a sections isComplete status
   * 
-  * Last Modified: 10-12-2022
+  * Last Modified: 11-12-2022
   **/
 
 const { appUserList } = require('../gateways')
@@ -31,6 +31,7 @@ exports.updateSectionStatus = async function (req, res, next) {
                 message: 'Section not found'
             })
         }
+        try {
 
         // update isComplete of the section with true
         section.isComplete = true
@@ -45,6 +46,12 @@ exports.updateSectionStatus = async function (req, res, next) {
         await user.save()
 
         res.json(user)
+    } catch (error) {
+        // Handle error if section is not updated properly
+        return res.status(500).json({
+            message: 'Error updating section completion'
+        })
+    }
     } catch (err) {
         return next(err)
     }

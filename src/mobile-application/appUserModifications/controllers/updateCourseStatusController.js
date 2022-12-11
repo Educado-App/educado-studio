@@ -1,7 +1,7 @@
 /**
   * Controller for updating a course's isComplete status
   * 
-  * Last Modified: 10-12-2022
+  * Last Modified: 11-12-2022
   **/
 
 const { appUserList } = require('../gateways')
@@ -17,22 +17,26 @@ exports.updateCourseStatus = async function (req, res, next) {
 
 		// find the course in the user's activeCourses list
 		const course = await appUserList.findCourseById(user, req.params.courseId)
-
-		// Error if course does not exists
 		if (!course) {
 			return res.status(404).json({
 				message: 'Course not found'
 			})
 		}
 
-		// set the isComplete property of the course object to true
-		course.isComplete = true
+		try {
+			// set the isComplete property of the course to true
+			course.isComplete = true
 
-		await user.save()
+			await user.save()
 
-		res.json(user)
+			res.json(user)
+		} catch (error) {
+			// Handle error if course is not updated properly
+			return res.status(500).json({
+				message: 'Error updating course completion'
+			})
+		}
 	} catch (err) {
 		return next(err)
 	}
-
 }

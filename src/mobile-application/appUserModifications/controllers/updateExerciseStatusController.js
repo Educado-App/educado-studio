@@ -1,7 +1,7 @@
 /**
   * Controller for updating an exercise isComplete status
   * 
-  * Last Modified: 10-12-2022
+  * Last Modified: 11-12-2022
   **/
 
 const { appUserList } = require('../gateways')
@@ -39,6 +39,8 @@ exports.updateExerciseStatus = async function (req, res, next) {
 			})
 		}
 
+		try {
+
 		// update isComplete of the exercise with true
 		exercise.isComplete = true
 
@@ -54,6 +56,12 @@ exports.updateExerciseStatus = async function (req, res, next) {
 		await user.save()
 
 		res.json(user)
+	} catch (error) {
+		// Handle error if exercise is not updated properly
+		return res.status(500).json({
+			message: 'Error updating exercise completion'
+		})
+	}
 	} catch (err) {
 		return next(err)
 	}
