@@ -12,8 +12,8 @@ const { appUserList } = require('../gateways')
 const makeRegisterAppUser = require('./registerAppUser')
 const makeDeleteAppUser = require('./deleteAppUser')
 
-const registerAppUser = makeRegisterAppUser( {appUserList, phone, password} )
-const deleteAppUser = makeDeleteAppUser( {appUserList} )
+const registerAppUser = makeRegisterAppUser({ appUserList, phone, password })
+const deleteAppUser = makeDeleteAppUser({ appUserList })
 
 
 

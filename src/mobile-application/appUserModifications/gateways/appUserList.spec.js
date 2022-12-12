@@ -9,7 +9,7 @@ const makeFakeAppUser = require('../../../../__tests__/fixtures/fakeAppUser')
 
 describe('App user db', () => {
 
-    it('Creates a new app user', async() => {
+    it('Creates a new app user', async () => {
         const fakeAppUser = makeFakeAppUser()
         await appUserList.add(fakeAppUser)
 
@@ -17,7 +17,7 @@ describe('App user db', () => {
 
     })
 
-    it('Find app user by id', async() => {
+    it('Find app user by id', async () => {
         const fakeAppUser = makeFakeAppUser()
 
         const inserted = await appUserList.add(fakeAppUser)
@@ -26,12 +26,12 @@ describe('App user db', () => {
 
         const insertedUser = await appUserList.findById(inserted.id)
 
-        expect(insertedUser).not.toBeNull()        
+        expect(insertedUser).not.toBeNull()
         expect(insertedUser.id).toBe(inserted.id)
     })
-    
 
-    it('Find app user by their phone number', async() => {
+
+    it('Find app user by their phone number', async () => {
         const fakeAppUser = makeFakeAppUser()
         await appUserList.add(fakeAppUser)
 
@@ -40,7 +40,7 @@ describe('App user db', () => {
         expect(insertedUser.phone).toEqual(fakeAppUser.phone)
     })
 
-    it('Removes an app user from the collection', async() => {
+    it('Removes an app user from the collection', async () => {
         const fakeAppUser = makeFakeAppUser()
         const addedUser = await appUserList.add(fakeAppUser)
 
@@ -51,7 +51,7 @@ describe('App user db', () => {
         // remove returns the removed document.
         // Testing to see if the removed documents id matches the 
         // originally added id
-        expect(removed.id).toBe(addedUser.id) 
+        expect(removed.id).toBe(addedUser.id)
     })
-    
+
 })

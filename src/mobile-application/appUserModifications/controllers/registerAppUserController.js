@@ -13,19 +13,19 @@ module.exports = function makeRegisterAppUser({ }) {
         switch (httpRequest.method) {
             case 'POST':
                 return await postAddAppUser(httpRequest)
-        
+
             default:
                 throw new HttpMethodNotAllowedError(httpRequest.method)
         }
     }
 
-    async function postAddAppUser (httpRequest) {
-   
+    async function postAddAppUser(httpRequest) {
+
         const appUserInfo = httpRequest.body
 
         const registered = await registerAppUser(appUserInfo)
 
-            
+
         return {
             success: true,
             statusCode: 201,
