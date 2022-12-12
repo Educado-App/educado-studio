@@ -3,7 +3,7 @@ const { deleteAppUserController: handle } = require('.')
 const { appUserList } = require('../gateways')
 
 describe('App user deletion controller', () => {
- 
+
     it('Successfully delete an app user', async () => {
 
         const fakeAppUser = makeFakeAppUser()
