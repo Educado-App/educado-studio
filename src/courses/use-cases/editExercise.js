@@ -8,14 +8,17 @@ module.exports = function makeEditExercise({ exerciseList }) {
 
         const exercise = makeExercise({ id: exerciseDoc.id, ...changes })
 
-        return await exerciseList.update({
+        const toChange = {
             id: exercise.id,
             title: exercise.title,
             description: exercise.description,
-            content: exercise.content,
-            onWrongFeedback: {},
             answers: exercise.getAnswers(),
             modifiedAt: new Date(),
-        })
+        }
+
+        if (changes.content)           toChange.content = changes.content
+        if (changes.onWrongFeedback)   toChange.onWrongFeedback = changes.onWrongFeedback
+
+        return await exerciseList.update(toChange)
     }
 }

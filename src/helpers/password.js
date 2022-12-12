@@ -1,11 +1,15 @@
 const crypto = require("crypto");
 
+const { WeakPasswordError } = require("./error");
+
+
 const SALT_ROUNDS = 1000
 
 module.exports = Object.freeze({
     encrypt,
     isValid,
-    generateRandomPassword
+    generateRandomPassword,
+    isStrong
 })
 
 function encrypt(plainPassword) {
@@ -18,6 +22,25 @@ function encrypt(plainPassword) {
 function isValid({ password, hash, salt }) {
     let hashVerify = crypto.pbkdf2Sync(password, salt, SALT_ROUNDS, 64, 'sha256').toString('hex');
     return hash === hashVerify;
+}
+
+/**
+ * 
+ * @param {*} password a plain password
+ * @returns a 2 item list [bool, error]. First item is a boolean if the password is strong or not.
+ *          Second item contains an error object
+ */
+function isStrong(password = '') {
+    let error
+
+    if (!(password.length >= 8))        error = new WeakPasswordError("Password should be atleast 8 characters long")
+    if (password.search("[A-Z]") == -1) error = new WeakPasswordError("Password must contain one capital letter")
+
+    if (error) {
+        return [false, error]
+    }
+
+    return [true, false]
 }
 
 function generateRandomPassword() {

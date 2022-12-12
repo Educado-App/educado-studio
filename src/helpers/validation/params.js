@@ -1,12 +1,16 @@
 const { ValidationError } = require('../error')
 const Id = require('../id')
 const Ajv = require('ajv')
-const ajv = new Ajv({ coerceTypes: true, allErrors: true })
 const AjvErrors = require('ajv-errors')
 const AjvFormats = require('ajv-formats')
 
+
+const ajv = new Ajv({ coerceTypes: true, allErrors: true, strictSchema: true, removeAdditional: true })
+
+
 AjvErrors(ajv)
 AjvFormats(ajv, { mode: "fast", formats: ["date", "time"], keywords: true })
+
 
 module.exports = Object.freeze({
     validate

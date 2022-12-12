@@ -20,6 +20,33 @@ class ValidationError extends OperationalError {
     }
 }
 
+class NonMatchingPasswordError extends OperationalError {
+
+    constructor(msg, statusCode = 400) {
+        super(msg, statusCode)
+
+        this.name = 'NonMatchingPasswordError'
+    }
+}
+
+class SamePasswordError extends OperationalError {
+
+    constructor(msg, statusCode = 400) {
+        super(msg, statusCode)
+
+        this.name = 'SamePasswordError'
+    }
+}
+
+class WeakPasswordError extends OperationalError {
+
+    constructor(msg, statusCode = 400) {
+        super(msg, statusCode)
+
+        this.name = 'WeakPasswordError'
+    }
+}
+
 
 class AuthenticationError extends OperationalError {
 
@@ -50,9 +77,12 @@ function makeHttpError({ status = 500, message }) {
 }
 
 module.exports = { 
-    makeHttpError, 
     OperationalError, 
     ValidationError, 
     AuthenticationError,
-    HttpMethodNotAllowedError
+    NonMatchingPasswordError,
+    SamePasswordError,
+    WeakPasswordError,
+    HttpMethodNotAllowedError,
+    makeHttpError, 
 }

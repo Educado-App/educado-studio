@@ -20,7 +20,7 @@ module.exports = function makeUserList(dbModel) {
         return results.deletedCount
     }
 
-    async function update({ _id, ...changes }) {
+    async function update({ id: _id, ...changes }) {
         const result = await dbModel.findOneAndUpdate({ _id }, { ...changes }, { new: true })
         return result?.toObject({ getters: true, virtuals: true })
     }
