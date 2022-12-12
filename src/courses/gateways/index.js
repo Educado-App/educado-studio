@@ -14,7 +14,7 @@ const makeCategoryList = require('./categoryList')
 const courseList = makeCourseList({ dbModel: CourseModel, Params, ParamsSchema, Id })
 const sectionList = makeSectionList({ dbModel: SectionModel, Id })
 const exerciseList = makeExerciseList({ dbModel: ExerciseModel, Params, ParamsSchema })
-const categoryList = makeCategoryList({ dbModel: CategoryModel })
+const categoryList = makeCategoryList({ dbModel: CategoryModel, Id })
 
 module.exports = {
     courseList,

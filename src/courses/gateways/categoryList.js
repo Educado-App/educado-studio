@@ -1,7 +1,8 @@
-module.exports = function makeCategoryList({ dbModel }) {
+module.exports = function makeCategoryList({ dbModel, Id }) {
 
     return Object.freeze({
         findAll,
+        findById,
         add,
         remove
     })
@@ -13,6 +14,15 @@ module.exports = function makeCategoryList({ dbModel }) {
             .sort('name')
 
         return results.map((doc) => doc.toObject({ getters: true, virtuals: true }))
+    }
+
+    async function findById(id) {
+
+        if (!Id.isValid(id)) throw new ValidationError(`Invalid category id '${id}'`)
+
+        const result = await dbModel.findById(id)
+
+        return result?.toObject({ getters: true, virtuals: true })
     }
 
     async function add({ id: _id, ...category }) {

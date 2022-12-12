@@ -13,10 +13,12 @@ DEFAULT_CATEGORY = {
     parent: null
 }
 
-module.exports = function defaultCategory() {
+module.exports = async function defaultCategory() {
 
     // Try and add the default category to the database if not already created
-    categoryList.add(defaultCategory)
-
+    const found = await categoryList.findById(DEFAULT_CATEGORY_ID)
+        
+    if (!found) await categoryList.add(DEFAULT_CATEGORY)
+    
     return DEFAULT_CATEGORY
 }
