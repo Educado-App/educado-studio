@@ -1,4 +1,5 @@
 const Id = require('../../helpers/id')
+const defaultCategory = require('../utils/defaultCategory')
 
 const buildMakeCategory = require('./category')
 const buildMakeCourse = require('./course')
@@ -10,7 +11,7 @@ const makeCategory = buildMakeCategory({ Id })
 const makeAnswer = buildMakeAnswer()
 const makeExercise = buildMakeExercise({ Id, makeAnswer })
 const makeSection = buildMakeSection({ Id, makeExercise })
-const makeCourse = buildMakeCourse({ Id, makeSection, makeCategory })
+const makeCourse = buildMakeCourse({ Id, makeSection, makeCategory, defaultCategory })
 
 module.exports = {
     makeCourse,

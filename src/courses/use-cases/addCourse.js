@@ -7,7 +7,6 @@ module.exports = function makeAddCourse({ courseList }) {
         const course = makeCourse({
             author: courseInfo.author,
             title: courseInfo.title,
-            category: courseInfo.category,
             description: courseInfo.description,
             coverImg: courseInfo.coverImg
         })

@@ -1,6 +1,6 @@
 const { ValidationError } = require("../../helpers/error")
 
-module.exports = function buildMakeCourse({ Id, makeSection, makeCategory }) {
+module.exports = function buildMakeCourse({ Id, makeSection, makeCategory, defaultCategory }) {
 
     return function makeCourse({
         id = Id.makeId(),
@@ -8,7 +8,7 @@ module.exports = function buildMakeCourse({ Id, makeSection, makeCategory }) {
         description,
         author,
         coverImg,
-        category,
+        category = defaultCategory(),
         published = true,
         sections = [],
         createdAt = new Date(),
@@ -16,7 +16,6 @@ module.exports = function buildMakeCourse({ Id, makeSection, makeCategory }) {
     }) {
 
         let validSections = sections.map(section => makeSection(section))
-        let validCategory = makeCategory(category)
 
         if (!title) throw new ValidationError('Course must have a title')
         if (!author) throw new ValidationError('Course must have an author')
@@ -28,7 +27,7 @@ module.exports = function buildMakeCourse({ Id, makeSection, makeCategory }) {
             getDescription: () => description,
             getAuthor: () => author,
             getCoverImg: () => coverImg,
-            getCategory: () => validCategory,
+            getCategory: () => category,
             isPublished: () => published,
             getCreatedAt: () => createdAt,
             getModifiedAt: () => modifiedAt,
